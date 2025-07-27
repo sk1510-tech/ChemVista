@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}ChemVista - Interactive Periodic Table & Formula Finder{% endblock %}
+
+{% block main_class %}container-fluid px-0{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-gradient text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="fas fa-atom me-3"></i>Welcome to ChemVista
+                </h1>
+                <p class="lead mb-4">
+                    Explore the fascinating world of chemistry through our interactive periodic table and powerful chemical formula finder. 
+                    Click on any element to discover its properties, or search for compounds to understand their composition.
+                </p>
+                <div class="d-flex gap-3">
+                    <button class="btn btn-light btn-lg" onclick="scrollToPeriodicTable()">
+                        <i class="fas fa-table me-2"></i>Explore Periodic Table
+                    </button>
+                    <button class="btn btn-outline-light btn-lg" onclick="scrollToFormula()">
+                        <i class="fas fa-search me-2"></i>Find Formulas
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="hero-animation">
+                    <i class="fas fa-flask fa-5x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="container-fluid">
+    <div class="row g-4 p-4">
+        <!-- Periodic Table Column -->
+        <div class="col-lg-8" id="periodic-table-section">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-table me-2"></i>Interactive Periodic Table
+                    </h3>
+                    <small>Click on any element to explore its properties</small>
+                </div>
+                <div class="card-body p-3">
+                    <div class="periodic-table-container">
+                        <div class="periodic-table">
+                            <!-- Period 1 -->
+                            <div class="element hydrogen" data-element="1" data-group="1" data-period="1">
+                                <div class="atomic-number">1</div>
+                                <div class="symbol">H</div>
+                                <div class="name">Hydrogen</div>
+                            </div>
+                            <div class="spacer spacer-period-1"></div>
+                            <div class="element noble-gas" data-element="2" data-group="18" data-period="1">
+                                <div class="atomic-number">2</div>
+                                <div class="symbol">He</div>
+                                <div class="name">Helium</div>
+                            </div>
+
+                            <!-- Period 2 -->
+                            <div class="element alkali-metal" data-element="3" data-group="1" data-period="2">
+                                <div class="atomic-number">3</div>
+                                <div class="symbol">Li</div>
+                                <div class="name">Lithium</div>
+                            </div>
+                            <div class="element alkaline-earth" data-element="4" data-group="2" data-period="2">
+                                <div class="atomic-number">4</div>
+                                <div class="symbol">Be</div>
+                                <div class="name">Beryllium</div>
+                            </div>
+                            <div class="spacer spacer-period-2-3-13"></div>
+                            <div class="element metalloid" data-element="5" data-group="13" data-period="2">
+                                <div class="atomic-number">5</div>
+                                <div class="symbol">B</div>
+                                <div class="name">Boron</div>
+                            </div>
+                            <div class="element nonmetal" data-element="6" data-group="14" data-period="2">
+                                <div class="atomic-number">6</div>
+                                <div class="symbol">C</div>
+                                <div class="name">Carbon</div>
+                            </div>
+                            <div class="element nonmetal" data-element="7" data-group="15" data-period="2">
+                                <div class="atomic-number">7</div>
+                                <div class="symbol">N</div>
+                                <div class="name">Nitrogen</div>
+                            </div>
+                            <div class="element nonmetal" data-element="8" data-group="16" data-period="2">
+                                <div class="atomic-number">8</div>
+                                <div class="symbol">O</div>
+                                <div class="name">Oxygen</div>
+                            </div>
+                            <div class="element halogen" data-element="9" data-group="17" data-period="2">
+                                <div class="atomic-number">9</div>
+                                <div class="symbol">F</div>
+                                <div class="name">Fluorine</div>
+                            </div>
+                            <div class="element noble-gas" data-element="10" data-group="18" data-period="2">
+                                <div class="atomic-number">10</div>
+                                <div class="symbol">Ne</div>
+                                <div class="name">Neon</div>
+                            </div>
+
+                            <!-- Period 3 -->
+                            <div class="element alkali-metal" data-element="11" data-group="1" data-period="3">
+                                <div class="atomic-number">11</div>
+                                <div class="symbol">Na</div>
+                                <div class="name">Sodium</div>
+                            </div>
+                            <div class="element alkaline-earth" data-element="12" data-group="2" data-period="3">
+                                <div class="atomic-number">12</div>
+                                <div class="symbol">Mg</div>
+                                <div class="name">Magnesium</div>
+                            </div>
+                            <div class="spacer spacer-period-3-13"></div>
+                            <div class="element post-transition" data-element="13" data-group="13" data-period="3">
+                                <div class="atomic-number">13</div>
+                                <div class="symbol">Al</div>
+                                <div class="name">Aluminum</div>
+                            </div>
+                            <div class="element metalloid" data-element="14" data-group="14" data-period="3">
+                                <div class="atomic-number">14</div>
+                                <div class="symbol">Si</div>
+                                <div class="name">Silicon</div>
+                            </div>
+                            <div class="element nonmetal" data-element="15" data-group="15" data-period="3">
+                                <div class="atomic-number">15</div>
+                                <div class="symbol">P</div>
+                                <div class="name">Phosphorus</div>
+                            </div>
+                            <div class="element nonmetal" data-element="16" data-group="16" data-period="3">
+                                <div class="atomic-number">16</div>
+                                <div class="symbol">S</div>
+                                <div class="name">Sulfur</div>
+                            </div>
+                            <div class="element halogen" data-element="17" data-group="17" data-period="3">
+                                <div class="atomic-number">17</div>
+                                <div class="symbol">Cl</div>
+                                <div class="name">Chlorine</div>
+                            </div>
+                            <div class="element noble-gas" data-element="18" data-group="18" data-period="3">
+                                <div class="atomic-number">18</div>
+                                <div class="symbol">Ar</div>
+                                <div class="name">Argon</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Legend -->
+                        <div class="legend mt-4">
+                            <h6 class="fw-bold mb-3">Element Categories:</h6>
+                            <div class="row g-2">
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color alkali-metal"></span>
+                                        Alkali Metals
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color alkaline-earth"></span>
+                                        Alkaline Earth
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color metalloid"></span>
+                                        Metalloids
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color nonmetal"></span>
+                                        Nonmetals
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color halogen"></span>
+                                        Halogens
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color noble-gas"></span>
+                                        Noble Gases
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="legend-item">
+                                        <span class="legend-color post-transition"></span>
+                                        Post-transition
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chemical Formula Finder Column -->
+        <div class="col-lg-4" id="formula-finder-section">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-search me-2"></i>Chemical Formula Finder
+                    </h3>
+                    <small>Search by compound name or chemical formula</small>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('search') }}" method="GET" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   name="q" 
+                                   id="searchInput"
+                                   placeholder="Enter compound name or formula (e.g., water, H2O)" 
+                                   autocomplete="off">
+                            <button class="btn btn-success" type="submit" title="Search">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div id="searchSuggestions" class="suggestions-dropdown"></div>
+                    </form>
+
+                    <div class="examples-section">
+                        <h6 class="fw-bold text-muted mb-3">Popular Searches:</h6>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="water">
+                                Water
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="H2O">
+                                H₂O
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="carbon dioxide">
+                                Carbon Dioxide
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="CO2">
+                                CO₂
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="salt">
+                                Salt
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="NaCl">
+                                NaCl
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h6 class="fw-bold">How to use:</h6>
+                            <ul class="list-unstyled small">
+                                <li><i class="fas fa-check text-success me-2"></i>Type a compound name (e.g., "water")</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Enter a chemical formula (e.g., "H2O")</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Get detailed information about the compound</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Learn about molecular structure and properties</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="stats-section mt-4">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <h4 class="text-primary mb-0">18</h4>
+                                    <small class="text-muted">Elements</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <h4 class="text-success mb-0">10+</h4>
+                                    <small class="text-muted">Compounds</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold">Why Choose ChemVista?</h2>
+                <p class="lead text-muted">Comprehensive chemistry education at your fingertips</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-mouse-pointer fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold">Interactive Elements</h5>
+                    <p class="text-muted">Click on any element to explore detailed properties, discovery history, and practical applications.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-search fa-3x text-success"></i>
+                    </div>
+                    <h5 class="fw-bold">Smart Formula Search</h5>
+                    <p class="text-muted">Search by compound name or formula to discover molecular composition and chemical properties.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-graduation-cap fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="fw-bold">Educational Focus</h5>
+                    <p class="text-muted">Perfect for students, educators, and chemistry enthusiasts looking to expand their knowledge.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Smooth scrolling functions
+function scrollToPeriodicTable() {
+    document.getElementById('periodic-table-section').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
+}
+
+function scrollToFormula() {
+    document.getElementById('formula-finder-section').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
+}
+
+// Element click handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle element clicks
+    document.querySelectorAll('.element').forEach(element => {
+        element.addEventListener('click', function() {
+            const atomicNumber = this.dataset.element;
+            window.location.href = `/element/${atomicNumber}`;
+        });
+    });
+
+    // Handle example button clicks
+    document.querySelectorAll('.example-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const searchTerm = this.dataset.search;
+            window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
+        });
+    });
+});
+</script>
+{% endblock %}

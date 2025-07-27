@@ -1,0 +1,215 @@
+[
+  {
+    "id": "water",
+    "name": "Water",
+    "formula": "H2O",
+    "description": "Water is a transparent, tasteless, odorless, and nearly colorless chemical substance that is the main constituent of Earth's hydrosphere and the fluids of all known living organisms.",
+    "molecular_weight": 18.015,
+    "chemical_name": "Dihydrogen monoxide",
+    "type": "Inorganic compound",
+    "state": "Liquid",
+    "melting_point": 0,
+    "boiling_point": 100,
+    "density": 1.0,
+    "solubility": "Universal solvent",
+    "uses": ["Drinking", "Cleaning", "Industrial processes", "Biological functions"],
+    "properties": ["Polar molecule", "Hydrogen bonding", "High specific heat", "Universal solvent"],
+    "structure": "Bent molecular geometry with 104.5° bond angle",
+    "composition": [
+      {"element": "Hydrogen", "symbol": "H", "count": 2},
+      {"element": "Oxygen", "symbol": "O", "count": 1}
+    ]
+  },
+  {
+    "id": "carbon_dioxide",
+    "name": "Carbon Dioxide",
+    "formula": "CO2",
+    "description": "Carbon dioxide is a colorless gas with a density about 53% higher than that of dry air. It occurs naturally in Earth's atmosphere as a trace gas.",
+    "molecular_weight": 44.009,
+    "chemical_name": "Carbon dioxide",
+    "type": "Inorganic compound",
+    "state": "Gas",
+    "melting_point": -78.5,
+    "boiling_point": -78.5,
+    "density": 1.98,
+    "solubility": "Slightly soluble in water",
+    "uses": ["Photosynthesis", "Fire extinguisher", "Carbonated beverages", "Dry ice"],
+    "properties": ["Linear molecule", "Non-polar", "Greenhouse gas", "Acidic oxide"],
+    "structure": "Linear molecular geometry with 180° bond angle",
+    "composition": [
+      {"element": "Carbon", "symbol": "C", "count": 1},
+      {"element": "Oxygen", "symbol": "O", "count": 2}
+    ]
+  },
+  {
+    "id": "sodium_chloride",
+    "name": "Sodium Chloride",
+    "formula": "NaCl",
+    "description": "Sodium chloride, commonly known as salt, is an ionic compound composed of sodium and chloride ions. It is essential for life and is the most common type of salt.",
+    "molecular_weight": 58.443,
+    "chemical_name": "Sodium chloride",
+    "type": "Ionic compound",
+    "state": "Solid",
+    "melting_point": 801,
+    "boiling_point": 1465,
+    "density": 2.17,
+    "solubility": "Highly soluble in water",
+    "uses": ["Food seasoning", "Food preservation", "De-icing roads", "Chemical industry"],
+    "properties": ["Ionic bonding", "Crystalline structure", "Conducts electricity when dissolved", "High melting point"],
+    "structure": "Face-centered cubic crystal lattice",
+    "composition": [
+      {"element": "Sodium", "symbol": "Na", "count": 1},
+      {"element": "Chlorine", "symbol": "Cl", "count": 1}
+    ]
+  },
+  {
+    "id": "methane",
+    "name": "Methane",
+    "formula": "CH4",
+    "description": "Methane is the simplest hydrocarbon and the main component of natural gas. It is a potent greenhouse gas and an important energy source.",
+    "molecular_weight": 16.043,
+    "chemical_name": "Methane",
+    "type": "Organic compound",
+    "state": "Gas",
+    "melting_point": -182.5,
+    "boiling_point": -161.5,
+    "density": 0.717,
+    "solubility": "Slightly soluble in water",
+    "uses": ["Natural gas fuel", "Chemical feedstock", "Hydrogen production", "Heating"],
+    "properties": ["Tetrahedral geometry", "Non-polar", "Flammable", "Greenhouse gas"],
+    "structure": "Tetrahedral molecular geometry with 109.5° bond angles",
+    "composition": [
+      {"element": "Carbon", "symbol": "C", "count": 1},
+      {"element": "Hydrogen", "symbol": "H", "count": 4}
+    ]
+  },
+  {
+    "id": "ammonia",
+    "name": "Ammonia",
+    "formula": "NH3",
+    "description": "Ammonia is a compound of nitrogen and hydrogen with the formula NH3. It is a colorless gas with a characteristic pungent smell and is essential for many biological processes.",
+    "molecular_weight": 17.031,
+    "chemical_name": "Ammonia",
+    "type": "Inorganic compound",
+    "state": "Gas",
+    "melting_point": -77.73,
+    "boiling_point": -33.34,
+    "density": 0.73,
+    "solubility": "Highly soluble in water",
+    "uses": ["Fertilizer production", "Cleaning agent", "Refrigerant", "Chemical synthesis"],
+    "properties": ["Trigonal pyramidal geometry", "Polar molecule", "Basic nature", "Hydrogen bonding"],
+    "structure": "Trigonal pyramidal with 107° bond angle",
+    "composition": [
+      {"element": "Nitrogen", "symbol": "N", "count": 1},
+      {"element": "Hydrogen", "symbol": "H", "count": 3}
+    ]
+  },
+  {
+    "id": "sulfuric_acid",
+    "name": "Sulfuric Acid",
+    "formula": "H2SO4",
+    "description": "Sulfuric acid is a mineral acid composed of the elements sulfur, oxygen and hydrogen. It is a colorless, odorless and viscous liquid that is miscible with water.",
+    "molecular_weight": 98.079,
+    "chemical_name": "Sulfuric acid",
+    "type": "Inorganic acid",
+    "state": "Liquid",
+    "melting_point": 10,
+    "boiling_point": 337,
+    "density": 1.84,
+    "solubility": "Miscible with water",
+    "uses": ["Battery acid", "Chemical manufacturing", "Metal processing", "Fertilizer production"],
+    "properties": ["Strong acid", "Dehydrating agent", "Oxidizing agent", "Corrosive"],
+    "structure": "Tetrahedral around sulfur atom",
+    "composition": [
+      {"element": "Hydrogen", "symbol": "H", "count": 2},
+      {"element": "Sulfur", "symbol": "S", "count": 1},
+      {"element": "Oxygen", "symbol": "O", "count": 4}
+    ]
+  },
+  {
+    "id": "glucose",
+    "name": "Glucose",
+    "formula": "C6H12O6",
+    "description": "Glucose is a simple sugar and the most abundant monosaccharide. It is the primary source of energy for living organisms and is essential for cellular respiration.",
+    "molecular_weight": 180.156,
+    "chemical_name": "D-Glucose",
+    "type": "Organic compound (Sugar)",
+    "state": "Solid",
+    "melting_point": 146,
+    "boiling_point": "Decomposes",
+    "density": 1.54,
+    "solubility": "Highly soluble in water",
+    "uses": ["Energy source", "Food industry", "Medical applications", "Fermentation"],
+    "properties": ["Sweet taste", "Reducing sugar", "Chiral molecule", "Multiple hydroxyl groups"],
+    "structure": "Pyranose ring structure in solution",
+    "composition": [
+      {"element": "Carbon", "symbol": "C", "count": 6},
+      {"element": "Hydrogen", "symbol": "H", "count": 12},
+      {"element": "Oxygen", "symbol": "O", "count": 6}
+    ]
+  },
+  {
+    "id": "calcium_carbonate",
+    "name": "Calcium Carbonate",
+    "formula": "CaCO3",
+    "description": "Calcium carbonate is a chemical compound with the formula CaCO3. It is a common substance found in rocks as the minerals calcite and aragonite and is the main component of shells.",
+    "molecular_weight": 100.087,
+    "chemical_name": "Calcium carbonate",
+    "type": "Ionic compound",
+    "state": "Solid",
+    "melting_point": 1339,
+    "boiling_point": "Decomposes",
+    "density": 2.71,
+    "solubility": "Poorly soluble in water",
+    "uses": ["Paper production", "Paint filler", "Plastic filler", "Antacid"],
+    "properties": ["White powder", "Basic nature", "Thermally decomposes", "Forms precipitates"],
+    "structure": "Trigonal crystal system",
+    "composition": [
+      {"element": "Calcium", "symbol": "Ca", "count": 1},
+      {"element": "Carbon", "symbol": "C", "count": 1},
+      {"element": "Oxygen", "symbol": "O", "count": 3}
+    ]
+  },
+  {
+    "id": "ethanol",
+    "name": "Ethanol",
+    "formula": "C2H5OH",
+    "description": "Ethanol, also called ethyl alcohol, is a volatile, flammable, colorless liquid with the characteristic alcoholic beverage odor. It is widely used as a solvent and fuel.",
+    "molecular_weight": 46.069,
+    "chemical_name": "Ethyl alcohol",
+    "type": "Organic compound (Alcohol)",
+    "state": "Liquid",
+    "melting_point": -114.1,
+    "boiling_point": 78.37,
+    "density": 0.789,
+    "solubility": "Miscible with water",
+    "uses": ["Alcoholic beverages", "Fuel additive", "Solvent", "Antiseptic"],
+    "properties": ["Flammable", "Polar molecule", "Hydrogen bonding", "Psychoactive"],
+    "structure": "Linear chain with hydroxyl group",
+    "composition": [
+      {"element": "Carbon", "symbol": "C", "count": 2},
+      {"element": "Hydrogen", "symbol": "H", "count": 6},
+      {"element": "Oxygen", "symbol": "O", "count": 1}
+    ]
+  },
+  {
+    "id": "ozone",
+    "name": "Ozone",
+    "formula": "O3",
+    "description": "Ozone is a pale blue gas with a distinctively pungent smell. It is an allotrope of oxygen that is much less stable than the diatomic allotrope O2.",
+    "molecular_weight": 47.998,
+    "chemical_name": "Trioxygen",
+    "type": "Inorganic compound",
+    "state": "Gas",
+    "melting_point": -192.2,
+    "boiling_point": -111.9,
+    "density": 2.144,
+    "solubility": "Slightly soluble in water",
+    "uses": ["Sterilization", "Water treatment", "Bleaching", "UV protection (stratosphere)"],
+    "properties": ["Bent molecule", "Strong oxidizing agent", "Unstable", "UV absorber"],
+    "structure": "Bent molecular geometry with resonance",
+    "composition": [
+      {"element": "Oxygen", "symbol": "O", "count": 3}
+    ]
+  }
+]
