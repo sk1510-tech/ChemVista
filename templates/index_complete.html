@@ -1,0 +1,789 @@
+{% extends "base_enhanced.html" %}
+
+{% block title %}ChemVista - Complete Periodic Table{% endblock %}
+
+{% block extra_head %}
+<style>
+/* Enhanced Periodic Table Styles */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.periodic-table-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.periodic-table {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 2px;
+    margin: 2rem 0;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.element {
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 8px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.element:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.element .atomic-number {
+    font-size: 0.6rem;
+    font-weight: 600;
+    opacity: 0.7;
+    line-height: 1;
+}
+
+.element .symbol {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 2px 0;
+}
+
+.element .name {
+    font-size: 0.5rem;
+    opacity: 0.8;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.element .atomic-mass {
+    font-size: 0.5rem;
+    opacity: 0.6;
+    line-height: 1;
+}
+
+/* Element Categories */
+.element.alkali-metal { background: linear-gradient(145deg, #ff6b6b, #ee5a52); color: white; }
+.element.alkaline-earth-metal { background: linear-gradient(145deg, #ffa726, #ff9800); color: white; }
+.element.transition-metal { background: linear-gradient(145deg, #42a5f5, #2196f3); color: white; }
+.element.post-transition-metal { background: linear-gradient(145deg, #26c6da, #00bcd4); color: white; }
+.element.metalloid { background: linear-gradient(145deg, #ab47bc, #9c27b0); color: white; }
+.element.reactive-nonmetal { background: linear-gradient(145deg, #66bb6a, #4caf50); color: white; }
+.element.halogen { background: linear-gradient(145deg, #ffee58, #ffeb3b); color: #333; }
+.element.noble-gas { background: linear-gradient(145deg, #78909c, #607d8b); color: white; }
+.element.lanthanide { background: linear-gradient(145deg, #ef5350, #f44336); color: white; }
+.element.actinide { background: linear-gradient(145deg, #8bc34a, #689f38); color: white; }
+
+.empty-cell {
+    background: transparent;
+    border: none;
+    pointer-events: none;
+}
+
+.series-section {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+
+.series-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #495057;
+}
+
+.series-grid {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 2px;
+}
+
+.search-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.search-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    font-size: 1rem;
+}
+
+.search-btn {
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.search-results {
+    min-height: 100px;
+}
+
+.result-item {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.result-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+}
+
+.element-preview {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.element-properties p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+/* Legend */
+.legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.05);
+    border-radius: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-alkali-metal { background: linear-gradient(145deg, #ff6b6b, #ee5a52); }
+.legend-alkaline-earth-metal { background: linear-gradient(145deg, #ffa726, #ff9800); }
+.legend-transition-metal { background: linear-gradient(145deg, #42a5f5, #2196f3); }
+.legend-post-transition-metal { background: linear-gradient(145deg, #26c6da, #00bcd4); }
+.legend-metalloid { background: linear-gradient(145deg, #ab47bc, #9c27b0); }
+.legend-reactive-nonmetal { background: linear-gradient(145deg, #66bb6a, #4caf50); }
+.legend-halogen { background: linear-gradient(145deg, #ffee58, #ffeb3b); }
+.legend-noble-gas { background: linear-gradient(145deg, #78909c, #607d8b); }
+.legend-lanthanide { background: linear-gradient(145deg, #ef5350, #f44336); }
+.legend-actinide { background: linear-gradient(145deg, #8bc34a, #689f38); }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .periodic-table {
+        grid-template-columns: repeat(18, minmax(30px, 1fr));
+    }
+    
+    .element {
+        min-height: 50px;
+        font-size: 0.7rem;
+        padding: 4px 2px;
+    }
+    
+    .element .symbol {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .periodic-table {
+        grid-template-columns: repeat(18, minmax(25px, 1fr));
+        gap: 1px;
+    }
+    
+    .element {
+        min-height: 40px;
+        font-size: 0.6rem;
+        padding: 2px 1px;
+    }
+    
+    .element .symbol {
+        font-size: 0.8rem;
+    }
+    
+    .element .name,
+    .element .atomic-mass {
+        display: none;
+    }
+    
+    .main-container {
+        padding: 1rem;
+    }
+    
+    .search-form {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .periodic-table {
+        grid-template-columns: repeat(9, 1fr);
+    }
+    
+    .series-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">
+            <i class="fas fa-atom me-3"></i>ChemVista
+        </h1>
+        <p class="hero-subtitle">
+            Explore the complete periodic table with all 118 elements and discover chemical compounds
+        </p>
+    </div>
+</section>
+                <div class="legend-color legend-alkali-metal"></div>
+                <span>Alkali Metals</span>
+    <!-- Periodic Table Section -->
+    <section class="periodic-table-section">
+                <div class="legend-color legend-alkaline-earth-metal"></div>
+                <span>Alkaline Earth Metals</span>
+        </h2>
+        
+                <div class="legend-color legend-transition-metal"></div>
+                <span>Transition Metals</span>
+            <div class="legend-item">
+                <div class="legend-color legend-alkali-metal"></div>
+                <div class="legend-color legend-post-transition-metal"></div>
+                <span>Post-transition Metals</span>
+            <div class="legend-item">
+                <div class="legend-color legend-alkaline-earth-metal"></div>
+                <div class="legend-color legend-metalloid"></div>
+                <span>Metalloids</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #42a5f5, #2196f3);"></div>
+                <div class="legend-color legend-reactive-nonmetal"></div>
+                <span>Reactive Nonmetals</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #26c6da, #00bcd4);"></div>
+                <div class="legend-color legend-halogen"></div>
+                <span>Halogens</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #ab47bc, #9c27b0);"></div>
+                <div class="legend-color legend-noble-gas"></div>
+                <span>Noble Gases</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #66bb6a, #4caf50);"></div>
+                <div class="legend-color legend-lanthanide"></div>
+                <span>Lanthanides</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #ffee58, #ffeb3b);"></div>
+                <div class="legend-color legend-actinide"></div>
+                <span>Actinides</span>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #78909c, #607d8b);"></div>
+                <span>Noble Gases</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #ef5350, #f44336);"></div>
+                <span>Lanthanides</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(145deg, #8bc34a, #689f38);"></div>
+                <span>Actinides</span>
+            </div>
+        </div>
+
+        <!-- Main Periodic Table -->
+        <div id="periodic-table" class="periodic-table">
+            <!-- Elements will be populated by JavaScript -->
+        </div>
+
+        <!-- Lanthanides Series -->
+        <div class="series-section">
+            <h4 class="series-title">Lanthanides (57-71)</h4>
+            <div id="lanthanides-grid" class="series-grid">
+                <!-- Lanthanides will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Actinides Series -->
+        <div class="series-section">
+            <h4 class="series-title">Actinides (89-103)</h4>
+            <div id="actinides-grid" class="series-grid">
+                <!-- Actinides will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Chemical Formula Finder Section -->
+    <section class="search-section">
+        <h2 class="text-center mb-4">
+            <i class="fas fa-search me-2"></i>Chemical Formula Finder
+        </h2>
+        <p class="text-center text-muted mb-4">
+            Search for chemical compounds by name or formula
+        </p>
+        
+        <div class="search-form">
+            <input type="text" id="search-input" class="search-input" 
+                   placeholder="Enter compound name or formula (e.g., 'water' or 'H2O')" 
+                   autocomplete="off">
+            <button id="search-btn" class="search-btn">
+                <i class="fas fa-search me-2"></i>Search
+            </button>
+        </div>
+        
+        <div id="search-results" class="search-results">
+            <!-- Search results will appear here -->
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Pass elements data to JavaScript
+window.elementsData = JSON.parse('{{ elements | tojson | safe }}');
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('ChemVista Enhanced - Loading with', window.elementsData.length, 'elements');
+    
+    // Initialize the complete periodic table
+    createCompletePeriodicTable();
+    
+    // Initialize search functionality
+    initializeSearch();
+    
+    // Initialize element click handlers
+    initializeElementClicks();
+    
+    console.log('ChemVista Enhanced - Fully loaded!');
+});
+
+function createCompletePeriodicTable() {
+    const container = document.getElementById('periodic-table');
+    if (!container || !window.elementsData) {
+        console.error('Periodic table container or elements data not found');
+        return;
+    }
+
+    // Clear existing content
+    container.innerHTML = '';
+
+    // Create the 18x7 periodic table grid
+    const gridPositions = {};
+    
+    // Standard periodic table positions (excluding lanthanides and actinides)
+    window.elementsData.forEach(element => {
+        if (element.category !== 'lanthanide' && element.category !== 'actinide') {
+            const key = `${element.period}-${element.group}`;
+            gridPositions[key] = element;
+        }
+    });
+
+    // Create the main periodic table grid
+    for (let period = 1; period <= 7; period++) {
+        for (let group = 1; group <= 18; group++) {
+            const key = `${period}-${group}`;
+            const element = gridPositions[key];
+            
+            if (element) {
+                const elementDiv = createElementDiv(element);
+                elementDiv.style.gridColumn = group;
+                elementDiv.style.gridRow = period;
+                container.appendChild(elementDiv);
+            } else if (shouldShowEmptyCell(period, group)) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'empty-cell';
+                emptyDiv.style.gridColumn = group;
+                emptyDiv.style.gridRow = period;
+                container.appendChild(emptyDiv);
+            }
+        }
+    }
+
+    // Add placeholders for lanthanides and actinides
+    const laPlaceholder = createPlaceholder('La-Lu*', '57-71');
+    laPlaceholder.style.gridColumn = 3;
+    laPlaceholder.style.gridRow = 6;
+    container.appendChild(laPlaceholder);
+
+    const acPlaceholder = createPlaceholder('Ac-Lr**', '89-103');
+    acPlaceholder.style.gridColumn = 3;
+    acPlaceholder.style.gridRow = 7;
+    container.appendChild(acPlaceholder);
+
+    // Create lanthanides and actinides sections
+    createLanthanidesSection();
+    createActinidesSection();
+
+    console.log('Periodic table created with', container.children.length, 'main elements');
+}
+
+function shouldShowEmptyCell(period, group) {
+    // Define which cells should be empty in the periodic table
+    const emptyCells = [
+        // Period 1: groups 2-17 are empty
+        ...Array.from({length: 16}, (_, i) => `1-${i + 2}`),
+        // Period 2: groups 3-12 are empty
+        ...Array.from({length: 10}, (_, i) => `2-${i + 3}`),
+        // Period 3: groups 3-12 are empty
+        ...Array.from({length: 10}, (_, i) => `3-${i + 3}`)
+    ];
+    
+    return emptyCells.includes(`${period}-${group}`);
+}
+
+function createElementDiv(element) {
+    const div = document.createElement('div');
+    div.className = `element ${element.category} clickable`;
+    div.dataset.atomicNumber = element.atomic_number;
+    div.dataset.symbol = element.symbol;
+    div.dataset.name = element.name;
+    div.dataset.category = element.category;
+    div.dataset.atomicMass = element.atomic_mass;
+    div.dataset.description = element.description || '';
+    
+    div.innerHTML = `
+        <div class="atomic-number">${element.atomic_number}</div>
+        <div class="symbol">${element.symbol}</div>
+        <div class="name">${element.name}</div>
+        <div class="atomic-mass">${element.atomic_mass}</div>
+    `;
+    
+    return div;
+}
+
+function createPlaceholder(symbol, range) {
+    const div = document.createElement('div');
+    div.className = 'element placeholder';
+    div.innerHTML = `
+        <div class="symbol">${symbol}</div>
+        <div class="name">${range}</div>
+    `;
+    return div;
+}
+
+function createLanthanidesSection() {
+    const container = document.getElementById('lanthanides-grid');
+    if (!container) return;
+
+    const lanthanides = window.elementsData.filter(el => el.category === 'lanthanide');
+    lanthanides.sort((a, b) => a.atomic_number - b.atomic_number);
+    
+    lanthanides.forEach(element => {
+        const elementDiv = createElementDiv(element);
+        container.appendChild(elementDiv);
+    });
+
+    console.log('Lanthanides section created with', lanthanides.length, 'elements');
+}
+
+function createActinidesSection() {
+    const container = document.getElementById('actinides-grid');
+    if (!container) return;
+
+    const actinides = window.elementsData.filter(el => el.category === 'actinide');
+    actinides.sort((a, b) => a.atomic_number - b.atomic_number);
+    
+    actinides.forEach(element => {
+        const elementDiv = createElementDiv(element);
+        container.appendChild(elementDiv);
+    });
+
+    console.log('Actinides section created with', actinides.length, 'elements');
+}
+
+function initializeElementClicks() {
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.element.clickable')) {
+            const element = e.target.closest('.element.clickable');
+            showElementModal(element.dataset);
+        }
+    });
+}
+
+function showElementModal(data) {
+    const modal = document.getElementById('element-modal');
+    if (!modal) {
+        createElementModal();
+    }
+    
+    const modalContent = document.getElementById('element-modal-content');
+    modalContent.innerHTML = `
+        <div class="modal-header">
+            <h2>${data.name} (${data.symbol})</h2>
+            <button class="modal-close" onclick="hideElementModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="element-preview ${data.category}">
+                <div class="atomic-number">${data.atomicNumber}</div>
+                <div class="symbol">${data.symbol}</div>
+                <div class="name">${data.name}</div>
+            </div>
+            <div class="element-properties">
+                <p><strong>Atomic Number:</strong> ${data.atomicNumber}</p>
+                <p><strong>Atomic Mass:</strong> ${data.atomicMass}</p>
+                <p><strong>Category:</strong> ${formatCategory(data.category)}</p>
+                <p><strong>Description:</strong> ${data.description || 'No description available.'}</p>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+function hideElementModal() {
+    const modal = document.getElementById('element-modal');
+    if (modal) {
+        modal.classList.remove('show');
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+}
+
+function createElementModal() {
+    if (document.getElementById('element-modal')) return;
+    
+    const modal = document.createElement('div');
+    modal.id = 'element-modal';
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content" id="element-modal-content">
+            <!-- Content will be populated -->
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            hideElementModal();
+        }
+    });
+}
+
+function initializeSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const resultsContainer = document.getElementById('search-results');
+
+    if (!searchInput) return;
+
+    function performSearch() {
+        const query = searchInput.value.trim();
+        if (!query) {
+            resultsContainer.innerHTML = '';
+            return;
+        }
+
+        resultsContainer.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
+
+        fetch(`/api/search?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(results => {
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="text-center text-muted">
+                            <i class="fas fa-search fa-2x mb-3"></i>
+                            <p>No compounds found for "${query}"</p>
+                        </div>
+                    `;
+                } else {
+                    let html = `<h5>Found ${results.length} compound(s) for "${query}":</h5>`;
+                    results.forEach(compound => {
+                        html += `
+                            <div class="result-item" onclick="showCompoundDetails('${compound.formula}', '${compound.name}')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>${compound.formula}</strong>
+                                        <span class="text-muted ms-2">${compound.name}</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted"></i>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultsContainer.innerHTML = html;
+                }
+            })
+            .catch(error => {
+                console.error('Search error:', error);
+                resultsContainer.innerHTML = `
+                    <div class="text-center text-danger">
+                        <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+                        <p>Search failed. Please try again.</p>
+                    </div>
+                `;
+            });
+    }
+
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // Real-time search with debouncing
+    let searchTimeout;
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        
+        if (query.length >= 2) {
+            searchTimeout = setTimeout(performSearch, 500);
+        } else if (query.length === 0) {
+            resultsContainer.innerHTML = '';
+        }
+    });
+}
+
+function showCompoundDetails(formula, name) {
+    alert(`Compound Details:\n\nFormula: ${formula}\nName: ${name}\n\nClick OK to close.`);
+}
+
+function formatCategory(category) {
+    return category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+}
+
+// Add keyboard navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        hideElementModal();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,442 @@
+{% extends "base.html" %}
+
+{% block title %}{{ compound.name }} ({{ compound.formula }}) - Compound Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Formula Finder</a></li>
+            <li class="breadcrumb-item active">{{ compound.name }}</li>
+        </ol>
+    </nav>
+
+    <!-- Compound Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card compound-header shadow-lg">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 text-center">
+                            <div class="formula-display">
+                                <div class="formula-text">{{ compound.formula }}</div>
+                                <div class="compound-type">{{ compound.type }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <h1 class="display-4 fw-bold mb-2">{{ compound.name }}</h1>
+                            <h3 class="text-muted mb-3">{{ compound.chemical_name }}</h3>
+                            <p class="lead">{{ compound.description }}</p>
+                            <div class="compound-badges">
+                                <span class="badge bg-primary fs-6 me-2">{{ compound.type }}</span>
+                                <span class="badge bg-secondary fs-6 me-2">{{ compound.state }}</span>
+                                <span class="badge bg-info fs-6">{{ compound.molecular_weight }} g/mol</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compound Properties -->
+    <div class="row g-4">
+        <!-- Basic Properties -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Basic Properties
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Molecular Weight</label>
+                                <div class="property-value">{{ compound.molecular_weight }} g/mol</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Type</label>
+                                <div class="property-value">{{ compound.type }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Physical State</label>
+                                <div class="property-value">
+                                    <span class="state-badge state-{{ compound.state.lower() }}">
+                                        {% if compound.state == 'Gas' %}
+                                            <i class="fas fa-cloud me-1"></i>
+                                        {% elif compound.state == 'Liquid' %}
+                                            <i class="fas fa-tint me-1"></i>
+                                        {% else %}
+                                            <i class="fas fa-cube me-1"></i>
+                                        {% endif %}
+                                        {{ compound.state }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Density</label>
+                                <div class="property-value">{{ compound.density }} g/cm³</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="property-item">
+                                <label class="property-label">Solubility</label>
+                                <div class="property-value">{{ compound.solubility }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thermal Properties -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-thermometer-half me-2"></i>Thermal Properties
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Melting Point</label>
+                                <div class="property-value">
+                                    {% if compound.melting_point == "Decomposes" %}
+                                        Decomposes
+                                    {% else %}
+                                        {{ compound.melting_point }}°C
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="property-item">
+                                <label class="property-label">Boiling Point</label>
+                                <div class="property-value">
+                                    {% if compound.boiling_point == "Decomposes" %}
+                                        Decomposes
+                                    {% else %}
+                                        {{ compound.boiling_point }}°C
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Temperature Scale Visualization -->
+                    <div class="temperature-scale mt-4">
+                        <h6 class="mb-3">Temperature Points</h6>
+                        <div class="temp-scale-container">
+                            {% if compound.melting_point != "Decomposes" %}
+                                <div class="temp-point melting">
+                                    <div class="temp-marker"></div>
+                                    <div class="temp-label">
+                                        <small>Melting</small>
+                                        <div>{{ compound.melting_point }}°C</div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if compound.boiling_point != "Decomposes" %}
+                                <div class="temp-point boiling">
+                                    <div class="temp-marker"></div>
+                                    <div class="temp-label">
+                                        <small>Boiling</small>
+                                        <div>{{ compound.boiling_point }}°C</div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Molecular Composition -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-atoms me-2"></i>Molecular Composition
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="composition-breakdown">
+                        <div class="formula-breakdown mb-3">
+                            <h6 class="mb-2">Chemical Formula: <code class="formula-code">{{ compound.formula }}</code></h6>
+                        </div>
+                        
+                        <div class="elements-list">
+                            {% for element in compound.composition %}
+                                <div class="element-composition-item">
+                                    <div class="element-info">
+                                        <span class="element-symbol">{{ element.symbol }}</span>
+                                        <span class="element-name">{{ element.element }}</span>
+                                    </div>
+                                    <div class="element-count">
+                                        <span class="count-badge">{{ element.count }} atom{{ 's' if element.count > 1 else '' }}</span>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="molecular-structure mt-3">
+                            <label class="property-label">Molecular Structure</label>
+                            <div class="property-value">{{ compound.structure }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Properties & Applications -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-cogs me-2"></i>Properties & Applications
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="properties-section mb-4">
+                        <h6 class="fw-bold mb-3">Key Properties</h6>
+                        <div class="properties-list">
+                            {% for property in compound.properties %}
+                                <div class="property-tag">
+                                    <i class="fas fa-check-circle me-2 text-success"></i>
+                                    {{ property }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="uses-section">
+                        <h6 class="fw-bold mb-3">Common Uses</h6>
+                        <div class="uses-list">
+                            {% for use in compound.uses %}
+                                <div class="use-item">
+                                    <i class="fas fa-arrow-right me-2 text-primary"></i>
+                                    {{ use }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ url_for('search') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Formula Finder
+                </a>
+                
+                <div class="share-section">
+                    <button class="btn btn-outline-secondary" onclick="copyToClipboard()">
+                        <i class="fas fa-link me-2"></i>Copy Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+.formula-display {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.formula-text {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 5px;
+}
+
+.compound-type {
+    font-size: 11px;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.property-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.property-label {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.property-value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #212529;
+}
+
+.state-badge {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.state-gas { background: linear-gradient(135deg, #74b9ff, #0984e3); color: white; }
+.state-liquid { background: linear-gradient(135deg, #00cec9, #00b894); color: white; }
+.state-solid { background: linear-gradient(135deg, #636e72, #2d3436); color: white; }
+
+.temperature-scale {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.temp-scale-container {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.temp-point {
+    text-align: center;
+}
+
+.temp-marker {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+}
+
+.melting .temp-marker {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+}
+
+.boiling .temp-marker {
+    background: linear-gradient(135deg, #fdcb6e, #e17055);
+}
+
+.temp-label {
+    font-size: 0.9rem;
+}
+
+.temp-label small {
+    color: #6c757d;
+    font-weight: 600;
+}
+
+.formula-code {
+    background: #e9ecef;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+}
+
+.element-composition-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.element-symbol {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #495057;
+    margin-right: 8px;
+}
+
+.element-name {
+    color: #6c757d;
+}
+
+.count-badge {
+    background: #007bff;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.property-tag {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #e8f5e8;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.use-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #e3f2fd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.compound-badges .badge {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+}
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function copyToClipboard() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        // Show success message
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check me-2"></i>Copied!';
+        btn.classList.add('btn-success');
+        btn.classList.remove('btn-outline-secondary');
+        
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.classList.remove('btn-success');
+            btn.classList.add('btn-outline-secondary');
+        }, 2000);
+    });
+}
+</script>
+{% endblock %}
