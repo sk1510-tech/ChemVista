@@ -1,0 +1,500 @@
+{% extends "base.html" %}
+
+{% block title %}Famous Scientists - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-user-graduate text-primary me-3"></i>Famous Chemists & Scientists
+            </h1>
+            <p class="lead text-muted mb-4">Discover the brilliant minds who shaped our understanding of chemistry</p>
+        </div>
+    </div>
+
+    <!-- Scientists Grid -->
+    <div class="row">
+        {% for scientist in scientists %}
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="scientist-card">
+                <div class="scientist-header">
+                    <div class="scientist-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="scientist-info">
+                        <h4 class="scientist-name">{{ scientist.name }}</h4>
+                        <p class="scientist-years text-muted">{{ scientist.years }}</p>
+                        <span class="nationality-badge">{{ scientist.nationality }}</span>
+                    </div>
+                </div>
+                
+                <div class="scientist-content">
+                    <div class="biography-section">
+                        <h6 class="section-title">
+                            <i class="fas fa-user me-2"></i>Biography
+                        </h6>
+                        <p class="biography-text">{{ scientist.biography }}</p>
+                    </div>
+
+                    <div class="discoveries-section">
+                        <h6 class="section-title">
+                            <i class="fas fa-flask me-2"></i>Key Discoveries
+                        </h6>
+                        <ul class="discoveries-list">
+                            {% for discovery in scientist.discoveries %}
+                            <li>{{ discovery }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="achievements-section">
+                        <h6 class="section-title">
+                            <i class="fas fa-trophy me-2"></i>Major Achievements
+                        </h6>
+                        <ul class="achievements-list">
+                            {% for achievement in scientist.achievements %}
+                            <li>{{ achievement }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scientist-footer">
+                    <a href="{{ url_for('scientist_detail', name=scientist.name.replace(' ', '-').lower()) }}" 
+                       class="btn btn-primary btn-sm">
+                        <i class="fas fa-info-circle me-1"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Chemistry Timeline -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card timeline-card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0"><i class="fas fa-clock me-2"></i>Chemistry Timeline</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Ancient Times</h5>
+                                <p>Early metallurgy, alchemy, and chemical processes discovered by ancient civilizations.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1661 - Robert Boyle</h5>
+                                <p>Published "The Sceptical Chymist," distinguishing chemistry from alchemy.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1789 - Antoine Lavoisier</h5>
+                                <p>Published "Elementary Treatise on Chemistry," establishing modern chemical nomenclature.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1869 - Dmitri Mendeleev</h5>
+                                <p>Developed the periodic table, organizing elements by atomic weight and properties.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1898 - Marie & Pierre Curie</h5>
+                                <p>Discovered polonium and radium, advancing understanding of radioactivity.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1930s - Linus Pauling</h5>
+                                <p>Developed theories of chemical bonding and molecular structure.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>Modern Era</h5>
+                                <p>Continued discoveries in nanotechnology, biochemistry, and materials science.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nobel Prize in Chemistry -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card nobel-card">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-medal me-2"></i>Nobel Prize in Chemistry</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Notable Laureates</h5>
+                            <div class="nobel-laureate">
+                                <strong>Marie Curie (1911)</strong>
+                                <p class="small text-muted">For the discovery of radium and polonium</p>
+                            </div>
+                            <div class="nobel-laureate">
+                                <strong>Linus Pauling (1954)</strong>
+                                <p class="small text-muted">For research on chemical bonding</p>
+                            </div>
+                            <div class="nobel-laureate">
+                                <strong>Dorothy Hodgkin (1964)</strong>
+                                <p class="small text-muted">For X-ray crystallography of biological molecules</p>
+                            </div>
+                            <div class="nobel-laureate">
+                                <strong>Frances Arnold (2018)</strong>
+                                <p class="small text-muted">For directed evolution of enzymes</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Recent Breakthroughs</h5>
+                            <div class="recent-breakthrough">
+                                <strong>2023 - Quantum Dots</strong>
+                                <p class="small text-muted">Moungi Bawendi, Louis Brus, Alexei Ekimov for quantum dot discovery and synthesis</p>
+                            </div>
+                            <div class="recent-breakthrough">
+                                <strong>2022 - Click Chemistry</strong>
+                                <p class="small text-muted">Carolyn Bertozzi, Morten Meldal, Barry Sharpless for click chemistry and bioorthogonal reactions</p>
+                            </div>
+                            <div class="recent-breakthrough">
+                                <strong>2021 - Asymmetric Organocatalysis</strong>
+                                <p class="small text-muted">Benjamin List and David MacMillan for asymmetric organocatalysis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Women in Chemistry -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card women-chemistry-card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-female me-2"></i>Women in Chemistry</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Marie Curie</h5>
+                                <p class="small">First woman to win a Nobel Prize and the first person to win Nobel Prizes in two different scientific fields.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Rosalind Franklin</h5>
+                                <p class="small">Her X-ray crystallography was crucial to understanding the double helix structure of DNA.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Dorothy Hodgkin</h5>
+                                <p class="small">Pioneer in X-ray crystallography, determined structures of penicillin and vitamin B12.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Lise Meitner</h5>
+                                <p class="small">Played a vital role in the discovery of nuclear fission, though initially overlooked for recognition.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Frances Arnold</h5>
+                                <p class="small">Pioneer in directed evolution of enzymes, winner of 2018 Nobel Prize in Chemistry.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="woman-scientist">
+                                <h5>Jennifer Doudna</h5>
+                                <p class="small">Co-developer of CRISPR gene editing technology, 2020 Nobel Prize winner.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chemistry Quotes -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card quotes-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-quote-left me-2"></i>Inspiring Chemistry Quotes</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <blockquote class="chemistry-quote">
+                                <p>"Nothing in life is to be feared, it is only to be understood."</p>
+                                <footer class="blockquote-footer">Marie Curie</footer>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <blockquote class="chemistry-quote">
+                                <p>"I have learned throughout my life as a composer chiefly through my mistakes and pursuits of false assumptions, not by my exposure to founts of wisdom and knowledge."</p>
+                                <footer class="blockquote-footer">Linus Pauling</footer>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <blockquote class="chemistry-quote">
+                                <p>"The elements, if arranged according to their atomic weights, exhibit an apparent periodicity of properties."</p>
+                                <footer class="blockquote-footer">Dmitri Mendeleev</footer>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <blockquote class="chemistry-quote">
+                                <p>"In the field of observation, chance favors only the prepared mind."</p>
+                                <footer class="blockquote-footer">Louis Pasteur</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .scientist-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+        border-radius: 20px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .scientist-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .scientist-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f8f9fa;
+    }
+
+    .scientist-avatar {
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+
+    .scientist-avatar i {
+        font-size: 2rem;
+        color: white;
+    }
+
+    .scientist-name {
+        margin: 0 0 0.25rem 0;
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .scientist-years {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.9rem;
+    }
+
+    .nationality-badge {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .section-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    .biography-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .discoveries-list, .achievements-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .discoveries-list li, .achievements-list li {
+        padding: 0.25rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 0.9rem;
+    }
+
+    .discoveries-list li:before {
+        content: "🧪";
+        position: absolute;
+        left: 0;
+    }
+
+    .achievements-list li:before {
+        content: "🏆";
+        position: absolute;
+        left: 0;
+    }
+
+    .scientist-footer {
+        text-align: center;
+        padding-top: 1rem;
+        border-top: 2px solid #f8f9fa;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .timeline:before {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--primary-color);
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-marker {
+        position: absolute;
+        left: -2rem;
+        top: 0.5rem;
+        width: 12px;
+        height: 12px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 0 0 3px var(--primary-color);
+    }
+
+    .timeline-content h5 {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .nobel-laureate, .recent-breakthrough, .woman-scientist {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .nobel-laureate:hover, .recent-breakthrough:hover, .woman-scientist:hover {
+        transform: translateX(5px);
+    }
+
+    .chemistry-quote {
+        background: rgba(255, 255, 255, 0.8);
+        border-left: 4px solid var(--primary-color);
+        padding: 1rem;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 1rem;
+    }
+
+    .chemistry-quote p {
+        font-style: italic;
+        margin-bottom: 0.5rem;
+    }
+
+    .chemistry-quote footer {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    @media (max-width: 768px) {
+        .scientist-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .scientist-avatar {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+
+        .timeline {
+            padding-left: 1rem;
+        }
+
+        .timeline:before {
+            left: 0.5rem;
+        }
+
+        .timeline-marker {
+            left: -1.5rem;
+        }
+    }
+</style>
+{% endblock %}

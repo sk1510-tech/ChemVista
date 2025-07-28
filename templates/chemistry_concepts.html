@@ -1,0 +1,459 @@
+{% extends "base.html" %}
+
+{% block title %}Chemistry Concepts - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-atom text-primary me-3"></i>Chemistry Concepts
+            </h1>
+            <p class="lead text-muted mb-4">Master fundamental chemistry principles and theories</p>
+        </div>
+    </div>
+
+    <!-- Concepts Grid -->
+    <div class="row">
+        {% for concept in concepts %}
+        <div class="col-lg-4 mb-4">
+            <div class="concept-card">
+                <div class="concept-header">
+                    <h4 class="concept-title">{{ concept.title }}</h4>
+                    <p class="concept-description">{{ concept.description }}</p>
+                </div>
+                
+                <div class="concept-content">
+                    <div class="content-section">
+                        <h6><i class="fas fa-book-open text-primary me-2"></i>Overview</h6>
+                        <p>{{ concept.content }}</p>
+                    </div>
+
+                    <div class="applications-section">
+                        <h6><i class="fas fa-cogs text-success me-2"></i>Applications</h6>
+                        <ul class="applications-list">
+                            {% for application in concept.applications %}
+                            <li>{{ application }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="examples-section">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i>Examples</h6>
+                        <div class="examples-grid">
+                            {% for example in concept.examples %}
+                            <span class="example-tag">{{ example }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="concept-footer">
+                    <a href="{{ url_for('concept_detail', concept_title=concept.title.replace(' ', '-').lower()) }}" 
+                       class="btn btn-primary btn-sm">
+                        <i class="fas fa-arrow-right me-1"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Additional Concepts -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">More Chemistry Concepts</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Acids and Bases</h4>
+                            <p class="concept-description">Understanding pH, strength, and reactions</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>Acids donate protons (H+) while bases accept them. The pH scale measures acidity from 0-14.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Strong Acids:</strong> HCl, H₂SO₄, HNO₃
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Strong Bases:</strong> NaOH, KOH, Ca(OH)₂
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Neutral pH:</strong> 7 (pure water)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Organic Chemistry</h4>
+                            <p class="concept-description">Chemistry of carbon compounds</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>Study of carbon-based compounds that form the basis of all life on Earth.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Functional Groups:</strong> Alcohols, Aldehydes, Ketones
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Hydrocarbons:</strong> Alkanes, Alkenes, Alkynes
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Biomolecules:</strong> Proteins, Carbohydrates, Lipids
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Redox Reactions</h4>
+                            <p class="concept-description">Oxidation and reduction processes</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>Reactions involving electron transfer between species, fundamental to many processes.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Oxidation:</strong> Loss of electrons
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Reduction:</strong> Gain of electrons
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Applications:</strong> Batteries, Corrosion, Metabolism
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Chemical Kinetics</h4>
+                            <p class="concept-description">Rates and mechanisms of reactions</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>Study of how fast chemical reactions occur and what factors affect reaction rates.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Factors:</strong> Temperature, Concentration, Catalysts
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Rate Law:</strong> Rate = k[A]ᵐ[B]ⁿ
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Activation Energy:</strong> Energy barrier to overcome
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Equilibrium</h4>
+                            <p class="concept-description">Dynamic balance in chemical systems</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>State where forward and reverse reaction rates are equal, concentrations remain constant.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Le Chatelier's Principle:</strong> System responds to stress
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Keq:</strong> Equilibrium constant
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Factors:</strong> Temperature, Pressure, Concentration
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 mb-4">
+                    <div class="concept-card additional-concept">
+                        <div class="concept-header">
+                            <h4 class="concept-title">Stoichiometry</h4>
+                            <p class="concept-description">Quantitative relationships in reactions</p>
+                        </div>
+                        <div class="concept-content">
+                            <p>Calculation of quantities in chemical reactions based on balanced equations.</p>
+                            <div class="quick-facts">
+                                <div class="fact-item">
+                                    <strong>Mole Ratios:</strong> From balanced equations
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Limiting Reagent:</strong> Determines product amount
+                                </div>
+                                <div class="fact-item">
+                                    <strong>Yield:</strong> Theoretical vs. Actual
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Learning Tools -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card tools-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-tools me-2"></i>Interactive Learning Tools</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="tool-item">
+                                <i class="fas fa-calculator fa-3x text-primary mb-3"></i>
+                                <h5>Formula Calculator</h5>
+                                <p class="text-muted">Calculate molecular weights and analyze chemical formulas</p>
+                                <a href="{{ url_for('formula_finder') }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-arrow-right me-1"></i>Use Calculator
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="tool-item">
+                                <i class="fas fa-question-circle fa-3x text-success mb-3"></i>
+                                <h5>Chemistry Quiz</h5>
+                                <p class="text-muted">Test your knowledge with interactive chemistry questions</p>
+                                <a href="{{ url_for('quiz') }}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-play me-1"></i>Take Quiz
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="tool-item">
+                                <i class="fas fa-table fa-3x text-info mb-3"></i>
+                                <h5>Periodic Table</h5>
+                                <p class="text-muted">Explore elements and their properties interactively</p>
+                                <a href="{{ url_for('index') }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Explore Table
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Tips -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card tips-card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Study Tips for Chemistry</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Effective Study Strategies</h5>
+                            <ul class="study-tips">
+                                <li><strong>Practice regularly:</strong> Chemistry requires consistent practice</li>
+                                <li><strong>Understand concepts:</strong> Don't just memorize formulas</li>
+                                <li><strong>Work problems:</strong> Apply knowledge through problem-solving</li>
+                                <li><strong>Use visual aids:</strong> Draw structures and mechanisms</li>
+                                <li><strong>Form study groups:</strong> Discuss concepts with peers</li>
+                                <li><strong>Connect to real life:</strong> Find applications in daily life</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Common Mistakes to Avoid</h5>
+                            <ul class="common-mistakes">
+                                <li><strong>Ignoring units:</strong> Always include proper units</li>
+                                <li><strong>Skipping steps:</strong> Show all work in calculations</li>
+                                <li><strong>Memorizing without understanding:</strong> Focus on why, not just what</li>
+                                <li><strong>Not balancing equations:</strong> Check stoichiometry</li>
+                                <li><strong>Rushing through problems:</strong> Read carefully and plan</li>
+                                <li><strong>Neglecting significant figures:</strong> Maintain proper precision</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .concept-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
+        border-radius: 20px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .concept-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .concept-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f8f9fa;
+    }
+
+    .concept-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .concept-description {
+        color: var(--text-secondary);
+        font-style: italic;
+        margin: 0;
+    }
+
+    .content-section h6 {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+
+    .applications-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .applications-list li {
+        padding: 0.25rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .applications-list li:before {
+        content: "⚙️";
+        position: absolute;
+        left: 0;
+    }
+
+    .examples-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .example-tag {
+        background: var(--warning-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .concept-footer {
+        text-align: center;
+        padding-top: 1rem;
+        border-top: 2px solid #f8f9fa;
+    }
+
+    .additional-concept {
+        border-left: 4px solid var(--accent-color);
+    }
+
+    .quick-facts {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .fact-item {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .fact-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .tool-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .tool-item:hover {
+        transform: translateY(-3px);
+    }
+
+    .study-tips, .common-mistakes {
+        list-style: none;
+        padding: 0;
+    }
+
+    .study-tips li, .common-mistakes li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        border-bottom: 1px solid rgba(248, 249, 250, 0.8);
+    }
+
+    .study-tips li:before {
+        content: "✅";
+        position: absolute;
+        left: 0;
+    }
+
+    .common-mistakes li:before {
+        content: "❌";
+        position: absolute;
+        left: 0;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    @media (max-width: 768px) {
+        .examples-grid {
+            justify-content: center;
+        }
+
+        .tool-item {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+{% endblock %}

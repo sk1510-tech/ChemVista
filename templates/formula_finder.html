@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}Formula Finder - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-calculator text-primary me-3"></i>Chemical Formula Finder
+            </h1>
+            <p class="lead text-muted mb-4">Calculate molecular weights, balance equations, and analyze chemical formulas</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Formula Calculator -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-balance-scale me-2"></i>Molecular Weight Calculator</h5>
+                </div>
+                <div class="card-body">
+                    <form id="formulaForm">
+                        <div class="mb-3">
+                            <label for="chemicalFormula" class="form-label">Chemical Formula</label>
+                            <input type="text" class="form-control" id="chemicalFormula" 
+                                   placeholder="e.g., H2O, CO2, CaCl2" autocomplete="off">
+                            <div class="form-text">Enter a chemical formula to calculate its molecular weight</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-calculator me-2"></i>Calculate
+                        </button>
+                    </form>
+                    
+                    <div id="formulaResult" class="mt-3" style="display: none;">
+                        <div class="alert alert-success">
+                            <h6 class="alert-heading">Results:</h6>
+                            <div id="resultContent"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="formulaError" class="mt-3" style="display: none;">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span id="errorContent"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equation Balancer -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-equals me-2"></i>Equation Balancer</h5>
+                </div>
+                <div class="card-body">
+                    <form id="equationForm">
+                        <div class="mb-3">
+                            <label for="chemicalEquation" class="form-label">Chemical Equation</label>
+                            <input type="text" class="form-control" id="chemicalEquation" 
+                                   placeholder="e.g., H2 + O2 -> H2O" autocomplete="off">
+                            <div class="form-text">Use '->' to separate reactants and products</div>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-balance-scale me-2"></i>Balance Equation
+                        </button>
+                    </form>
+                    
+                    <div id="equationResult" class="mt-3" style="display: none;">
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading">Balanced Equation:</h6>
+                            <div id="balancedContent"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="equationError" class="mt-3" style="display: none;">
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <span id="equationErrorContent"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Common Formulas Reference -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-book me-2"></i>Common Chemical Formulas Reference</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <h6 class="text-primary">Common Acids</h6>
+                            <ul class="list-unstyled">
+                                <li><code>HCl</code> - Hydrochloric acid</li>
+                                <li><code>H2SO4</code> - Sulfuric acid</li>
+                                <li><code>HNO3</code> - Nitric acid</li>
+                                <li><code>CH3COOH</code> - Acetic acid</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6 class="text-success">Common Bases</h6>
+                            <ul class="list-unstyled">
+                                <li><code>NaOH</code> - Sodium hydroxide</li>
+                                <li><code>KOH</code> - Potassium hydroxide</li>
+                                <li><code>Ca(OH)2</code> - Calcium hydroxide</li>
+                                <li><code>NH3</code> - Ammonia</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6 class="text-warning">Common Salts</h6>
+                            <ul class="list-unstyled">
+                                <li><code>NaCl</code> - Sodium chloride</li>
+                                <li><code>CaCO3</code> - Calcium carbonate</li>
+                                <li><code>KNO3</code> - Potassium nitrate</li>
+                                <li><code>MgSO4</code> - Magnesium sulfate</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <h6 class="text-danger">Organic Compounds</h6>
+                            <ul class="list-unstyled">
+                                <li><code>CH4</code> - Methane</li>
+                                <li><code>C2H6</code> - Ethane</li>
+                                <li><code>C6H12O6</code> - Glucose</li>
+                                <li><code>C8H18</code> - Octane</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formula Examples -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>How to Use</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Formula Calculator Examples:</h6>
+                            <ul>
+                                <li><strong>Water:</strong> <code>H2O</code> → 18.015 g/mol</li>
+                                <li><strong>Carbon dioxide:</strong> <code>CO2</code> → 44.009 g/mol</li>
+                                <li><strong>Glucose:</strong> <code>C6H12O6</code> → 180.156 g/mol</li>
+                                <li><strong>Calcium chloride:</strong> <code>CaCl2</code> → 110.984 g/mol</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-success">Equation Balancer Examples:</h6>
+                            <ul>
+                                <li><code>H2 + O2 -> H2O</code></li>
+                                <li><code>CH4 + O2 -> CO2 + H2O</code></li>
+                                <li><code>Fe + O2 -> Fe2O3</code></li>
+                                <li><code>Al + HCl -> AlCl3 + H2</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .card {
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    code {
+        background-color: #f8f9fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .btn {
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Formula Calculator
+    document.getElementById('formulaForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formula = document.getElementById('chemicalFormula').value.trim();
+        
+        if (!formula) return;
+        
+        fetch('/api/formula-calculator', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ formula: formula })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid) {
+                showFormulaResult(data);
+            } else {
+                showFormulaError(data.error);
+            }
+        })
+        .catch(error => {
+            showFormulaError('Network error occurred');
+        });
+    });
+
+    // Equation Balancer
+    document.getElementById('equationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const equation = document.getElementById('chemicalEquation').value.trim();
+        
+        if (!equation) return;
+        
+        fetch('/api/balance-equation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ equation: equation })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.valid) {
+                showEquationResult(data);
+            } else {
+                showEquationError(data.error);
+            }
+        })
+        .catch(error => {
+            showEquationError('Network error occurred');
+        });
+    });
+
+    function showFormulaResult(data) {
+        const resultDiv = document.getElementById('formulaResult');
+        const errorDiv = document.getElementById('formulaError');
+        
+        let compositionHtml = '<ul class="mb-0">';
+        for (const [element, count] of Object.entries(data.composition)) {
+            compositionHtml += `<li><strong>${element}:</strong> ${count}</li>`;
+        }
+        compositionHtml += '</ul>';
+        
+        document.getElementById('resultContent').innerHTML = `
+            <p><strong>Formula:</strong> <code>${data.formula}</code></p>
+            <p><strong>Molecular Weight:</strong> <span class="fw-bold text-primary">${data.molecular_weight} g/mol</span></p>
+            <p><strong>Composition:</strong></p>
+            ${compositionHtml}
+        `;
+        
+        resultDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+    }
+
+    function showFormulaError(error) {
+        const resultDiv = document.getElementById('formulaResult');
+        const errorDiv = document.getElementById('formulaError');
+        
+        document.getElementById('errorContent').textContent = error;
+        
+        resultDiv.style.display = 'none';
+        errorDiv.style.display = 'block';
+    }
+
+    function showEquationResult(data) {
+        const resultDiv = document.getElementById('equationResult');
+        const errorDiv = document.getElementById('equationError');
+        
+        document.getElementById('balancedContent').innerHTML = `
+            <p><strong>Original:</strong> <code>${data.original}</code></p>
+            <p><strong>Balanced:</strong> <code class="text-success">${data.balanced}</code></p>
+        `;
+        
+        resultDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
+    }
+
+    function showEquationError(error) {
+        const resultDiv = document.getElementById('equationResult');
+        const errorDiv = document.getElementById('equationError');
+        
+        document.getElementById('equationErrorContent').textContent = error;
+        
+        resultDiv.style.display = 'none';
+        errorDiv.style.display = 'block';
+    }
+});
+</script>
+{% endblock %}

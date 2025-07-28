@@ -1,0 +1,879 @@
+{% extends "base.html" %}
+
+{% block title %}Laboratory Safety - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-shield-alt text-danger me-3"></i>Laboratory Safety
+            </h1>
+            <p class="lead text-muted mb-4">Essential safety guidelines and protocols for chemistry laboratories</p>
+            <div class="alert alert-warning d-inline-block">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Safety First:</strong> Always follow your institution's specific safety protocols
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Information -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card emergency-info">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>Emergency Procedures</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <div class="emergency-card fire">
+                                <i class="fas fa-fire fa-3x text-danger mb-3"></i>
+                                <h5>Fire</h5>
+                                <ul class="emergency-steps">
+                                    <li>Alert others immediately</li>
+                                    <li>Turn off gas valves if safe</li>
+                                    <li>Use appropriate fire extinguisher</li>
+                                    <li>Evacuate if fire spreads</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="emergency-card spill">
+                                <i class="fas fa-tint fa-3x text-primary mb-3"></i>
+                                <h5>Chemical Spill</h5>
+                                <ul class="emergency-steps">
+                                    <li>Alert others in area</li>
+                                    <li>Contain spill if safe</li>
+                                    <li>Use spill kit materials</li>
+                                    <li>Report to supervisor</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="emergency-card injury">
+                                <i class="fas fa-user-injured fa-3x text-warning mb-3"></i>
+                                <h5>Injury</h5>
+                                <ul class="emergency-steps">
+                                    <li>Get immediate help</li>
+                                    <li>Use eyewash/shower if needed</li>
+                                    <li>Remove contaminated clothing</li>
+                                    <li>Seek medical attention</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="emergency-card evacuation">
+                                <i class="fas fa-running fa-3x text-success mb-3"></i>
+                                <h5>Evacuation</h5>
+                                <ul class="emergency-steps">
+                                    <li>Turn off equipment if safe</li>
+                                    <li>Close chemical containers</li>
+                                    <li>Exit via nearest route</li>
+                                    <li>Meet at assembly point</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Protective Equipment -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card ppe-section">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-hard-hat me-2"></i>Personal Protective Equipment (PPE)</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="ppe-item">
+                                <div class="ppe-icon">
+                                    <i class="fas fa-eye fa-3x text-info"></i>
+                                </div>
+                                <h5>Safety Goggles</h5>
+                                <ul class="ppe-details">
+                                    <li><strong>Required:</strong> Always in lab</li>
+                                    <li><strong>Type:</strong> Chemical splash protection</li>
+                                    <li><strong>Fit:</strong> Snug against face</li>
+                                    <li><strong>Care:</strong> Clean after each use</li>
+                                </ul>
+                                <div class="ppe-warning">
+                                    <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                    <small>Regular glasses are NOT sufficient protection</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="ppe-item">
+                                <div class="ppe-icon">
+                                    <i class="fas fa-tshirt fa-3x text-success"></i>
+                                </div>
+                                <h5>Lab Coat</h5>
+                                <ul class="ppe-details">
+                                    <li><strong>Material:</strong> Cotton or flame-resistant</li>
+                                    <li><strong>Length:</strong> Below knees</li>
+                                    <li><strong>Closure:</strong> Fully buttoned</li>
+                                    <li><strong>Sleeves:</strong> Long, covering arms</li>
+                                </ul>
+                                <div class="ppe-warning">
+                                    <i class="fas fa-ban text-danger me-2"></i>
+                                    <small>Remove before leaving lab area</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="ppe-item">
+                                <div class="ppe-icon">
+                                    <i class="fas fa-hand-paper fa-3x text-warning"></i>
+                                </div>
+                                <h5>Gloves</h5>
+                                <ul class="ppe-details">
+                                    <li><strong>Type:</strong> Chemical-resistant</li>
+                                    <li><strong>Material:</strong> Nitrile, latex, or neoprene</li>
+                                    <li><strong>Fit:</strong> Proper size, no tears</li>
+                                    <li><strong>Use:</strong> Single-use when possible</li>
+                                </ul>
+                                <div class="ppe-warning">
+                                    <i class="fas fa-sync-alt text-info me-2"></i>
+                                    <small>Change between different chemicals</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="ppe-item">
+                                <div class="ppe-icon">
+                                    <i class="fas fa-shoe-prints fa-3x text-dark"></i>
+                                </div>
+                                <h5>Footwear</h5>
+                                <ul class="ppe-details">
+                                    <li><strong>Type:</strong> Closed-toe shoes</li>
+                                    <li><strong>Material:</strong> Leather or synthetic</li>
+                                    <li><strong>Height:</strong> Above ankle preferred</li>
+                                    <li><strong>Sole:</strong> Non-slip, chemical-resistant</li>
+                                </ul>
+                                <div class="ppe-warning">
+                                    <i class="fas fa-times text-danger me-2"></i>
+                                    <small>No sandals, flip-flops, or canvas shoes</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Equipment -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card safety-equipment">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-tools me-2"></i>Safety Equipment Location</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="equipment-card">
+                                <i class="fas fa-shower fa-3x text-primary mb-3"></i>
+                                <h5>Emergency Shower</h5>
+                                <p class="equipment-description">For chemical splashes on body or clothing</p>
+                                <div class="equipment-instructions">
+                                    <h6>How to Use:</h6>
+                                    <ol>
+                                        <li>Pull activation handle</li>
+                                        <li>Remove contaminated clothing</li>
+                                        <li>Rinse for 15-20 minutes</li>
+                                        <li>Seek medical attention</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="equipment-card">
+                                <i class="fas fa-eye fa-3x text-info mb-3"></i>
+                                <h5>Eyewash Station</h5>
+                                <p class="equipment-description">For chemical splashes in eyes</p>
+                                <div class="equipment-instructions">
+                                    <h6>How to Use:</h6>
+                                    <ol>
+                                        <li>Hold eyelids open</li>
+                                        <li>Rinse both eyes for 15 minutes</li>
+                                        <li>Roll eyes during rinsing</li>
+                                        <li>Get immediate medical help</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="equipment-card">
+                                <i class="fas fa-fire-extinguisher fa-3x text-danger mb-3"></i>
+                                <h5>Fire Extinguisher</h5>
+                                <p class="equipment-description">For small chemical fires</p>
+                                <div class="equipment-instructions">
+                                    <h6>PASS Method:</h6>
+                                    <ol>
+                                        <li><strong>P</strong>ull the pin</li>
+                                        <li><strong>A</strong>im at base of fire</li>
+                                        <li><strong>S</strong>queeze handle</li>
+                                        <li><strong>S</strong>weep side to side</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="equipment-card">
+                                <i class="fas fa-wind fa-3x text-success mb-3"></i>
+                                <h5>Fume Hood</h5>
+                                <p class="equipment-description">For containing and removing hazardous vapors</p>
+                                <div class="equipment-instructions">
+                                    <h6>Best Practices:</h6>
+                                    <ul>
+                                        <li>Keep sash at proper height (18 inches)</li>
+                                        <li>Work at least 6 inches from sash</li>
+                                        <li>Don't block air flow with equipment</li>
+                                        <li>Clean up spills immediately</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="equipment-card">
+                                <i class="fas fa-box fa-3x text-warning mb-3"></i>
+                                <h5>Spill Kit</h5>
+                                <p class="equipment-description">For cleaning up chemical spills safely</p>
+                                <div class="equipment-instructions">
+                                    <h6>Contents:</h6>
+                                    <ul>
+                                        <li>Absorbent materials</li>
+                                        <li>Neutralizing agents</li>
+                                        <li>Protective equipment</li>
+                                        <li>Disposal bags</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chemical Hazards -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card chemical-hazards">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Chemical Hazard Symbols</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol explosive">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-bomb fa-3x text-danger"></i>
+                                </div>
+                                <h6>Explosive</h6>
+                                <p class="small">Can explode under certain conditions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol flammable">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-fire fa-3x text-warning"></i>
+                                </div>
+                                <h6>Flammable</h6>
+                                <p class="small">Easily catches fire</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol corrosive">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-flask fa-3x text-success"></i>
+                                </div>
+                                <h6>Corrosive</h6>
+                                <p class="small">Causes severe burns</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol toxic">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-skull-crossbones fa-3x text-dark"></i>
+                                </div>
+                                <h6>Toxic</h6>
+                                <p class="small">Poisonous if inhaled, ingested, or absorbed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol irritant">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-exclamation fa-3x text-info"></i>
+                                </div>
+                                <h6>Irritant</h6>
+                                <p class="small">Causes skin or eye irritation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+                            <div class="hazard-symbol environmental">
+                                <div class="symbol-icon">
+                                    <i class="fas fa-leaf fa-3x text-success"></i>
+                                </div>
+                                <h6>Environmental</h6>
+                                <p class="small">Harmful to environment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Rules -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card safety-rules">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-check-circle me-2"></i>Laboratory Do's</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="safety-list do-list">
+                        <li>Always wear appropriate PPE</li>
+                        <li>Read all labels and SDS sheets</li>
+                        <li>Work in well-ventilated areas</li>
+                        <li>Keep workspace clean and organized</li>
+                        <li>Label all containers clearly</li>
+                        <li>Wash hands frequently</li>
+                        <li>Report accidents immediately</li>
+                        <li>Use proper lifting techniques</li>
+                        <li>Keep emergency numbers visible</li>
+                        <li>Follow all written procedures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card safety-rules">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="fas fa-times-circle me-2"></i>Laboratory Don'ts</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="safety-list dont-list">
+                        <li>Never eat or drink in the lab</li>
+                        <li>Don't work alone with hazardous materials</li>
+                        <li>Never pipette by mouth</li>
+                        <li>Don't smell chemicals directly</li>
+                        <li>Never mix chemicals without knowing the result</li>
+                        <li>Don't pour chemicals down the drain</li>
+                        <li>Never leave experiments unattended</li>
+                        <li>Don't wear loose clothing or jewelry</li>
+                        <li>Never ignore safety equipment</li>
+                        <li>Don't take shortcuts with procedures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Waste Disposal -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card waste-disposal">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0"><i class="fas fa-trash-alt me-2"></i>Chemical Waste Disposal</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="waste-category">
+                                <div class="waste-icon">
+                                    <i class="fas fa-flask fa-3x text-primary"></i>
+                                </div>
+                                <h5>Aqueous Waste</h5>
+                                <ul class="waste-examples">
+                                    <li>Water-based solutions</li>
+                                    <li>Dilute acids/bases</li>
+                                    <li>Salt solutions</li>
+                                </ul>
+                                <div class="waste-container">Blue container</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="waste-category">
+                                <div class="waste-icon">
+                                    <i class="fas fa-oil-can fa-3x text-warning"></i>
+                                </div>
+                                <h5>Organic Waste</h5>
+                                <ul class="waste-examples">
+                                    <li>Solvents</li>
+                                    <li>Hydrocarbons</li>
+                                    <li>Alcohols</li>
+                                </ul>
+                                <div class="waste-container">Red container</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="waste-category">
+                                <div class="waste-icon">
+                                    <i class="fas fa-weight-hanging fa-3x text-success"></i>
+                                </div>
+                                <h5>Heavy Metals</h5>
+                                <ul class="waste-examples">
+                                    <li>Mercury compounds</li>
+                                    <li>Lead solutions</li>
+                                    <li>Chromium salts</li>
+                                </ul>
+                                <div class="waste-container">Yellow container</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 mb-4">
+                            <div class="waste-category">
+                                <div class="waste-icon">
+                                    <i class="fas fa-microscope fa-3x text-danger"></i>
+                                </div>
+                                <h5>Special Waste</h5>
+                                <ul class="waste-examples">
+                                    <li>Reactive chemicals</li>
+                                    <li>Peroxides</li>
+                                    <li>Unknowns</li>
+                                </ul>
+                                <div class="waste-container">Contact supervisor</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="waste-guidelines mt-4">
+                        <h5>General Disposal Guidelines:</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="guideline-list">
+                                    <li>Never dispose of chemicals in regular trash</li>
+                                    <li>Label all waste containers with contents</li>
+                                    <li>Don't overfill containers</li>
+                                    <li>Separate incompatible chemicals</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="guideline-list">
+                                    <li>Use secondary containment for liquids</li>
+                                    <li>Close containers when not in use</li>
+                                    <li>Request pickup when containers are full</li>
+                                    <li>Keep waste inventory records</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Contacts -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card emergency-contacts">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0"><i class="fas fa-phone me-2"></i>Emergency Contacts</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-card emergency">
+                                <i class="fas fa-ambulance fa-2x text-danger mb-2"></i>
+                                <h5>Emergency Services</h5>
+                                <p class="contact-number">911</p>
+                                <p class="contact-description">Fire, police, medical emergencies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-card poison">
+                                <i class="fas fa-skull-crossbones fa-2x text-warning mb-2"></i>
+                                <h5>Poison Control</h5>
+                                <p class="contact-number">1-800-222-1222</p>
+                                <p class="contact-description">Chemical poisoning emergencies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <div class="contact-card safety">
+                                <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
+                                <h5>Campus Safety</h5>
+                                <p class="contact-number">[Your Institution]</p>
+                                <p class="contact-description">Non-emergency safety issues</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="important-note">
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        <strong>Important:</strong> Always notify your instructor or laboratory supervisor immediately after any emergency situation.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(255, 193, 7, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 15px 15px 0 0 !important;
+        font-weight: 600;
+    }
+
+    .emergency-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .emergency-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(220, 53, 69, 0.3);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .emergency-steps {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        text-align: left;
+    }
+
+    .emergency-steps li {
+        padding: 0.25rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 0.9rem;
+    }
+
+    .emergency-steps li:before {
+        content: counter(step-counter);
+        counter-increment: step-counter;
+        position: absolute;
+        left: 0;
+        background: var(--danger-color);
+        color: white;
+        border-radius: 50%;
+        width: 1.2rem;
+        height: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+    }
+
+    .emergency-card {
+        counter-reset: step-counter;
+    }
+
+    .ppe-item {
+        background: rgba(248, 249, 250, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .ppe-item:hover {
+        transform: translateY(-3px);
+    }
+
+    .ppe-icon {
+        margin-bottom: 1rem;
+    }
+
+    .ppe-details {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        text-align: left;
+    }
+
+    .ppe-details li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+    }
+
+    .ppe-warning {
+        background: rgba(255, 193, 7, 0.1);
+        border-radius: 8px;
+        padding: 0.75rem;
+        margin-top: 1rem;
+        border-left: 3px solid var(--warning-color);
+    }
+
+    .equipment-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .equipment-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .equipment-description {
+        color: var(--text-secondary);
+        font-style: italic;
+        margin-bottom: 1rem;
+    }
+
+    .equipment-instructions {
+        text-align: left;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .equipment-instructions h6 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .equipment-instructions ol, .equipment-instructions ul {
+        margin: 0;
+        padding-left: 1.2rem;
+    }
+
+    .equipment-instructions li {
+        padding: 0.25rem 0;
+        font-size: 0.9rem;
+    }
+
+    .hazard-symbol {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .hazard-symbol:hover {
+        transform: scale(1.05);
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .symbol-icon {
+        margin-bottom: 0.5rem;
+    }
+
+    .hazard-symbol h6 {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .hazard-symbol p {
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .safety-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .do-list li {
+        padding: 0.75rem 0;
+        padding-left: 2rem;
+        position: relative;
+        border-bottom: 1px solid rgba(40, 167, 69, 0.2);
+    }
+
+    .do-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--success-color);
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .dont-list li {
+        padding: 0.75rem 0;
+        padding-left: 2rem;
+        position: relative;
+        border-bottom: 1px solid rgba(220, 53, 69, 0.2);
+    }
+
+    .dont-list li:before {
+        content: "✗";
+        position: absolute;
+        left: 0;
+        color: var(--danger-color);
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .waste-category {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .waste-category:hover {
+        transform: translateY(-3px);
+    }
+
+    .waste-icon {
+        margin-bottom: 1rem;
+    }
+
+    .waste-examples {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        text-align: left;
+    }
+
+    .waste-examples li {
+        padding: 0.25rem 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+
+    .waste-container {
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
+
+    .waste-guidelines {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 1.5rem;
+        border-left: 4px solid var(--secondary-color);
+    }
+
+    .guideline-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .guideline-list li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .guideline-list li:before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--secondary-color);
+        font-weight: bold;
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin: 0.5rem 0;
+    }
+
+    .contact-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .important-note {
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1.5rem;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+        .emergency-card, .ppe-item, .equipment-card {
+            margin-bottom: 1.5rem;
+        }
+
+        .hazard-symbol {
+            margin-bottom: 1rem;
+        }
+
+        .contact-card {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
+{% endblock %}
