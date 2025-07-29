@@ -409,25 +409,50 @@
     }
 
     @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .quick-finder {
+            margin: 1rem 0;
+            padding: 1.5rem;
+        }
+        
+        .finder-input {
+            font-size: 1rem;
+            padding: 0.875rem 1.25rem;
+        }
+        
         .periodic-table {
-            grid-template-columns: repeat(18, 1fr);
+            grid-template-columns: repeat(9, 1fr);
             gap: 1px;
             font-size: 0.6rem;
             padding: 0.5rem;
+            max-width: 100%;
         }
         
         .element {
-            min-height: 50px;
-            padding: 0.25rem;
+            min-height: 45px;
+            padding: 0.2rem;
+            font-size: 0.6rem;
         }
         
         .element-symbol {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            margin: 0.1rem 0;
         }
         
-        .element-name,
+        .element-name {
+            font-size: 0.4rem;
+            line-height: 1;
+        }
+        
         .element-mass {
-            display: none;
+            font-size: 0.35rem;
+        }
+        
+        .element-number {
+            font-size: 0.5rem;
         }
         
         .section-title {
@@ -441,8 +466,94 @@
         
         .lanthanide,
         .actinide {
-            min-height: 45px;
+            min-height: 40px;
+            font-size: 0.55rem;
+            padding: 0.2rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 1.5rem 0;
+        }
+        
+        .periodic-table {
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5px;
+            padding: 0.25rem;
+        }
+        
+        .element {
+            min-height: 35px;
+            padding: 0.1rem;
+            font-size: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .element-symbol {
+            font-size: 0.65rem;
+        }
+        
+        .element-name {
+            display: none;
+        }
+        
+        .element-mass {
+            font-size: 0.3rem;
+        }
+        
+        .element-number {
+            font-size: 0.4rem;
+        }
+        
+        .lanthanide,
+        .actinide {
+            min-height: 35px;
+            font-size: 0.5rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .finder-results {
+            max-height: 200px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .periodic-table {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .element {
+            min-height: 30px;
+            font-size: 0.45rem;
+        }
+        
+        .element-symbol {
             font-size: 0.6rem;
+        }
+        
+        .element-number {
+            font-size: 0.35rem;
+        }
+        
+        .element-mass {
+            display: none;
+        }
+        
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .quick-finder h3 {
+            font-size: 1.2rem;
         }
     }
 </style>

@@ -439,6 +439,7 @@
             
             .hero-subtitle {
                 font-size: 1.1rem;
+                padding: 0 1rem;
             }
             
             .navbar-brand {
@@ -448,6 +449,137 @@
             .search-input {
                 font-size: 1rem;
                 padding: 0.875rem 2.5rem 0.875rem 1rem;
+            }
+            
+            .periodic-table {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 1px;
+                padding: 0.5rem;
+            }
+            
+            .element {
+                min-height: 50px;
+                font-size: 0.6rem;
+                padding: 0.25rem;
+            }
+            
+            .element-symbol {
+                font-size: 0.8rem;
+            }
+            
+            .element-name {
+                font-size: 0.45rem;
+            }
+            
+            .element-mass {
+                font-size: 0.4rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .finder-input {
+                font-size: 1rem;
+                padding: 0.875rem 1.25rem;
+            }
+            
+            .info-card, .glass-effect {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .periodic-table {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .element {
+                min-height: 45px;
+                font-size: 0.55rem;
+            }
+            
+            .element-symbol {
+                font-size: 0.7rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                padding: 1.25rem;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .navbar {
+                padding: 0.5rem 0;
+            }
+            
+            .container-fluid {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            
+            .quick-finder {
+                margin: 1rem 0;
+                padding: 1.5rem;
+            }
+            
+            .finder-result {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .periodic-table {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .element {
+                min-height: 40px;
+                font-size: 0.5rem;
+                padding: 0.2rem;
+            }
+            
+            .element-symbol {
+                font-size: 0.65rem;
+            }
+            
+            .element-name {
+                display: none;
+            }
+            
+            .element-mass {
+                font-size: 0.35rem;
+            }
+        }
             }
             
             .search-btn {
