@@ -1,363 +1,845 @@
 {% extends "base.html" %}
 
-{% block title %}ChemVista - Interactive Periodic Table & Formula Finder{% endblock %}
+{% block title %}ChemVista - Complete Periodic Table Explorer{% endblock %}
 
-{% block main_class %}container-fluid px-0{% endblock %}
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 30px 30px;
+    }
+    
+    .quick-finder {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin: 2rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .finder-input {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        width: 100%;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .finder-input:focus {
+        outline: none;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .finder-results {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 1rem;
+    }
+    
+    .finder-result {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-left: 4px solid #667eea;
+    }
+    
+    .finder-result:hover {
+        background: white;
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .section-divider {
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #667eea, transparent);
+        margin: 3rem 0;
+        border-radius: 1px;
+    }
+    
+    .periodic-table {
+        display: grid;
+        grid-template-columns: repeat(18, 1fr);
+        gap: 2px;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
 
-{% block content %}
-<!-- Hero Section -->
-<section class="hero-section bg-gradient text-white py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="display-4 fw-bold mb-3">
-                    <i class="fas fa-atom me-3"></i>Welcome to ChemVista
-                </h1>
-                <p class="lead mb-4">
-                    Explore the fascinating world of chemistry through our interactive periodic table and powerful chemical formula finder. 
-                    Click on any element to discover its properties, or search for compounds to understand their composition.
-                </p>
-                <div class="d-flex gap-3">
-                    <button class="btn btn-light btn-lg" onclick="scrollToPeriodicTable()">
-                        <i class="fas fa-table me-2"></i>Explore Periodic Table
-                    </button>
-                    <button class="btn btn-outline-light btn-lg" onclick="scrollToFormula()">
-                        <i class="fas fa-search me-2"></i>Find Formulas
-                    </button>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center">
-                <div class="hero-animation">
-                    <i class="fas fa-flask fa-5x opacity-75"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    .element {
+        aspect-ratio: 1;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        padding: 0.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        text-decoration: none;
+        min-height: 70px;
+        overflow: hidden;
+    }
 
-<!-- Main Content -->
-<div class="container-fluid">
-    <div class="row g-4 p-4">
-        <!-- Periodic Table Column -->
-        <div class="col-lg-8" id="periodic-table-section">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="card-title mb-0">
-                        <i class="fas fa-table me-2"></i>Interactive Periodic Table
-                    </h3>
-                    <small>Click on any element to explore its properties</small>
-                </div>
-                <div class="card-body p-3">
-                    <div class="periodic-table-container">
-                        <div class="periodic-table">
-                            <!-- Period 1 -->
-                            <div class="element hydrogen" data-element="1" data-group="1" data-period="1">
-                                <div class="atomic-number">1</div>
-                                <div class="symbol">H</div>
-                                <div class="name">Hydrogen</div>
-                            </div>
-                            <div class="spacer spacer-period-1"></div>
-                            <div class="element noble-gas" data-element="2" data-group="18" data-period="1">
-                                <div class="atomic-number">2</div>
-                                <div class="symbol">He</div>
-                                <div class="name">Helium</div>
-                            </div>
+    .element:hover {
+        transform: scale(1.1) translateZ(0);
+        z-index: 100;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
 
-                            <!-- Period 2 -->
-                            <div class="element alkali-metal" data-element="3" data-group="1" data-period="2">
-                                <div class="atomic-number">3</div>
-                                <div class="symbol">Li</div>
-                                <div class="name">Lithium</div>
-                            </div>
-                            <div class="element alkaline-earth" data-element="4" data-group="2" data-period="2">
-                                <div class="atomic-number">4</div>
-                                <div class="symbol">Be</div>
-                                <div class="name">Beryllium</div>
-                            </div>
-                            <div class="spacer spacer-period-2-3-13"></div>
-                            <div class="element metalloid" data-element="5" data-group="13" data-period="2">
-                                <div class="atomic-number">5</div>
-                                <div class="symbol">B</div>
-                                <div class="name">Boron</div>
-                            </div>
-                            <div class="element nonmetal" data-element="6" data-group="14" data-period="2">
-                                <div class="atomic-number">6</div>
-                                <div class="symbol">C</div>
-                                <div class="name">Carbon</div>
-                            </div>
-                            <div class="element nonmetal" data-element="7" data-group="15" data-period="2">
-                                <div class="atomic-number">7</div>
-                                <div class="symbol">N</div>
-                                <div class="name">Nitrogen</div>
-                            </div>
-                            <div class="element nonmetal" data-element="8" data-group="16" data-period="2">
-                                <div class="atomic-number">8</div>
-                                <div class="symbol">O</div>
-                                <div class="name">Oxygen</div>
-                            </div>
-                            <div class="element halogen" data-element="9" data-group="17" data-period="2">
-                                <div class="atomic-number">9</div>
-                                <div class="symbol">F</div>
-                                <div class="name">Fluorine</div>
-                            </div>
-                            <div class="element noble-gas" data-element="10" data-group="18" data-period="2">
-                                <div class="atomic-number">10</div>
-                                <div class="symbol">Ne</div>
-                                <div class="name">Neon</div>
-                            </div>
+    .element-number {
+        position: absolute;
+        top: 3px;
+        left: 5px;
+        font-size: 0.6rem;
+        font-weight: 600;
+        opacity: 0.8;
+    }
 
-                            <!-- Period 3 -->
-                            <div class="element alkali-metal" data-element="11" data-group="1" data-period="3">
-                                <div class="atomic-number">11</div>
-                                <div class="symbol">Na</div>
-                                <div class="name">Sodium</div>
-                            </div>
-                            <div class="element alkaline-earth" data-element="12" data-group="2" data-period="3">
-                                <div class="atomic-number">12</div>
-                                <div class="symbol">Mg</div>
-                                <div class="name">Magnesium</div>
-                            </div>
-                            <div class="spacer spacer-period-3-13"></div>
-                            <div class="element post-transition" data-element="13" data-group="13" data-period="3">
-                                <div class="atomic-number">13</div>
-                                <div class="symbol">Al</div>
-                                <div class="name">Aluminum</div>
-                            </div>
-                            <div class="element metalloid" data-element="14" data-group="14" data-period="3">
-                                <div class="atomic-number">14</div>
-                                <div class="symbol">Si</div>
-                                <div class="name">Silicon</div>
-                            </div>
-                            <div class="element nonmetal" data-element="15" data-group="15" data-period="3">
-                                <div class="atomic-number">15</div>
-                                <div class="symbol">P</div>
-                                <div class="name">Phosphorus</div>
-                            </div>
-                            <div class="element nonmetal" data-element="16" data-group="16" data-period="3">
-                                <div class="atomic-number">16</div>
-                                <div class="symbol">S</div>
-                                <div class="name">Sulfur</div>
-                            </div>
-                            <div class="element halogen" data-element="17" data-group="17" data-period="3">
-                                <div class="atomic-number">17</div>
-                                <div class="symbol">Cl</div>
-                                <div class="name">Chlorine</div>
-                            </div>
-                            <div class="element noble-gas" data-element="18" data-group="18" data-period="3">
-                                <div class="atomic-number">18</div>
-                                <div class="symbol">Ar</div>
-                                <div class="name">Argon</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Legend -->
-                        <div class="legend mt-4">
-                            <h6 class="fw-bold mb-3">Element Categories:</h6>
-                            <div class="row g-2">
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color alkali-metal"></span>
-                                        Alkali Metals
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color alkaline-earth"></span>
-                                        Alkaline Earth
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color metalloid"></span>
-                                        Metalloids
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color nonmetal"></span>
-                                        Nonmetals
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color halogen"></span>
-                                        Halogens
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color noble-gas"></span>
-                                        Noble Gases
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-3">
-                                    <div class="legend-item">
-                                        <span class="legend-color post-transition"></span>
-                                        Post-transition
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    .element-symbol {
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: 'JetBrains Mono', monospace;
+        margin: 0.2rem 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
 
-        <!-- Chemical Formula Finder Column -->
-        <div class="col-lg-4" id="formula-finder-section">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h3 class="card-title mb-0">
-                        <i class="fas fa-search me-2"></i>Chemical Formula Finder
-                    </h3>
-                    <small>Search by compound name or chemical formula</small>
-                </div>
-                <div class="card-body">
-                    <form action="{{ url_for('search') }}" method="GET" class="mb-4">
-                        <div class="input-group">
-                            <input type="text" 
-                                   class="form-control form-control-lg" 
-                                   name="q" 
-                                   id="searchInput"
-                                   placeholder="Enter compound name or formula (e.g., water, H2O)" 
-                                   autocomplete="off">
-                            <button class="btn btn-success" type="submit" title="Search">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <div id="searchSuggestions" class="suggestions-dropdown"></div>
-                    </form>
+    .element-name {
+        font-size: 0.55rem;
+        font-weight: 500;
+        opacity: 0.9;
+        line-height: 1.1;
+    }
 
-                    <div class="examples-section">
-                        <h6 class="fw-bold text-muted mb-3">Popular Searches:</h6>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="water">
-                                Water
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="H2O">
-                                H₂O
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="carbon dioxide">
-                                Carbon Dioxide
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="CO2">
-                                CO₂
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="salt">
-                                Salt
-                            </button>
-                            <button class="btn btn-outline-primary btn-sm example-btn" data-search="NaCl">
-                                NaCl
-                            </button>
-                        </div>
+    .element-mass {
+        font-size: 0.5rem;
+        opacity: 0.8;
+        font-weight: 400;
+        margin-top: 0.1rem;
+    }
 
-                        <div class="info-box">
-                            <h6 class="fw-bold">How to use:</h6>
-                            <ul class="list-unstyled small">
-                                <li><i class="fas fa-check text-success me-2"></i>Type a compound name (e.g., "water")</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Enter a chemical formula (e.g., "H2O")</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Get detailed information about the compound</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Learn about molecular structure and properties</li>
-                            </ul>
-                        </div>
-                    </div>
+    /* Grid positioning for specific elements */
+    .element:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .element:nth-child(2) { grid-column: 18; grid-row: 1; }
+    
+    .element:nth-child(3) { grid-column: 1; grid-row: 2; }
+    .element:nth-child(4) { grid-column: 2; grid-row: 2; }
+    .element:nth-child(5) { grid-column: 13; grid-row: 2; }
+    .element:nth-child(6) { grid-column: 14; grid-row: 2; }
+    .element:nth-child(7) { grid-column: 15; grid-row: 2; }
+    .element:nth-child(8) { grid-column: 16; grid-row: 2; }
+    .element:nth-child(9) { grid-column: 17; grid-row: 2; }
+    .element:nth-child(10) { grid-column: 18; grid-row: 2; }
 
-                    <div class="stats-section mt-4">
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <h4 class="text-primary mb-0">18</h4>
-                                    <small class="text-muted">Elements</small>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="stat-item">
-                                    <h4 class="text-success mb-0">10+</h4>
-                                    <small class="text-muted">Compounds</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    .element:nth-child(11) { grid-column: 1; grid-row: 3; }
+    .element:nth-child(12) { grid-column: 2; grid-row: 3; }
+    .element:nth-child(13) { grid-column: 13; grid-row: 3; }
+    .element:nth-child(14) { grid-column: 14; grid-row: 3; }
+    .element:nth-child(15) { grid-column: 15; grid-row: 3; }
+    .element:nth-child(16) { grid-column: 16; grid-row: 3; }
+    .element:nth-child(17) { grid-column: 17; grid-row: 3; }
+    .element:nth-child(18) { grid-column: 18; grid-row: 3; }
 
-<!-- Features Section -->
-<section class="features-section py-5 bg-light">
-    <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col-12">
-                <h2 class="fw-bold">Why Choose ChemVista?</h2>
-                <p class="lead text-muted">Comprehensive chemistry education at your fingertips</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card text-center p-4">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-mouse-pointer fa-3x text-primary"></i>
-                    </div>
-                    <h5 class="fw-bold">Interactive Elements</h5>
-                    <p class="text-muted">Click on any element to explore detailed properties, discovery history, and practical applications.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card text-center p-4">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-search fa-3x text-success"></i>
-                    </div>
-                    <h5 class="fw-bold">Smart Formula Search</h5>
-                    <p class="text-muted">Search by compound name or formula to discover molecular composition and chemical properties.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card text-center p-4">
-                    <div class="feature-icon mb-3">
-                        <i class="fas fa-graduation-cap fa-3x text-warning"></i>
-                    </div>
-                    <h5 class="fw-bold">Educational Focus</h5>
-                    <p class="text-muted">Perfect for students, educators, and chemistry enthusiasts looking to expand their knowledge.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    /* Fourth period - elements 19-36 */
+    .element:nth-child(19) { grid-column: 1; grid-row: 4; }
+    .element:nth-child(20) { grid-column: 2; grid-row: 4; }
+    .element:nth-child(21) { grid-column: 3; grid-row: 4; }
+    .element:nth-child(22) { grid-column: 4; grid-row: 4; }
+    .element:nth-child(23) { grid-column: 5; grid-row: 4; }
+    .element:nth-child(24) { grid-column: 6; grid-row: 4; }
+    .element:nth-child(25) { grid-column: 7; grid-row: 4; }
+    .element:nth-child(26) { grid-column: 8; grid-row: 4; }
+    .element:nth-child(27) { grid-column: 9; grid-row: 4; }
+    .element:nth-child(28) { grid-column: 10; grid-row: 4; }
+    .element:nth-child(29) { grid-column: 11; grid-row: 4; }
+    .element:nth-child(30) { grid-column: 12; grid-row: 4; }
+    .element:nth-child(31) { grid-column: 13; grid-row: 4; }
+    .element:nth-child(32) { grid-column: 14; grid-row: 4; }
+    .element:nth-child(33) { grid-column: 15; grid-row: 4; }
+    .element:nth-child(34) { grid-column: 16; grid-row: 4; }
+    .element:nth-child(35) { grid-column: 17; grid-row: 4; }
+    .element:nth-child(36) { grid-column: 18; grid-row: 4; }
+
+    /* Fifth period - elements 37-54 */
+    .element:nth-child(37) { grid-column: 1; grid-row: 5; }
+    .element:nth-child(38) { grid-column: 2; grid-row: 5; }
+    .element:nth-child(39) { grid-column: 3; grid-row: 5; }
+    .element:nth-child(40) { grid-column: 4; grid-row: 5; }
+    .element:nth-child(41) { grid-column: 5; grid-row: 5; }
+    .element:nth-child(42) { grid-column: 6; grid-row: 5; }
+    .element:nth-child(43) { grid-column: 7; grid-row: 5; }
+    .element:nth-child(44) { grid-column: 8; grid-row: 5; }
+    .element:nth-child(45) { grid-column: 9; grid-row: 5; }
+    .element:nth-child(46) { grid-column: 10; grid-row: 5; }
+    .element:nth-child(47) { grid-column: 11; grid-row: 5; }
+    .element:nth-child(48) { grid-column: 12; grid-row: 5; }
+    .element:nth-child(49) { grid-column: 13; grid-row: 5; }
+    .element:nth-child(50) { grid-column: 14; grid-row: 5; }
+    .element:nth-child(51) { grid-column: 15; grid-row: 5; }
+    .element:nth-child(52) { grid-column: 16; grid-row: 5; }
+    .element:nth-child(53) { grid-column: 17; grid-row: 5; }
+    .element:nth-child(54) { grid-column: 18; grid-row: 5; }
+
+    /* Sixth period - main group elements */
+    .element:nth-child(55) { grid-column: 1; grid-row: 6; } /* Cs */
+    .element:nth-child(56) { grid-column: 2; grid-row: 6; } /* Ba */
+    .element:nth-child(72) { grid-column: 4; grid-row: 6; } /* Hf */
+    .element:nth-child(73) { grid-column: 5; grid-row: 6; } /* Ta */
+    .element:nth-child(74) { grid-column: 6; grid-row: 6; } /* W */
+    .element:nth-child(75) { grid-column: 7; grid-row: 6; } /* Re */
+    .element:nth-child(76) { grid-column: 8; grid-row: 6; } /* Os */
+    .element:nth-child(77) { grid-column: 9; grid-row: 6; } /* Ir */
+    .element:nth-child(78) { grid-column: 10; grid-row: 6; } /* Pt */
+    .element:nth-child(79) { grid-column: 11; grid-row: 6; } /* Au */
+    .element:nth-child(80) { grid-column: 12; grid-row: 6; } /* Hg */
+    .element:nth-child(81) { grid-column: 13; grid-row: 6; } /* Tl */
+    .element:nth-child(82) { grid-column: 14; grid-row: 6; } /* Pb */
+    .element:nth-child(83) { grid-column: 15; grid-row: 6; } /* Bi */
+    .element:nth-child(84) { grid-column: 16; grid-row: 6; } /* Po */
+    .element:nth-child(85) { grid-column: 17; grid-row: 6; } /* At */
+    .element:nth-child(86) { grid-column: 18; grid-row: 6; } /* Rn */
+
+    /* Seventh period - main group elements */
+    .element:nth-child(87) { grid-column: 1; grid-row: 7; } /* Fr */
+    .element:nth-child(88) { grid-column: 2; grid-row: 7; } /* Ra */
+    .element:nth-child(104) { grid-column: 4; grid-row: 7; } /* Rf */
+    .element:nth-child(105) { grid-column: 5; grid-row: 7; } /* Db */
+    .element:nth-child(106) { grid-column: 6; grid-row: 7; } /* Sg */
+    .element:nth-child(107) { grid-column: 7; grid-row: 7; } /* Bh */
+    .element:nth-child(108) { grid-column: 8; grid-row: 7; } /* Hs */
+    .element:nth-child(109) { grid-column: 9; grid-row: 7; } /* Mt */
+    .element:nth-child(110) { grid-column: 10; grid-row: 7; } /* Ds */
+    .element:nth-child(111) { grid-column: 11; grid-row: 7; } /* Rg */
+    .element:nth-child(112) { grid-column: 12; grid-row: 7; } /* Cn */
+    .element:nth-child(113) { grid-column: 13; grid-row: 7; } /* Nh */
+    .element:nth-child(114) { grid-column: 14; grid-row: 7; } /* Fl */
+    .element:nth-child(115) { grid-column: 15; grid-row: 7; } /* Mc */
+    .element:nth-child(116) { grid-column: 16; grid-row: 7; } /* Lv */
+    .element:nth-child(117) { grid-column: 17; grid-row: 7; } /* Ts */
+    .element:nth-child(118) { grid-column: 18; grid-row: 7; } /* Og */
+
+    /* Lanthanides - separate section */
+    .lanthanides-row {
+        display: grid;
+        grid-template-columns: repeat(15, 1fr);
+        gap: 2px;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+    }
+
+    .lanthanide {
+        aspect-ratio: 1;
+        border-radius: 6px;
+        padding: 0.3rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+        text-decoration: none;
+    }
+
+    .lanthanide:hover {
+        transform: scale(1.05);
+        z-index: 100;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Actinides - separate section */
+    .actinides-row {
+        display: grid;
+        grid-template-columns: repeat(15, 1fr);
+        gap: 2px;
+        margin-top: 0.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 16px;
+    }
+
+    .actinide {
+        aspect-ratio: 1;
+        border-radius: 6px;
+        padding: 0.3rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 60px;
+        text-decoration: none;
+    }
+
+    .actinide:hover {
+        transform: scale(1.05);
+        z-index: 100;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .legend {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .legend-item:hover {
+        background: rgba(255, 255, 255, 0.5);
+        transform: translateY(-1px);
+    }
+
+    .legend-color {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .legend-label {
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .stat-card {
+        background: var(--glass-bg);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 3rem 0 2rem;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    @media (max-width: 1200px) {
+        .periodic-table {
+            font-size: 0.7rem;
+        }
+        
+        .element {
+            min-height: 60px;
+        }
+        
+        .element-symbol {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 2rem 0;
+        }
+        
+        .quick-finder {
+            margin: 1rem 0;
+            padding: 1.5rem;
+        }
+        
+        .finder-input {
+            font-size: 1rem;
+            padding: 0.875rem 1.25rem;
+        }
+        
+        .periodic-table {
+            grid-template-columns: repeat(9, 1fr);
+            gap: 1px;
+            font-size: 0.6rem;
+            padding: 0.5rem;
+            max-width: 100%;
+        }
+        
+        .element {
+            min-height: 45px;
+            padding: 0.2rem;
+            font-size: 0.6rem;
+        }
+        
+        .element-symbol {
+            font-size: 0.75rem;
+            margin: 0.1rem 0;
+        }
+        
+        .element-name {
+            font-size: 0.4rem;
+            line-height: 1;
+        }
+        
+        .element-mass {
+            font-size: 0.35rem;
+        }
+        
+        .element-number {
+            font-size: 0.5rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .lanthanides-row,
+        .actinides-row {
+            padding: 0.5rem;
+        }
+        
+        .lanthanide,
+        .actinide {
+            min-height: 40px;
+            font-size: 0.55rem;
+            padding: 0.2rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .hero-section {
+            padding: 1.5rem 0;
+        }
+        
+        .periodic-table {
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5px;
+            padding: 0.25rem;
+        }
+        
+        .element {
+            min-height: 35px;
+            padding: 0.1rem;
+            font-size: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .element-symbol {
+            font-size: 0.65rem;
+        }
+        
+        .element-name {
+            display: none;
+        }
+        
+        .element-mass {
+            font-size: 0.3rem;
+        }
+        
+        .element-number {
+            font-size: 0.4rem;
+        }
+        
+        .lanthanide,
+        .actinide {
+            min-height: 35px;
+            font-size: 0.5rem;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .finder-results {
+            max-height: 200px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .periodic-table {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .element {
+            min-height: 30px;
+            font-size: 0.45rem;
+        }
+        
+        .element-symbol {
+            font-size: 0.6rem;
+        }
+        
+        .element-number {
+            font-size: 0.35rem;
+        }
+        
+        .element-mass {
+            display: none;
+        }
+        
+        .hero-title {
+            font-size: 1.8rem;
+        }
+        
+        .quick-finder h3 {
+            font-size: 1.2rem;
+        }
+    }
+</style>
 {% endblock %}
 
-{% block extra_scripts %}
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Hero Section -->
+    <section class="hero-section text-center py-5">
+        <div class="container">
+            <h1 class="hero-title">Complete Periodic Table</h1>
+            <p class="hero-subtitle">Explore all 118 elements with detailed information, properties, and interactive design</p>
+            
+            <!-- Quick Finder -->
+            <div class="quick-finder mt-4">
+                <h3 class="mb-3"><i class="fas fa-search me-2"></i>Quick Formula & Compound Finder</h3>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <input type="text" class="finder-input" id="quickSearch" 
+                               placeholder="Search for elements (H, He, Li...), compounds (H2O, NaCl, CO2...), or names (water, salt, oxygen...)">
+                        <div class="finder-results" id="searchResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="container mb-5">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">118</div>
+                <div class="stat-label">Total Elements</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Compounds</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">7</div>
+                <div class="stat-label">Periods</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Groups</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Categories</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Periodic Table -->
+    <section class="container-fluid">
+        <div class="periodic-table">
+            {% for element in elements[:86] %}
+                {% if element.number <= 86 %}
+                <a href="{{ url_for('element_detail', number=element.number) }}" 
+                   class="element {{ element.category|replace('-', '-') }}" 
+                   title="{{ element.name }} ({{ element.symbol }})">
+                    <div class="element-number">{{ element.number }}</div>
+                    <div class="element-symbol">{{ element.symbol }}</div>
+                    <div class="element-name">{{ element.name }}</div>
+                    {% if element.atomic_mass %}
+                    <div class="element-mass">{{ "%.3g"|format(element.atomic_mass) }}</div>
+                    {% endif %}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Lanthanides -->
+        <div class="lanthanides-row">
+            <div style="grid-column: 1; font-weight: 600; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                Lanthanides
+            </div>
+            {% for element in elements[56:71] %}
+                {% if element.category == 'lanthanide' %}
+                <a href="{{ url_for('element_detail', number=element.number) }}" 
+                   class="lanthanide lanthanide" 
+                   title="{{ element.name }} ({{ element.symbol }})">
+                    <div class="element-number">{{ element.number }}</div>
+                    <div class="element-symbol">{{ element.symbol }}</div>
+                    <div class="element-name">{{ element.name }}</div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Actinides -->
+        <div class="actinides-row">
+            <div style="grid-column: 1; font-weight: 600; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                Actinides
+            </div>
+            {% for element in elements[88:103] %}
+                {% if element.category == 'actinide' %}
+                <a href="{{ url_for('element_detail', number=element.number) }}" 
+                   class="actinide actinide" 
+                   title="{{ element.name }} ({{ element.symbol }})">
+                    <div class="element-number">{{ element.number }}</div>
+                    <div class="element-symbol">{{ element.symbol }}</div>
+                    <div class="element-name">{{ element.name }}</div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Super heavy elements (104-118) -->
+        <div class="periodic-table" style="margin-top: 1rem;">
+            {% for element in elements[103:118] %}
+                {% if element.number >= 104 %}
+                <a href="{{ url_for('element_detail', number=element.number) }}" 
+                   class="element {{ element.category|replace('-', '-') }}" 
+                   title="{{ element.name }} ({{ element.symbol }})"
+                   style="grid-column: {{ ((element.number - 104) % 18) + 1 }}; grid-row: 1;">
+                    <div class="element-number">{{ element.number }}</div>
+                    <div class="element-symbol">{{ element.symbol }}</div>
+                    <div class="element-name">{{ element.name }}</div>
+                    {% if element.atomic_mass %}
+                    <div class="element-mass">{{ "%.3g"|format(element.atomic_mass) }}</div>
+                    {% endif %}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Legend -->
+    <section class="container mt-5">
+        <h2 class="section-title">Element Categories</h2>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color alkali-metal"></div>
+                <div class="legend-label">Alkali Metals</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color alkaline-earth-metal"></div>
+                <div class="legend-label">Alkaline Earth Metals</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color transition-metal"></div>
+                <div class="legend-label">Transition Metals</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color post-transition-metal"></div>
+                <div class="legend-label">Post-Transition Metals</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color metalloid"></div>
+                <div class="legend-label">Metalloids</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color nonmetal"></div>
+                <div class="legend-label">Nonmetals</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color halogen"></div>
+                <div class="legend-label">Halogens</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color noble-gas"></div>
+                <div class="legend-label">Noble Gases</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color lanthanide"></div>
+                <div class="legend-label">Lanthanides</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color actinide"></div>
+                <div class="legend-label">Actinides</div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
 <script>
-// Smooth scrolling functions
-function scrollToPeriodicTable() {
-    document.getElementById('periodic-table-section').scrollIntoView({ 
-        behavior: 'smooth' 
-    });
-}
-
-function scrollToFormula() {
-    document.getElementById('formula-finder-section').scrollIntoView({ 
-        behavior: 'smooth' 
-    });
-}
-
-// Element click handlers
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle element clicks
-    document.querySelectorAll('.element').forEach(element => {
-        element.addEventListener('click', function() {
-            const atomicNumber = this.dataset.element;
-            window.location.href = `/element/${atomicNumber}`;
+    // Add smooth hover effects to elements
+    const elements = document.querySelectorAll('.element, .lanthanide, .actinide');
+    
+    elements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) translateZ(0)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) translateZ(0)';
         });
     });
 
-    // Handle example button clicks
-    document.querySelectorAll('.example-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const searchTerm = this.dataset.search;
-            window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
+    // Add click analytics (optional)
+    elements.forEach(element => {
+        element.addEventListener('click', function() {
+            const elementName = this.title;
+            console.log(`Clicked on element: ${elementName}`);
         });
     });
+
+    // Quick search functionality
+    const searchInput = document.getElementById('quickSearch');
+    const searchResults = document.getElementById('searchResults');
+    let searchTimeout;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                performQuickSearch(query);
+            }, 300);
+        });
+    }
+
+    async function performQuickSearch(query) {
+        try {
+            // Search elements first
+            const elementResponse = await fetch(`/api/element/search?q=${encodeURIComponent(query)}`);
+            
+            // Search compounds
+            const compoundResponse = await fetch(`/api/compound/search?q=${encodeURIComponent(query)}`);
+            
+            const [elementData, compoundData] = await Promise.all([
+                elementResponse.json(),
+                compoundResponse.json()
+            ]);
+
+            displayQuickResults(elementData, compoundData, query);
+        } catch (error) {
+            console.error('Search error:', error);
+            searchResults.innerHTML = '<div class="finder-result">Search error. Please try again.</div>';
+        }
+    }
+
+    function displayQuickResults(elements, compounds, query) {
+        let html = '';
+        
+        // Show elements first
+        if (elements && elements.length > 0) {
+            elements.slice(0, 3).forEach(element => {
+                html += `
+                    <div class="finder-result" onclick="window.location.href='/element/${element.symbol}'">
+                        <strong>${element.symbol} - ${element.name}</strong>
+                        <br><small>Atomic #${element.number} | ${element.atomic_mass} u | ${element.category}</small>
+                    </div>
+                `;
+            });
+        }
+
+        // Show compounds
+        if (compounds && compounds.length > 0) {
+            compounds.slice(0, 4).forEach(compound => {
+                const usesText = compound.uses ? compound.uses.slice(0, 2).join(', ') : 'Various uses';
+                html += `
+                    <div class="finder-result" onclick="window.location.href='/compound/${compound.formula}'">
+                        <strong>${compound.formula} - ${compound.name}</strong>
+                        <br><small>${compound.molecular_weight.toFixed(2)} g/mol | ${usesText}</small>
+                    </div>
+                `;
+            });
+        }
+
+        // Show calculate option for potential formulas
+        if (query.match(/^[A-Z][a-z]?[0-9]*([A-Z][a-z]?[0-9]*)*$/)) {
+            html += `
+                <div class="finder-result" onclick="window.location.href='/calculator?formula=${encodeURIComponent(query)}'">
+                    <strong><i class="fas fa-calculator me-2"></i>Calculate: ${query}</strong>
+                    <br><small>Calculate molecular weight and formula analysis</small>
+                </div>
+            `;
+        }
+
+        if (html === '') {
+            html = '<div class="finder-result">No results found. Try searching for element symbols (H, He, Li), compound formulas (H2O, NaCl), or common names (water, salt).</div>';
+        }
+
+        searchResults.innerHTML = html;
+    }
 });
 </script>
 {% endblock %}

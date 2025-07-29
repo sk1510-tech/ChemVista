@@ -1,0 +1,608 @@
+{% extends "base.html" %}
+
+{% block title %}Chemistry Quiz - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-question-circle text-primary me-3"></i>Chemistry Quiz
+            </h1>
+            <p class="lead text-muted mb-4">Test your chemistry knowledge with interactive questions</p>
+        </div>
+    </div>
+
+    <!-- Quiz Interface -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Quiz Start Screen -->
+            <div id="quiz-start" class="quiz-screen active">
+                <div class="card start-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-play-circle fa-5x text-primary mb-4"></i>
+                        <h3 class="mb-3">Ready to Test Your Chemistry Knowledge?</h3>
+                        <p class="lead mb-4">
+                            This quiz will test your understanding of elements, compounds, and chemical principles. 
+                            You'll have multiple choice questions covering various chemistry topics.
+                        </p>
+                        <div class="quiz-info mb-4">
+                            <div class="info-item">
+                                <i class="fas fa-clock text-info me-2"></i>
+                                <strong>Time:</strong> No time limit
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-list text-success me-2"></i>
+                                <strong>Questions:</strong> 5 random questions
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-award text-warning me-2"></i>
+                                <strong>Scoring:</strong> Instant feedback
+                            </div>
+                        </div>
+                        <button id="start-quiz-btn" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Start Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Screen -->
+            <div id="quiz-questions" class="quiz-screen">
+                <div class="card question-card">
+                    <div class="card-header">
+                        <div class="quiz-progress">
+                            <div class="progress-info">
+                                Question <span id="current-question">1</span> of <span id="total-questions">5</span>
+                            </div>
+                            <div class="progress">
+                                <div id="progress-bar" class="progress-bar bg-primary" role="progressbar" style="width: 20%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 id="question-text" class="question-text mb-4"></h4>
+                        <div id="answer-options" class="answer-options">
+                            <!-- Options will be populated by JavaScript -->
+                        </div>
+                        <div id="question-feedback" class="question-feedback mt-3" style="display: none;">
+                            <!-- Feedback will be shown here -->
+                        </div>
+                        <div class="question-actions mt-4">
+                            <button id="next-question-btn" class="btn btn-primary" style="display: none;">
+                                Next Question <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Results Screen -->
+            <div id="quiz-results" class="quiz-screen">
+                <div class="card results-card">
+                    <div class="card-body text-center">
+                        <div id="results-icon" class="results-icon mb-4">
+                            <!-- Icon will be set by JavaScript -->
+                        </div>
+                        <h3 id="results-title" class="mb-3"></h3>
+                        <div class="score-display mb-4">
+                            <div class="score-circle">
+                                <span id="final-score">0</span>
+                                <small>out of 5</small>
+                            </div>
+                        </div>
+                        <div id="results-message" class="results-message mb-4"></div>
+                        <div class="results-actions">
+                            <button id="retake-quiz-btn" class="btn btn-primary me-3">
+                                <i class="fas fa-redo me-2"></i>Retake Quiz
+                            </button>
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                                <i class="fas fa-table me-2"></i>Explore Periodic Table
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Screen -->
+            <div id="quiz-loading" class="quiz-screen">
+                <div class="card loading-card">
+                    <div class="card-body text-center">
+                        <div class="spinner-border text-primary mb-3" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h4>Loading Questions...</h4>
+                        <p class="text-muted">Preparing your chemistry quiz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Statistics -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card stats-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Quiz Topics</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-item">
+                                <i class="fas fa-atom fa-2x text-primary mb-2"></i>
+                                <h5>Elements & Symbols</h5>
+                                <p class="text-muted">Test your knowledge of element names, symbols, and atomic numbers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-item">
+                                <i class="fas fa-flask fa-2x text-success mb-2"></i>
+                                <h5>Chemical Compounds</h5>
+                                <p class="text-muted">Identify chemical formulas and compound names</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-item">
+                                <i class="fas fa-cog fa-2x text-warning mb-2"></i>
+                                <h5>Chemical Properties</h5>
+                                <p class="text-muted">Understanding electron configurations, bonding, and reactions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Resources -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card resources-card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-book me-2"></i>Study Resources</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('periodic_table_info') }}" class="resource-link">
+                                <div class="resource-item">
+                                    <i class="fas fa-info-circle fa-2x text-primary mb-2"></i>
+                                    <h6>Periodic Table Guide</h6>
+                                    <p class="small text-muted">Learn about organization and trends</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('chemistry_concepts') }}" class="resource-link">
+                                <div class="resource-item">
+                                    <i class="fas fa-graduation-cap fa-2x text-success mb-2"></i>
+                                    <h6>Chemistry Concepts</h6>
+                                    <p class="small text-muted">Master fundamental principles</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('formula_finder') }}" class="resource-link">
+                                <div class="resource-item">
+                                    <i class="fas fa-calculator fa-2x text-info mb-2"></i>
+                                    <h6>Formula Calculator</h6>
+                                    <p class="small text-muted">Practice with molecular weights</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('scientists') }}" class="resource-link">
+                                <div class="resource-item">
+                                    <i class="fas fa-user-graduate fa-2x text-warning mb-2"></i>
+                                    <h6>Famous Chemists</h6>
+                                    <p class="small text-muted">Learn from the pioneers</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .quiz-screen {
+        display: none;
+    }
+
+    .quiz-screen.active {
+        display: block;
+    }
+
+    .quiz-progress {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .progress-info {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .progress {
+        flex-grow: 1;
+        margin-left: 2rem;
+        height: 8px;
+    }
+
+    .question-text {
+        color: var(--text-primary);
+        font-weight: 500;
+        line-height: 1.6;
+    }
+
+    .answer-options {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .answer-option {
+        background: rgba(248, 249, 250, 0.8);
+        border: 2px solid transparent;
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .answer-option:hover {
+        background: rgba(37, 99, 235, 0.1);
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+    }
+
+    .answer-option.selected {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .answer-option.correct {
+        background: var(--success-color);
+        color: white;
+        border-color: var(--success-color);
+    }
+
+    .answer-option.incorrect {
+        background: var(--danger-color);
+        color: white;
+        border-color: var(--danger-color);
+    }
+
+    .answer-option.disabled {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .question-feedback {
+        background: rgba(248, 249, 250, 0.9);
+        border-radius: 12px;
+        padding: 1rem;
+        border-left: 4px solid var(--info-color);
+    }
+
+    .question-feedback.correct {
+        border-left-color: var(--success-color);
+        background: rgba(16, 185, 129, 0.1);
+    }
+
+    .question-feedback.incorrect {
+        border-left-color: var(--danger-color);
+        background: rgba(239, 68, 68, 0.1);
+    }
+
+    .score-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .score-circle small {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .results-icon {
+        font-size: 4rem;
+    }
+
+    .results-icon.excellent {
+        color: var(--success-color);
+    }
+
+    .results-icon.good {
+        color: var(--warning-color);
+    }
+
+    .results-icon.needs-improvement {
+        color: var(--danger-color);
+    }
+
+    .info-item {
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .topic-item, .resource-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .topic-item:hover, .resource-item:hover {
+        transform: translateY(-3px);
+    }
+
+    .resource-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .resource-link:hover {
+        color: inherit;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    .btn {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .quiz-progress {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .progress {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+let currentQuiz = {
+    questions: [],
+    currentQuestionIndex: 0,
+    score: 0,
+    userAnswers: []
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    const startBtn = document.getElementById('start-quiz-btn');
+    const retakeBtn = document.getElementById('retake-quiz-btn');
+    
+    startBtn.addEventListener('click', startQuiz);
+    retakeBtn.addEventListener('click', restartQuiz);
+});
+
+async function startQuiz() {
+    showScreen('quiz-loading');
+    
+    try {
+        const response = await fetch('/api/quiz/random');
+        const questions = await response.json();
+        
+        currentQuiz.questions = questions;
+        currentQuiz.currentQuestionIndex = 0;
+        currentQuiz.score = 0;
+        currentQuiz.userAnswers = [];
+        
+        showScreen('quiz-questions');
+        displayQuestion();
+    } catch (error) {
+        console.error('Error loading quiz:', error);
+        alert('Error loading quiz questions. Please try again.');
+        showScreen('quiz-start');
+    }
+}
+
+function restartQuiz() {
+    showScreen('quiz-start');
+}
+
+function showScreen(screenId) {
+    document.querySelectorAll('.quiz-screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+    document.getElementById(screenId).classList.add('active');
+}
+
+function displayQuestion() {
+    const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
+    const totalQuestions = currentQuiz.questions.length;
+    
+    // Update progress
+    document.getElementById('current-question').textContent = currentQuiz.currentQuestionIndex + 1;
+    document.getElementById('total-questions').textContent = totalQuestions;
+    
+    const progressPercent = ((currentQuiz.currentQuestionIndex + 1) / totalQuestions) * 100;
+    document.getElementById('progress-bar').style.width = progressPercent + '%';
+    
+    // Display question
+    document.getElementById('question-text').textContent = question.question;
+    
+    // Display options
+    const optionsContainer = document.getElementById('answer-options');
+    optionsContainer.innerHTML = '';
+    
+    question.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'answer-option';
+        optionDiv.textContent = option;
+        optionDiv.addEventListener('click', () => selectAnswer(option, optionDiv));
+        optionsContainer.appendChild(optionDiv);
+    });
+    
+    // Hide feedback and next button
+    document.getElementById('question-feedback').style.display = 'none';
+    document.getElementById('next-question-btn').style.display = 'none';
+}
+
+function selectAnswer(selectedAnswer, optionElement) {
+    const question = currentQuiz.questions[currentQuiz.currentQuestionIndex];
+    const isCorrect = selectedAnswer === question.correct_answer;
+    
+    // Disable all options
+    document.querySelectorAll('.answer-option').forEach(option => {
+        option.classList.add('disabled');
+    });
+    
+    // Mark selected answer
+    optionElement.classList.add('selected');
+    
+    // Mark correct and incorrect answers
+    document.querySelectorAll('.answer-option').forEach(option => {
+        if (option.textContent === question.correct_answer) {
+            option.classList.add('correct');
+        } else if (option.textContent === selectedAnswer && !isCorrect) {
+            option.classList.add('incorrect');
+        }
+    });
+    
+    // Store answer
+    currentQuiz.userAnswers.push({
+        question: question.question,
+        selected: selectedAnswer,
+        correct: question.correct_answer,
+        isCorrect: isCorrect
+    });
+    
+    if (isCorrect) {
+        currentQuiz.score++;
+    }
+    
+    // Show feedback
+    showFeedback(isCorrect, question.explanation);
+    
+    // Show next button or finish quiz
+    if (currentQuiz.currentQuestionIndex < currentQuiz.questions.length - 1) {
+        const nextBtn = document.getElementById('next-question-btn');
+        nextBtn.style.display = 'inline-block';
+        nextBtn.onclick = nextQuestion;
+    } else {
+        const nextBtn = document.getElementById('next-question-btn');
+        nextBtn.textContent = 'Finish Quiz';
+        nextBtn.innerHTML = 'Finish Quiz <i class="fas fa-flag-checkered ms-2"></i>';
+        nextBtn.style.display = 'inline-block';
+        nextBtn.onclick = finishQuiz;
+    }
+}
+
+function showFeedback(isCorrect, explanation) {
+    const feedbackDiv = document.getElementById('question-feedback');
+    feedbackDiv.className = 'question-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+    
+    const icon = isCorrect ? '<i class="fas fa-check-circle text-success me-2"></i>' : '<i class="fas fa-times-circle text-danger me-2"></i>';
+    const message = isCorrect ? 'Correct!' : 'Incorrect!';
+    
+    feedbackDiv.innerHTML = `
+        <div class="d-flex align-items-center mb-2">
+            ${icon}
+            <strong>${message}</strong>
+        </div>
+        <p class="mb-0">${explanation}</p>
+    `;
+    
+    feedbackDiv.style.display = 'block';
+}
+
+function nextQuestion() {
+    currentQuiz.currentQuestionIndex++;
+    displayQuestion();
+}
+
+function finishQuiz() {
+    showScreen('quiz-results');
+    displayResults();
+}
+
+function displayResults() {
+    const score = currentQuiz.score;
+    const total = currentQuiz.questions.length;
+    const percentage = (score / total) * 100;
+    
+    // Update score display
+    document.getElementById('final-score').textContent = score;
+    
+    // Determine performance level
+    let performance, icon, title, message;
+    
+    if (percentage >= 80) {
+        performance = 'excellent';
+        icon = '<i class="fas fa-trophy results-icon excellent"></i>';
+        title = 'Excellent Work!';
+        message = 'You have a strong understanding of chemistry concepts. Keep up the great work!';
+    } else if (percentage >= 60) {
+        performance = 'good';
+        icon = '<i class="fas fa-medal results-icon good"></i>';
+        title = 'Good Job!';
+        message = 'You have a solid foundation in chemistry. Review the topics you missed to improve further.';
+    } else {
+        performance = 'needs-improvement';
+        icon = '<i class="fas fa-book-reader results-icon needs-improvement"></i>';
+        title = 'Keep Studying!';
+        message = 'Don\'t worry! Chemistry takes practice. Review the concepts and try again when you\'re ready.';
+    }
+    
+    document.getElementById('results-icon').innerHTML = icon;
+    document.getElementById('results-title').textContent = title;
+    document.getElementById('results-message').textContent = message;
+}
+</script>
+{% endblock %}

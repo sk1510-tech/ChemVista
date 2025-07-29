@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+
+{% block title %}{{ scientist.name }} - ChemVista{% endblock %}
+
+{% block extra_css %}
+<style>
+    .scientist-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 30px 30px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .scientist-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .scientist-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .scientist-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+        border: 4px solid rgba(255,255,255,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: rgba(255,255,255,0.8);
+        margin: 0 auto 2rem;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .scientist-name {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #ffffff, #e0e7ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .scientist-years {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+    }
+    
+    .scientist-nationality {
+        font-size: 1.1rem;
+        opacity: 0.8;
+        font-style: italic;
+    }
+    
+    .info-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .discovery-item, .achievement-item {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border-left: 4px solid var(--primary-color);
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 0 10px 10px 0;
+        transition: all 0.3s ease;
+    }
+    
+    .discovery-item:hover, .achievement-item:hover {
+        transform: translateX(5px);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+    }
+    
+    .biography-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 15px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+    
+    @media (max-width: 768px) {
+        .scientist-name {
+            font-size: 2rem;
+        }
+        
+        .scientist-image {
+            width: 150px;
+            height: 150px;
+            font-size: 3rem;
+        }
+        
+        .info-card {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+        }
+        
+        .biography-text {
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .scientist-hero {
+            padding: 2rem 0;
+        }
+        
+        .scientist-name {
+            font-size: 1.8rem;
+        }
+        
+        .scientist-image {
+            width: 120px;
+            height: 120px;
+            font-size: 2.5rem;
+        }
+        
+        .info-card {
+            padding: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="scientist-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ url_for('scientists') }}" class="back-button mb-4">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Scientists
+                </a>
+            </div>
+        </div>
+        <div class="scientist-content text-center">
+            <div class="scientist-image">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <h1 class="scientist-name">{{ scientist.name }}</h1>
+            <p class="scientist-years">{{ scientist.years }}</p>
+            <p class="scientist-nationality">{{ scientist.nationality }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row">
+        <!-- Biography -->
+        <div class="col-lg-8 mb-4">
+            <div class="info-card">
+                <h2 class="card-title">
+                    <i class="fas fa-book-open"></i>
+                    Biography
+                </h2>
+                <p class="biography-text">{{ scientist.biography }}</p>
+            </div>
+        </div>
+        
+        <!-- Quick Facts -->
+        <div class="col-lg-4 mb-4">
+            <div class="info-card">
+                <h3 class="card-title">
+                    <i class="fas fa-info-circle"></i>
+                    Quick Facts
+                </h3>
+                <div class="mb-3">
+                    <strong>Born:</strong> {{ scientist.years.split('-')[0] }}
+                </div>
+                <div class="mb-3">
+                    <strong>Died:</strong> {{ scientist.years.split('-')[1] if scientist.years.split('-')|length > 1 else 'Present' }}
+                </div>
+                <div class="mb-3">
+                    <strong>Nationality:</strong> {{ scientist.nationality }}
+                </div>
+                <div>
+                    <strong>Field:</strong> Chemistry, Physics
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Major Discoveries -->
+        <div class="col-md-6 mb-4">
+            <div class="info-card">
+                <h3 class="card-title">
+                    <i class="fas fa-microscope"></i>
+                    Major Discoveries
+                </h3>
+                {% for discovery in scientist.discoveries %}
+                <div class="discovery-item">
+                    <i class="fas fa-flask me-2"></i>
+                    {{ discovery }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Key Achievements -->
+        <div class="col-md-6 mb-4">
+            <div class="info-card">
+                <h3 class="card-title">
+                    <i class="fas fa-trophy"></i>
+                    Key Achievements
+                </h3>
+                {% for achievement in scientist.achievements %}
+                <div class="achievement-item">
+                    <i class="fas fa-medal me-2"></i>
+                    {{ achievement }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Impact on Modern Chemistry -->
+    <div class="row">
+        <div class="col-12">
+            <div class="info-card">
+                <h3 class="card-title">
+                    <i class="fas fa-atom"></i>
+                    Impact on Modern Chemistry
+                </h3>
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="stat-number">{{ scientist.discoveries|length }}</div>
+                        <div class="stat-label">Major Discoveries</div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="stat-number">{{ scientist.achievements|length }}</div>
+                        <div class="stat-label">Key Achievements</div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="stat-number">{{ (2025 - scientist.years.split('-')[0]|int) }}</div>
+                        <div class="stat-label">Years of Legacy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add smooth animations on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all info cards
+    document.querySelectorAll('.info-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+    
+    // Add click sound effect (optional)
+    document.querySelectorAll('.discovery-item, .achievement-item').forEach(item => {
+        item.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+});
+</script>
+{% endblock %}

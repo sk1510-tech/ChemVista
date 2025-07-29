@@ -1,304 +1,409 @@
 {% extends "base.html" %}
 
-{% block title %}
-{% if query %}Search Results for "{{ query }}"{% else %}Chemical Formula Finder{% endif %} - ChemVista
+{% block title %}Search Results - ChemVista{% endblock %}
+
+{% block extra_css %}
+<style>
+    .search-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 30px 30px;
+        text-align: center;
+    }
+    
+    .search-form {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 2rem;
+    }
+    
+    .search-input-group {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .search-input {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 15px;
+        padding: 1rem 3rem 1rem 1.5rem;
+        font-size: 1.1rem;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--gradient-1);
+        border: none;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        color: white;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+        transform: translateY(-50%) scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .results-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .result-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    
+    .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .result-type {
+        display: inline-block;
+        background: var(--gradient-1);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+    
+    .result-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+    }
+    
+    .result-formula {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.2rem;
+        font-weight: 500;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 0.5rem 0;
+    }
+    
+    .result-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .result-properties {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .property-item {
+        background: rgba(102, 126, 234, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        border-left: 3px solid var(--primary-color);
+    }
+    
+    .no-results {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-secondary);
+    }
+    
+    .no-results i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+    
+    .search-suggestions {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-top: 1rem;
+    }
+    
+    .suggestion-item {
+        display: inline-block;
+        background: rgba(102, 126, 234, 0.1);
+        color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        margin: 0.25rem;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    
+    .suggestion-item:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+    
+    .results-count {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+        .search-hero {
+            padding: 2rem 0;
+        }
+        
+        .search-form {
+            padding: 1.5rem;
+            margin: 0 1rem 2rem;
+        }
+        
+        .search-input {
+            font-size: 1rem;
+            padding: 0.875rem 2.5rem 0.875rem 1.25rem;
+        }
+        
+        .result-card {
+            padding: 1.5rem;
+            margin: 0 1rem 1.5rem;
+        }
+        
+        .result-title {
+            font-size: 1.3rem;
+        }
+        
+        .result-properties {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .property-item {
+            font-size: 0.85rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .search-form {
+            padding: 1rem;
+        }
+        
+        .search-input {
+            font-size: 0.9rem;
+            padding: 0.75rem 2rem 0.75rem 1rem;
+        }
+        
+        .search-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .result-card {
+            padding: 1rem;
+        }
+        
+        .result-title {
+            font-size: 1.2rem;
+        }
+        
+        .result-formula {
+            font-size: 1rem;
+        }
+        
+        .no-results {
+            padding: 2rem 1rem;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
-            <li class="breadcrumb-item active">Formula Finder</li>
-        </ol>
-    </nav>
-
-    <!-- Search Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card search-header shadow-sm">
-                <div class="card-body">
-                    <h2 class="card-title">
-                        <i class="fas fa-search me-2"></i>Chemical Formula Finder
-                    </h2>
-                    
-                    <!-- Search Form -->
-                    <form action="{{ url_for('search') }}" method="GET" class="mt-3">
-                        <div class="row g-3 align-items-center">
-                            <div class="col-lg-8">
-                                <div class="input-group input-group-lg">
-                                    <span class="input-group-text">
-                                        <i class="fas fa-flask"></i>
-                                    </span>
-                                    <input type="text" 
-                                           class="form-control" 
-                                           name="q" 
-                                           value="{{ query }}"
-                                           placeholder="Enter compound name or formula (e.g., water, H2O)" 
-                                           autocomplete="off">
-                                    <button class="btn btn-success" type="submit">
-                                        <i class="fas fa-search me-2"></i>Search
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="search-tips">
-                                    <small class="text-muted">
-                                        <i class="fas fa-lightbulb me-1"></i>
-                                        Try: water, H2O, salt, NaCl, glucose
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+<div class="search-hero">
+    <div class="container">
+        <h1>Search Results</h1>
+        {% if query %}
+            <p class="results-count">Showing results for: <strong>"{{ query }}"</strong></p>
+        {% endif %}
+        
+        <!-- Search Form -->
+        <div class="search-form">
+            <form method="GET" action="{{ url_for('search') }}">
+                <div class="search-input-group">
+                    <input type="text" name="q" class="search-input" 
+                           placeholder="Search elements, compounds, or formulas..." 
+                           value="{{ query or '' }}" required>
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 
-    {% if query %}
-        <!-- Results Header -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="results-info">
-                    <h4>
-                        {% if results %}
-                            Found {{ results|length }} result{{ 's' if results|length != 1 else '' }} for "{{ query }}"
-                        {% else %}
-                            No results found for "{{ query }}"
-                        {% endif %}
-                    </h4>
-                </div>
-            </div>
-        </div>
-
+<div class="container mb-5">
+    <div class="results-container">
         {% if results %}
-            <!-- Search Results -->
-            <div class="row g-4">
-                {% for compound in results %}
-                <div class="col-lg-6">
-                    <div class="card compound-card h-100 shadow-sm">
-                        <div class="card-header bg-primary text-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">{{ compound.name }}</h5>
-                                <span class="formula-badge">{{ compound.formula }}</span>
+            {% for result in results %}
+                {% if result.type == 'element' %}
+                    <a href="{{ url_for('element_detail', number=result.number) }}" class="result-card">
+                        <div class="result-type">
+                            <i class="fas fa-atom me-1"></i>Element
+                        </div>
+                        <h2 class="result-title">{{ result.name }} ({{ result.symbol }})</h2>
+                        <div class="result-properties">
+                            <div class="property-item">
+                                <strong>Atomic #:</strong> {{ result.number }}
+                            </div>
+                            <div class="property-item">
+                                <strong>Mass:</strong> {{ result.atomic_mass }} u
+                            </div>
+                            <div class="property-item">
+                                <strong>Category:</strong> {{ result.category|title }}
+                            </div>
+                            {% if result.period %}
+                            <div class="property-item">
+                                <strong>Period:</strong> {{ result.period }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if result.description %}
+                        <p class="result-description">{{ result.description }}</p>
+                        {% endif %}
+                    </a>
+                    
+                {% elif result.type == 'compound' %}
+                    <a href="{{ url_for('compound_detail', formula=result.formula) }}" class="result-card">
+                        <div class="result-type">
+                            <i class="fas fa-flask me-1"></i>Compound
+                        </div>
+                        <h2 class="result-title">{{ result.name }}</h2>
+                        <div class="result-formula">{{ result.formula }}</div>
+                        <div class="result-properties">
+                            <div class="property-item">
+                                <strong>Molecular Weight:</strong> {{ "%.2f"|format(result.molecular_weight) }} g/mol
+                            </div>
+                            <div class="property-item">
+                                <strong>Category:</strong> {{ result.category|title }}
+                            </div>
+                            {% if result.state %}
+                            <div class="property-item">
+                                <strong>State:</strong> {{ result.state|title }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if result.description %}
+                        <p class="result-description">{{ result.description }}</p>
+                        {% endif %}
+                        {% if result.uses %}
+                        <div class="result-properties">
+                            <div class="property-item">
+                                <strong>Uses:</strong> {{ result.uses[:3]|join(', ') }}{% if result.uses|length > 3 %}...{% endif %}
                             </div>
                         </div>
-                        <div class="card-body">
-                            <p class="card-text">{{ compound.description[:150] }}{% if compound.description|length > 150 %}...{% endif %}</p>
-                            
-                            <div class="compound-info mb-3">
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <small class="text-muted">Molecular Weight:</small>
-                                        <div class="fw-bold">{{ compound.molecular_weight }} g/mol</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <small class="text-muted">Type:</small>
-                                        <div class="fw-bold">{{ compound.type }}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <small class="text-muted">State:</small>
-                                        <div class="fw-bold">
-                                            <span class="state-indicator state-{{ compound.state.lower() }}">
-                                                {% if compound.state == 'Gas' %}
-                                                    <i class="fas fa-cloud me-1"></i>
-                                                {% elif compound.state == 'Liquid' %}
-                                                    <i class="fas fa-tint me-1"></i>
-                                                {% else %}
-                                                    <i class="fas fa-cube me-1"></i>
-                                                {% endif %}
-                                                {{ compound.state }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <small class="text-muted">Solubility:</small>
-                                        <div class="fw-bold">{{ compound.solubility }}</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="composition-preview mb-3">
-                                <small class="text-muted">Composition:</small>
-                                <div class="composition-elements">
-                                    {% for element in compound.composition %}
-                                        <span class="element-tag">
-                                            {{ element.symbol }}{% if element.count > 1 %}<sub>{{ element.count }}</sub>{% endif %}
-                                        </span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-
-                            <a href="{{ url_for('compound_detail', compound_id=compound.id) }}" 
-                               class="btn btn-primary">
-                                <i class="fas fa-info-circle me-2"></i>View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+                        {% endif %}
+                    </a>
+                {% endif %}
+            {% endfor %}
+            
         {% else %}
-            <!-- No Results -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="no-results text-center py-5">
-                        <div class="no-results-icon mb-4">
-                            <i class="fas fa-search fa-4x text-muted"></i>
-                        </div>
-                        <h3 class="text-muted mb-3">No compounds found</h3>
-                        <p class="lead text-muted mb-4">
-                            We couldn't find any compounds matching "{{ query }}". 
-                            Please try a different search term.
-                        </p>
-                        
-                        <div class="suggestions">
-                            <h5 class="mb-3">Try these popular searches:</h5>
-                            <div class="d-flex flex-wrap justify-content-center gap-2">
-                                <a href="{{ url_for('search', q='water') }}" class="btn btn-outline-primary btn-sm">Water</a>
-                                <a href="{{ url_for('search', q='H2O') }}" class="btn btn-outline-primary btn-sm">H₂O</a>
-                                <a href="{{ url_for('search', q='carbon dioxide') }}" class="btn btn-outline-primary btn-sm">Carbon Dioxide</a>
-                                <a href="{{ url_for('search', q='CO2') }}" class="btn btn-outline-primary btn-sm">CO₂</a>
-                                <a href="{{ url_for('search', q='salt') }}" class="btn btn-outline-primary btn-sm">Salt</a>
-                                <a href="{{ url_for('search', q='NaCl') }}" class="btn btn-outline-primary btn-sm">NaCl</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h3>No results found</h3>
+                {% if query %}
+                    <p>Sorry, we couldn't find any results for "<strong>{{ query }}</strong>".</p>
+                {% else %}
+                    <p>Please enter a search term to find elements, compounds, or formulas.</p>
+                {% endif %}
+                
+                <div class="search-suggestions">
+                    <h5>Try searching for:</h5>
+                    <a href="{{ url_for('search', q='H2O') }}" class="suggestion-item">H2O</a>
+                    <a href="{{ url_for('search', q='NaCl') }}" class="suggestion-item">NaCl</a>
+                    <a href="{{ url_for('search', q='oxygen') }}" class="suggestion-item">Oxygen</a>
+                    <a href="{{ url_for('search', q='carbon') }}" class="suggestion-item">Carbon</a>
+                    <a href="{{ url_for('search', q='CO2') }}" class="suggestion-item">CO2</a>
+                    <a href="{{ url_for('search', q='gold') }}" class="suggestion-item">Gold</a>
+                    <a href="{{ url_for('search', q='iron') }}" class="suggestion-item">Iron</a>
+                    <a href="{{ url_for('search', q='glucose') }}" class="suggestion-item">Glucose</a>
                 </div>
             </div>
         {% endif %}
-    {% else %}
-        <!-- Empty State - No Search Yet -->
-        <div class="row">
-            <div class="col-12">
-                <div class="empty-state text-center py-5">
-                    <div class="empty-state-icon mb-4">
-                        <i class="fas fa-flask fa-4x text-primary"></i>
-                    </div>
-                    <h3 class="mb-3">Ready to explore chemistry?</h3>
-                    <p class="lead text-muted mb-4">
-                        Enter a compound name or chemical formula above to discover detailed information about molecular composition and properties.
-                    </p>
-                    
-                    <div class="popular-searches">
-                        <h5 class="mb-3">Popular Searches:</h5>
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <div class="search-suggestion-card">
-                                    <h6>Common Compounds</h6>
-                                    <div class="d-flex flex-wrap gap-1">
-                                        <a href="{{ url_for('search', q='water') }}" class="badge bg-primary text-decoration-none">Water</a>
-                                        <a href="{{ url_for('search', q='salt') }}" class="badge bg-primary text-decoration-none">Salt</a>
-                                        <a href="{{ url_for('search', q='sugar') }}" class="badge bg-primary text-decoration-none">Sugar</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="search-suggestion-card">
-                                    <h6>Chemical Formulas</h6>
-                                    <div class="d-flex flex-wrap gap-1">
-                                        <a href="{{ url_for('search', q='H2O') }}" class="badge bg-success text-decoration-none">H₂O</a>
-                                        <a href="{{ url_for('search', q='CO2') }}" class="badge bg-success text-decoration-none">CO₂</a>
-                                        <a href="{{ url_for('search', q='NaCl') }}" class="badge bg-success text-decoration-none">NaCl</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="search-suggestion-card">
-                                    <h6>Organic Molecules</h6>
-                                    <div class="d-flex flex-wrap gap-1">
-                                        <a href="{{ url_for('search', q='glucose') }}" class="badge bg-warning text-decoration-none">Glucose</a>
-                                        <a href="{{ url_for('search', q='ethanol') }}" class="badge bg-warning text-decoration-none">Ethanol</a>
-                                        <a href="{{ url_for('search', q='methane') }}" class="badge bg-warning text-decoration-none">Methane</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 </div>
 {% endblock %}
 
-{% block extra_head %}
-<style>
-.compound-card {
-    transition: transform 0.2s ease;
-}
-
-.compound-card:hover {
-    transform: translateY(-5px);
-}
-
-.formula-badge {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 8px;
-    border-radius: 15px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-}
-
-.state-indicator {
-    padding: 4px 8px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-}
-
-.state-gas { background: #e3f2fd; color: #1976d2; }
-.state-liquid { background: #e0f2f1; color: #00796b; }
-.state-solid { background: #f3e5f5; color: #7b1fa2; }
-
-.element-tag {
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    padding: 2px 6px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    margin-right: 4px;
-    font-family: 'Courier New', monospace;
-}
-
-.composition-elements {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 4px;
-}
-
-.search-suggestion-card {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.search-suggestion-card h6 {
-    margin-bottom: 10px;
-    color: #495057;
-}
-
-.no-results-icon, .empty-state-icon {
-    opacity: 0.5;
-}
-
-.results-info h4 {
-    color: #495057;
-    font-weight: 600;
-}
-
-.search-tips {
-    text-align: right;
-}
-
-@media (max-width: 768px) {
-    .search-tips {
-        text-align: left;
-        margin-top: 10px;
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate result cards on load
+    const resultCards = document.querySelectorAll('.result-card');
+    resultCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+    
+    // Focus search input
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput && !searchInput.value) {
+        searchInput.focus();
     }
-}
-</style>
+    
+    // Add search input enhancements
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                this.form.submit();
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

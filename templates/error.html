@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ error_code }} - ChemVista{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .error-content {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        max-width: 600px;
+        box-shadow: var(--shadow-medium);
+    }
+
+    .error-code {
+        font-size: 8rem;
+        font-weight: 700;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        line-height: 1;
+    }
+
+    .error-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .error-message {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        line-height: 1.6;
+    }
+
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .error-icon {
+        font-size: 4rem;
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .error-code {
+            font-size: 5rem;
+        }
+        
+        .error-title {
+            font-size: 1.5rem;
+        }
+        
+        .error-content {
+            padding: 3rem 1.5rem;
+        }
+        
+        .error-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .error-actions .btn {
+            width: 100%;
+            max-width: 250px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        {% if error_code == 404 %}
+        <div class="error-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-message">
+            The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
+        </p>
+        {% elif error_code == 500 %}
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="error-code">500</div>
+        <h1 class="error-title">Server Error</h1>
+        <p class="error-message">
+            Something went wrong on our end. We're working to fix this issue. Please try again later.
+        </p>
+        {% else %}
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="error-code">{{ error_code or "Error" }}</div>
+        <h1 class="error-title">Something Went Wrong</h1>
+        <p class="error-message">
+            An unexpected error occurred. Please try again or contact support if the problem persists.
+        </p>
+        {% endif %}
+        
+        <div class="error-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-primary">
+                <i class="fas fa-home me-2"></i>
+                Go Home
+            </a>
+            <a href="{{ url_for('search') }}" class="btn btn-outline-primary">
+                <i class="fas fa-search me-2"></i>
+                Search Compounds
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add entrance animation
+    const errorContent = document.querySelector('.error-content');
+    errorContent.style.opacity = '0';
+    errorContent.style.transform = 'translateY(30px)';
+    
+    setTimeout(() => {
+        errorContent.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        errorContent.style.opacity = '1';
+        errorContent.style.transform = 'translateY(0)';
+    }, 100);
+    
+    // Add keyboard shortcut to go home
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'h' || e.key === 'H') {
+            window.location.href = '{{ url_for("index") }}';
+        } else if (e.key === 's' || e.key === 'S') {
+            window.location.href = '{{ url_for("search") }}';
+        }
+    });
+});
+</script>
+{% endblock %}

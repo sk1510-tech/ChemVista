@@ -1,0 +1,574 @@
+{% extends "base.html" %}
+
+{% block title %}Educational Resources - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-book text-primary me-3"></i>Educational Resources
+            </h1>
+            <p class="lead text-muted mb-4">Comprehensive chemistry learning materials and reference links</p>
+        </div>
+    </div>
+
+    <!-- Quick Access Tools -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card tools-overview">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-tools me-2"></i>ChemVista Learning Tools</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('index') }}" class="tool-link">
+                                <div class="tool-card">
+                                    <i class="fas fa-table fa-3x text-primary mb-3"></i>
+                                    <h5>Interactive Periodic Table</h5>
+                                    <p class="text-muted">Explore all 118 elements with detailed properties and information</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('formula_finder') }}" class="tool-link">
+                                <div class="tool-card">
+                                    <i class="fas fa-calculator fa-3x text-success mb-3"></i>
+                                    <h5>Formula Calculator</h5>
+                                    <p class="text-muted">Calculate molecular weights and balance chemical equations</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('search') }}" class="tool-link">
+                                <div class="tool-card">
+                                    <i class="fas fa-search fa-3x text-info mb-3"></i>
+                                    <h5>Compound Search</h5>
+                                    <p class="text-muted">Search through 200+ chemical compounds and their properties</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{{ url_for('quiz') }}" class="tool-link">
+                                <div class="tool-card">
+                                    <i class="fas fa-question-circle fa-3x text-warning mb-3"></i>
+                                    <h5>Interactive Quiz</h5>
+                                    <p class="text-muted">Test your knowledge with randomly generated chemistry questions</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Online Resources -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card online-resources">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-globe me-2"></i>Recommended Online Resources</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <h5 class="section-title">Official Organizations</h5>
+                            <div class="resource-item">
+                                <div class="resource-header">
+                                    <i class="fas fa-university text-primary me-2"></i>
+                                    <strong>IUPAC (International Union of Pure and Applied Chemistry)</strong>
+                                </div>
+                                <p class="resource-description">The world authority on chemical nomenclature and standards</p>
+                                <a href="https://iupac.org" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Visit IUPAC
+                                </a>
+                            </div>
+                            
+                            <div class="resource-item">
+                                <div class="resource-header">
+                                    <i class="fas fa-atom text-success me-2"></i>
+                                    <strong>American Chemical Society (ACS)</strong>
+                                </div>
+                                <p class="resource-description">Leading chemistry organization with educational resources</p>
+                                <a href="https://www.acs.org" target="_blank" class="btn btn-outline-success btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Visit ACS
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <h5 class="section-title">Educational Platforms</h5>
+                            <div class="resource-item">
+                                <div class="resource-header">
+                                    <i class="fas fa-play text-danger me-2"></i>
+                                    <strong>Khan Academy Chemistry</strong>
+                                </div>
+                                <p class="resource-description">Free online chemistry courses and practice exercises</p>
+                                <a href="https://www.khanacademy.org/science/chemistry" target="_blank" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Khan Academy
+                                </a>
+                            </div>
+                            
+                            <div class="resource-item">
+                                <div class="resource-header">
+                                    <i class="fas fa-graduation-cap text-info me-2"></i>
+                                    <strong>Coursera Chemistry Courses</strong>
+                                </div>
+                                <p class="resource-description">University-level chemistry courses from top institutions</p>
+                                <a href="https://www.coursera.org/browse/physical-science-and-engineering/chemistry" target="_blank" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Coursera
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reference Materials -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card reference-materials">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-book-open me-2"></i>Reference Materials</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 mb-4">
+                            <h5 class="section-title">Data & Tables</h5>
+                            <div class="reference-item">
+                                <i class="fas fa-table text-primary me-2"></i>
+                                <div>
+                                    <strong>NIST Chemistry WebBook</strong>
+                                    <p class="small text-muted">Comprehensive chemical and physical property data</p>
+                                    <a href="https://webbook.nist.gov/chemistry/" target="_blank" class="small">webbook.nist.gov</a>
+                                </div>
+                            </div>
+                            
+                            <div class="reference-item">
+                                <i class="fas fa-chart-line text-success me-2"></i>
+                                <div>
+                                    <strong>CRC Handbook Online</strong>
+                                    <p class="small text-muted">Standard reference for physical and chemical data</p>
+                                    <a href="https://hbcp.chemnetbase.com" target="_blank" class="small">hbcp.chemnetbase.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 mb-4">
+                            <h5 class="section-title">Molecular Databases</h5>
+                            <div class="reference-item">
+                                <i class="fas fa-molecule text-warning me-2"></i>
+                                <div>
+                                    <strong>PubChem</strong>
+                                    <p class="small text-muted">Open chemistry database with millions of compounds</p>
+                                    <a href="https://pubchem.ncbi.nlm.nih.gov" target="_blank" class="small">pubchem.ncbi.nlm.nih.gov</a>
+                                </div>
+                            </div>
+                            
+                            <div class="reference-item">
+                                <i class="fas fa-dna text-danger me-2"></i>
+                                <div>
+                                    <strong>ChemSpider</strong>
+                                    <p class="small text-muted">Free chemical structure database</p>
+                                    <a href="http://www.chemspider.com" target="_blank" class="small">chemspider.com</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-4 mb-4">
+                            <h5 class="section-title">Safety Resources</h5>
+                            <div class="reference-item">
+                                <i class="fas fa-shield-alt text-info me-2"></i>
+                                <div>
+                                    <strong>Safety Data Sheets (SDS)</strong>
+                                    <p class="small text-muted">Chemical safety and handling information</p>
+                                    <a href="{{ url_for('lab_safety') }}" class="small">ChemVista Safety Guide</a>
+                                </div>
+                            </div>
+                            
+                            <div class="reference-item">
+                                <i class="fas fa-exclamation-triangle text-warning me-2"></i>
+                                <div>
+                                    <strong>OSHA Chemical Safety</strong>
+                                    <p class="small text-muted">Workplace chemical safety guidelines</p>
+                                    <a href="https://www.osha.gov/chemicals" target="_blank" class="small">osha.gov/chemicals</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Study Guides -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card study-guides">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Study Guides & Cheat Sheets</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="study-guide-card">
+                                <h5><i class="fas fa-table text-primary me-2"></i>Periodic Table Guide</h5>
+                                <div class="guide-content">
+                                    <h6>Key Concepts:</h6>
+                                    <ul class="guide-list">
+                                        <li>Atomic number = number of protons</li>
+                                        <li>Groups have similar properties</li>
+                                        <li>Periods show electron shell count</li>
+                                        <li>Trends: atomic radius, ionization energy</li>
+                                    </ul>
+                                    <a href="{{ url_for('periodic_table_info') }}" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-info-circle me-1"></i>Full Guide
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="study-guide-card">
+                                <h5><i class="fas fa-balance-scale text-success me-2"></i>Chemical Equations</h5>
+                                <div class="guide-content">
+                                    <h6>Balancing Steps:</h6>
+                                    <ul class="guide-list">
+                                        <li>Count atoms of each element</li>
+                                        <li>Start with most complex compound</li>
+                                        <li>Balance metals, then nonmetals</li>
+                                        <li>Balance hydrogen and oxygen last</li>
+                                    </ul>
+                                    <a href="{{ url_for('formula_finder') }}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-calculator me-1"></i>Try Calculator
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="study-guide-card">
+                                <h5><i class="fas fa-flask text-info me-2"></i>Common Formulas</h5>
+                                <div class="guide-content">
+                                    <h6>Essential Compounds:</h6>
+                                    <ul class="guide-list">
+                                        <li>Water: H₂O</li>
+                                        <li>Carbon dioxide: CO₂</li>
+                                        <li>Ammonia: NH₃</li>
+                                        <li>Methane: CH₄</li>
+                                    </ul>
+                                    <a href="{{ url_for('search') }}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-search me-1"></i>Search Compounds
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <div class="study-guide-card">
+                                <h5><i class="fas fa-atom text-warning me-2"></i>Bonding Types</h5>
+                                <div class="guide-content">
+                                    <h6>Bond Categories:</h6>
+                                    <ul class="guide-list">
+                                        <li>Ionic: metal + nonmetal</li>
+                                        <li>Covalent: nonmetal + nonmetal</li>
+                                        <li>Metallic: metal + metal</li>
+                                        <li>Hydrogen: special dipole interaction</li>
+                                    </ul>
+                                    <a href="{{ url_for('chemistry_concepts') }}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-book me-1"></i>Learn More
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Apps -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card mobile-apps">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0"><i class="fas fa-mobile-alt me-2"></i>Recommended Mobile Apps</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="app-card">
+                                <i class="fas fa-table fa-2x text-primary mb-2"></i>
+                                <h6>Periodic Table Apps</h6>
+                                <p class="small text-muted">Interactive periodic tables for mobile devices</p>
+                                <div class="app-badges">
+                                    <span class="badge bg-primary">iOS</span>
+                                    <span class="badge bg-success">Android</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="app-card">
+                                <i class="fas fa-flask fa-2x text-success mb-2"></i>
+                                <h6>Chemistry Calculators</h6>
+                                <p class="small text-muted">Molecular weight and equation balancing tools</p>
+                                <div class="app-badges">
+                                    <span class="badge bg-primary">iOS</span>
+                                    <span class="badge bg-success">Android</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="app-card">
+                                <i class="fas fa-graduation-cap fa-2x text-info mb-2"></i>
+                                <h6>Chemistry Study Apps</h6>
+                                <p class="small text-muted">Flashcards and practice quizzes</p>
+                                <div class="app-badges">
+                                    <span class="badge bg-primary">iOS</span>
+                                    <span class="badge bg-success">Android</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact & Support -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card contact-support">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0"><i class="fas fa-question-circle me-2"></i>Need Help?</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Getting Started</h5>
+                            <p>New to ChemVista? Start with these resources:</p>
+                            <ul class="help-list">
+                                <li><a href="{{ url_for('about') }}">About ChemVista</a> - Learn about our platform</li>
+                                <li><a href="{{ url_for('use_cases') }}">Use Cases</a> - See how others use ChemVista</li>
+                                <li><a href="{{ url_for('periodic_table_info') }}">Periodic Table Guide</a> - Understanding the basics</li>
+                                <li><a href="{{ url_for('quiz') }}">Take a Quiz</a> - Test your current knowledge</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Community & Support</h5>
+                            <p>Connect with other learners and get help:</p>
+                            <div class="support-links">
+                                <a href="https://github.com/sk1510-tech/ChemVista/discussions" target="_blank" class="btn btn-outline-primary me-2 mb-2">
+                                    <i class="fab fa-github me-1"></i>Discussions
+                                </a>
+                                <a href="https://github.com/sk1510-tech/ChemVista/issues" target="_blank" class="btn btn-outline-danger me-2 mb-2">
+                                    <i class="fas fa-bug me-1"></i>Report Issues
+                                </a>
+                                <a href="https://github.com/sk1510-tech/ChemVista" target="_blank" class="btn btn-outline-success me-2 mb-2">
+                                    <i class="fas fa-code me-1"></i>Contribute
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .tool-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .tool-link:hover {
+        color: inherit;
+    }
+
+    .tool-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        height: 100%;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .tool-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border-color: rgba(37, 99, 235, 0.2);
+    }
+
+    .section-title {
+        color: var(--primary-color);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #f8f9fa;
+        padding-bottom: 0.5rem;
+    }
+
+    .resource-item {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .resource-item:hover {
+        transform: translateX(5px);
+    }
+
+    .resource-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .resource-description {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .reference-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .reference-item:hover {
+        transform: translateX(3px);
+    }
+
+    .study-guide-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .study-guide-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(37, 99, 235, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .guide-list li {
+        padding: 0.25rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        font-size: 0.9rem;
+    }
+
+    .guide-list li:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .app-card {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 12px;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .app-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .app-badges {
+        margin-top: 1rem;
+    }
+
+    .app-badges .badge {
+        margin: 0 0.25rem;
+    }
+
+    .help-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .help-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(248, 249, 250, 0.8);
+    }
+
+    .help-list a {
+        text-decoration: none;
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+
+    .help-list a:hover {
+        text-decoration: underline;
+    }
+
+    .support-links .btn {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    @media (max-width: 768px) {
+        .tool-card {
+            margin-bottom: 1rem;
+        }
+
+        .resource-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .support-links .btn {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}

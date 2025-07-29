@@ -1,0 +1,619 @@
+{% extends "base.html" %}
+
+{% block title %}Periodic Table Information - ChemVista{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-table text-primary me-3"></i>Understanding the Periodic Table
+            </h1>
+            <p class="lead text-muted mb-4">A comprehensive guide to the organization and patterns of chemical elements</p>
+        </div>
+    </div>
+
+    <!-- Periodic Table Overview -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card overview-card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-info-circle me-2"></i>What is the Periodic Table?</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <p class="lead">
+                                The periodic table is a systematic arrangement of all known chemical elements, 
+                                organized by their atomic number and exhibiting periodic trends in their properties.
+                            </p>
+                            <p>
+                                Created by Dmitri Mendeleev in 1869, the modern periodic table contains 118 confirmed elements, 
+                                from hydrogen (the lightest) to oganesson (the heaviest). This elegant organization reveals 
+                                fundamental patterns in nature and allows scientists to predict the properties of elements 
+                                and their compounds.
+                            </p>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="fact-box">
+                                <h5 class="text-primary">Quick Facts</h5>
+                                <ul class="list-unstyled">
+                                    <li><strong>118</strong> confirmed elements</li>
+                                    <li><strong>18</strong> groups (columns)</li>
+                                    <li><strong>7</strong> periods (rows)</li>
+                                    <li><strong>4</strong> main blocks (s, p, d, f)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organization and Structure -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-columns me-2"></i>Groups (Columns)</h4>
+                </div>
+                <div class="card-body">
+                    <p>Vertical columns represent <strong>groups</strong> or <strong>families</strong> of elements with similar chemical properties.</p>
+                    
+                    <div class="group-info">
+                        <h6>Main Groups:</h6>
+                        <div class="group-item">
+                            <span class="group-number">1</span>
+                            <div class="group-details">
+                                <strong>Alkali Metals</strong>
+                                <p class="small text-muted">Highly reactive metals (except hydrogen)</p>
+                            </div>
+                        </div>
+                        <div class="group-item">
+                            <span class="group-number">2</span>
+                            <div class="group-details">
+                                <strong>Alkaline Earth Metals</strong>
+                                <p class="small text-muted">Reactive metals, less than Group 1</p>
+                            </div>
+                        </div>
+                        <div class="group-item">
+                            <span class="group-number">17</span>
+                            <div class="group-details">
+                                <strong>Halogens</strong>
+                                <p class="small text-muted">Highly reactive nonmetals</p>
+                            </div>
+                        </div>
+                        <div class="group-item">
+                            <span class="group-number">18</span>
+                            <div class="group-details">
+                                <strong>Noble Gases</strong>
+                                <p class="small text-muted">Inert gases, very stable</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0"><i class="fas fa-arrows-alt-h me-2"></i>Periods (Rows)</h4>
+                </div>
+                <div class="card-body">
+                    <p>Horizontal rows represent <strong>periods</strong>, showing elements with the same number of electron shells.</p>
+                    
+                    <div class="period-info">
+                        <h6>Period Characteristics:</h6>
+                        <div class="period-item">
+                            <span class="period-number">1</span>
+                            <div class="period-details">
+                                <strong>2 elements</strong>
+                                <p class="small text-muted">H, He - 1 electron shell</p>
+                            </div>
+                        </div>
+                        <div class="period-item">
+                            <span class="period-number">2</span>
+                            <div class="period-details">
+                                <strong>8 elements</strong>
+                                <p class="small text-muted">Li to Ne - 2 electron shells</p>
+                            </div>
+                        </div>
+                        <div class="period-item">
+                            <span class="period-number">3</span>
+                            <div class="period-details">
+                                <strong>8 elements</strong>
+                                <p class="small text-muted">Na to Ar - 3 electron shells</p>
+                            </div>
+                        </div>
+                        <div class="period-item">
+                            <span class="period-number">4-7</span>
+                            <div class="period-details">
+                                <strong>18-32 elements</strong>
+                                <p class="small text-muted">Transition and inner transition metals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Element Categories -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card categories-card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0"><i class="fas fa-palette me-2"></i>Element Categories</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item alkali-metal">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Alkali Metals</h5>
+                                </div>
+                                <p>Highly reactive metals in Group 1. Soft, low melting points, react violently with water.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> Li, Na, K, Rb, Cs, Fr
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item alkaline-earth">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Alkaline Earth Metals</h5>
+                                </div>
+                                <p>Reactive metals in Group 2. Harder than alkali metals, react with water at high temperatures.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> Be, Mg, Ca, Sr, Ba, Ra
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item transition-metal">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Transition Metals</h5>
+                                </div>
+                                <p>Dense, hard metals with high melting points. Form colored compounds, multiple oxidation states.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> Fe, Cu, Ag, Au, Pt, Zn
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item post-transition">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Post-transition Metals</h5>
+                                </div>
+                                <p>Softer metals with lower melting points than transition metals. Include aluminum, tin, lead.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> Al, Ga, In, Sn, Pb, Bi
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item metalloid">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Metalloids</h5>
+                                </div>
+                                <p>Elements with properties between metals and nonmetals. Important in semiconductors.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> B, Si, Ge, As, Sb, Te
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item nonmetal">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Nonmetals</h5>
+                                </div>
+                                <p>Poor conductors of heat and electricity. Essential for life processes.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> H, C, N, O, P, S
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item halogen">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Halogens</h5>
+                                </div>
+                                <p>Highly reactive nonmetals in Group 17. Form salts when combined with metals.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> F, Cl, Br, I, At
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="category-item noble-gas">
+                                <div class="category-header">
+                                    <div class="category-color"></div>
+                                    <h5>Noble Gases</h5>
+                                </div>
+                                <p>Inert gases in Group 18. Stable electron configurations, rarely form compounds.</p>
+                                <div class="examples">
+                                    <strong>Examples:</strong> He, Ne, Ar, Kr, Xe, Rn
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Periodic Trends -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card trends-card">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0"><i class="fas fa-chart-line me-2"></i>Periodic Trends</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="trend-item">
+                                <h5><i class="fas fa-expand-arrows-alt text-primary me-2"></i>Atomic Radius</h5>
+                                <div class="trend-description">
+                                    <p><strong>Across a period:</strong> Decreases (left to right)</p>
+                                    <p><strong>Down a group:</strong> Increases (top to bottom)</p>
+                                    <div class="trend-explanation">
+                                        <small class="text-muted">
+                                            As nuclear charge increases across a period, electrons are pulled closer. 
+                                            Down a group, additional electron shells increase the size.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="trend-item">
+                                <h5><i class="fas fa-bolt text-warning me-2"></i>Ionization Energy</h5>
+                                <div class="trend-description">
+                                    <p><strong>Across a period:</strong> Increases (left to right)</p>
+                                    <p><strong>Down a group:</strong> Decreases (top to bottom)</p>
+                                    <div class="trend-explanation">
+                                        <small class="text-muted">
+                                            Energy required to remove an electron. Higher nuclear charge and smaller size 
+                                            make electrons harder to remove.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="trend-item">
+                                <h5><i class="fas fa-magnet text-success me-2"></i>Electronegativity</h5>
+                                <div class="trend-description">
+                                    <p><strong>Across a period:</strong> Increases (left to right)</p>
+                                    <p><strong>Down a group:</strong> Decreases (top to bottom)</p>
+                                    <div class="trend-explanation">
+                                        <small class="text-muted">
+                                            Tendency to attract electrons in a chemical bond. Fluorine is the most 
+                                            electronegative element.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 mb-4">
+                            <div class="trend-item">
+                                <h5><i class="fas fa-thermometer-half text-danger me-2"></i>Metallic Character</h5>
+                                <div class="trend-description">
+                                    <p><strong>Across a period:</strong> Decreases (left to right)</p>
+                                    <p><strong>Down a group:</strong> Increases (top to bottom)</p>
+                                    <div class="trend-explanation">
+                                        <small class="text-muted">
+                                            Tendency to lose electrons and form positive ions. Metals are on the left, 
+                                            nonmetals on the right.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historical Development -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card history-card">
+                <div class="card-header bg-secondary text-white">
+                    <h3 class="mb-0"><i class="fas fa-history me-2"></i>Historical Development</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">1869</div>
+                            <div class="timeline-content">
+                                <h5>Dmitri Mendeleev</h5>
+                                <p>Created the first widely accepted periodic table, organized by atomic weight. Left gaps for undiscovered elements and predicted their properties.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">1913</div>
+                            <div class="timeline-content">
+                                <h5>Henry Moseley</h5>
+                                <p>Discovered that atomic number (number of protons) is the organizing principle, not atomic weight. This resolved inconsistencies in Mendeleev's table.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">1940s</div>
+                            <div class="timeline-content">
+                                <h5>Glenn T. Seaborg</h5>
+                                <p>Synthesized and identified transuranium elements (beyond uranium). Proposed the actinide series concept.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">Present</div>
+                            <div class="timeline-content">
+                                <h5>Modern Periodic Table</h5>
+                                <p>Contains 118 confirmed elements. Scientists continue to create superheavy elements in laboratories, extending the table's reach.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Elements -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card interactive-card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-mouse-pointer me-2"></i>Explore ChemVista's Interactive Features</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="feature-item">
+                                <i class="fas fa-table fa-3x text-primary mb-3"></i>
+                                <h5>Interactive Periodic Table</h5>
+                                <p class="text-muted mb-3">Click on any element to see detailed information including properties, uses, and electron configuration.</p>
+                                <a href="{{ url_for('index') }}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Explore Table
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="feature-item">
+                                <i class="fas fa-search fa-3x text-success mb-3"></i>
+                                <h5>Element Search</h5>
+                                <p class="text-muted mb-3">Search for elements by name, symbol, or atomic number with instant results and suggestions.</p>
+                                <a href="{{ url_for('search') }}" class="btn btn-success btn-sm">
+                                    <i class="fas fa-search me-1"></i>Start Searching
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="feature-item">
+                                <i class="fas fa-calculator fa-3x text-warning mb-3"></i>
+                                <h5>Chemistry Tools</h5>
+                                <p class="text-muted mb-3">Calculate molecular weights, balance equations, and explore chemical formulas.</p>
+                                <a href="{{ url_for('formula_finder') }}" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-tools me-1"></i>Use Tools
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .fact-box {
+        background: rgba(37, 99, 235, 0.1);
+        border-radius: 15px;
+        padding: 1.5rem;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .group-item, .period-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+    }
+
+    .group-number, .period-number {
+        background: var(--success-color);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .period-number {
+        background: var(--info-color, #17a2b8);
+    }
+
+    .category-item {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: transform 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .category-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .category-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        margin-right: 0.75rem;
+    }
+
+    .alkali-metal .category-color { background: #ff6b6b; }
+    .alkaline-earth .category-color { background: #4ecdc4; }
+    .transition-metal .category-color { background: #45b7d1; }
+    .post-transition .category-color { background: #f9ca24; }
+    .metalloid .category-color { background: #6c5ce7; }
+    .nonmetal .category-color { background: #a29bfe; }
+    .halogen .category-color { background: #fd79a8; }
+    .noble-gas .category-color { background: #fdcb6e; }
+
+    .examples {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 8px;
+        padding: 0.75rem;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .trend-item {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        padding: 1.5rem;
+        height: 100%;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .trend-explanation {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+    }
+
+    .timeline {
+        position: relative;
+        padding-left: 3rem;
+    }
+
+    .timeline:before {
+        content: '';
+        position: absolute;
+        left: 1.5rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--secondary-color, #6c757d);
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .timeline-date {
+        position: absolute;
+        left: -3rem;
+        top: 0;
+        background: var(--secondary-color, #6c757d);
+        color: white;
+        padding: 0.5rem;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .timeline-content {
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 10px;
+        padding: 1.5rem;
+        border-left: 4px solid var(--secondary-color, #6c757d);
+    }
+
+    .feature-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: rgba(248, 249, 250, 0.8);
+        border-radius: 15px;
+        height: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-3px);
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+
+    @media (max-width: 768px) {
+        .timeline {
+            padding-left: 1rem;
+        }
+
+        .timeline:before {
+            left: 0.5rem;
+        }
+
+        .timeline-date {
+            position: static;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .timeline-content {
+            margin-left: 0;
+        }
+    }
+</style>
+{% endblock %}

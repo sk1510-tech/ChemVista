@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}About ChemVista - Advanced Chemistry Explorer{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Hero Section -->
+    <div class="hero-section text-center mb-5">
+        <div class="hero-content">
+            <h1 class="display-3 fw-bold mb-3">
+                <i class="fas fa-atom text-primary me-3"></i>About ChemVista
+            </h1>
+            <p class="lead text-muted mb-4">Your comprehensive digital chemistry laboratory and educational platform</p>
+        </div>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-bullseye fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">Our Mission</h3>
+                    </div>
+                    <p class="card-text">
+                        To make chemistry accessible, engaging, and interactive for students, educators, and professionals worldwide. 
+                        We believe that understanding the fundamental building blocks of matter should be intuitive and enjoyable.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>Democratize chemistry education</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Provide accurate scientific data</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Foster scientific curiosity</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Support research and learning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-eye fa-3x text-success mb-3"></i>
+                        <h3 class="card-title">Our Vision</h3>
+                    </div>
+                    <p class="card-text">
+                        To become the world's premier digital chemistry platform, combining cutting-edge technology with 
+                        comprehensive scientific data to create an unparalleled learning experience.
+                    </p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-star text-warning me-2"></i>Global accessibility</li>
+                        <li><i class="fas fa-star text-warning me-2"></i>Continuous innovation</li>
+                        <li><i class="fas fa-star text-warning me-2"></i>Community-driven development</li>
+                        <li><i class="fas fa-star text-warning me-2"></i>Scientific accuracy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Overview -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">What Makes ChemVista Special</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-table fa-3x text-primary mb-3"></i>
+                        <h5>Complete Periodic Table</h5>
+                        <p class="text-muted">All 118 elements with comprehensive data including physical properties, electron configurations, and discovery information.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-flask fa-3x text-success mb-3"></i>
+                        <h5>Extensive Compound Database</h5>
+                        <p class="text-muted">Over 200 chemical compounds with detailed molecular information, properties, and real-world applications.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-calculator fa-3x text-info mb-3"></i>
+                        <h5>Advanced Calculators</h5>
+                        <p class="text-muted">Molecular weight calculator, equation balancer, and other essential chemistry tools.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-search fa-3x text-warning mb-3"></i>
+                        <h5>Smart Search</h5>
+                        <p class="text-muted">Intelligent search across elements and compounds with real-time autocomplete and suggestions.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-mobile-alt fa-3x text-danger mb-3"></i>
+                        <h5>Responsive Design</h5>
+                        <p class="text-muted">Perfect experience on desktop, tablet, and mobile devices with modern glass morphism UI.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="feature-card text-center">
+                        <i class="fas fa-graduation-cap fa-3x text-secondary mb-3"></i>
+                        <h5>Educational Focus</h5>
+                        <p class="text-muted">Designed specifically for learning with clear explanations, examples, and educational resources.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0"><i class="fas fa-code me-2"></i>Technology Stack</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">Backend Technologies</h5>
+                            <div class="tech-item">
+                                <i class="fab fa-python text-warning"></i>
+                                <strong>Python 3.7+</strong> - Core programming language
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-server text-success"></i>
+                                <strong>Flask 2.3.3</strong> - Web framework and RESTful API
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-code text-info"></i>
+                                <strong>Jinja2 3.1.2</strong> - Template engine
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-database text-secondary"></i>
+                                <strong>JSON</strong> - Data storage and APIs
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">Frontend Technologies</h5>
+                            <div class="tech-item">
+                                <i class="fab fa-bootstrap text-primary"></i>
+                                <strong>Bootstrap 5.3.0</strong> - Responsive CSS framework
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-js-square text-warning"></i>
+                                <strong>JavaScript ES6+</strong> - Interactive functionality
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-font text-danger"></i>
+                                <strong>Font Awesome 6.4.0</strong> - Professional icons
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-palette text-info"></i>
+                                <strong>CSS3</strong> - Modern glass morphism design
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Development Team -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="text-center mb-4">Development Team</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card team-card">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-circle fa-5x text-primary mb-3"></i>
+                            <h4>ChemVista Development Team</h4>
+                            <p class="text-muted">Passionate developers and chemistry enthusiasts</p>
+                            <p>
+                                Our team combines expertise in software development, chemistry education, 
+                                and user experience design to create the best possible chemistry learning platform.
+                            </p>
+                            <div class="social-links">
+                                <a href="https://github.com/sk1510-tech/ChemVista" class="btn btn-outline-dark btn-sm">
+                                    <i class="fab fa-github me-1"></i>GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact & Support -->
+    <div class="row mb-5">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-envelope me-2"></i>Contact Us</h4>
+                </div>
+                <div class="card-body">
+                    <p>We'd love to hear from you! Whether you have questions, suggestions, or want to contribute:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fab fa-github text-dark me-2"></i>
+                            <a href="https://github.com/sk1510-tech/ChemVista/issues" target="_blank">Report Issues</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fab fa-github text-dark me-2"></i>
+                            <a href="https://github.com/sk1510-tech/ChemVista/discussions" target="_blank">Join Discussions</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-code-branch text-success me-2"></i>
+                            <a href="https://github.com/sk1510-tech/ChemVista" target="_blank">Contribute Code</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="fas fa-hands-helping me-2"></i>Support</h4>
+                </div>
+                <div class="card-body">
+                    <p>Need help using ChemVista? Check out our resources:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-book text-info me-2"></i>
+                            <a href="{{ url_for('resources') }}">Documentation & Tutorials</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-question-circle text-warning me-2"></i>
+                            <a href="{{ url_for('quiz') }}">Interactive Learning Quiz</a>
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-shield-alt text-danger me-2"></i>
+                            <a href="{{ url_for('lab_safety') }}">Lab Safety Guidelines</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- License & Attribution -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0"><i class="fas fa-balance-scale me-2"></i>License & Attribution</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Open Source License</h5>
+                            <p>
+                                ChemVista is released under the <strong>MIT License</strong>, making it free to use, 
+                                modify, and distribute for both personal and commercial purposes.
+                            </p>
+                            <a href="https://opensource.org/licenses/MIT" target="_blank" class="btn btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i>View License
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Data Sources</h5>
+                            <p>
+                                Chemical data is sourced from reputable scientific databases and educational resources, 
+                                ensuring accuracy and reliability for educational use.
+                            </p>
+                            <ul class="list-unstyled small">
+                                <li>• IUPAC periodic table standards</li>
+                                <li>• Educational chemistry databases</li>
+                                <li>• Open scientific literature</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        margin: 2rem 0;
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 2rem 1rem;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .tech-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+        background: rgba(248, 249, 250, 0.5);
+        border-radius: 8px;
+    }
+
+    .tech-item i {
+        width: 30px;
+        margin-right: 1rem;
+    }
+
+    .team-card {
+        transition: transform 0.3s ease;
+    }
+
+    .team-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .social-links .btn {
+        margin: 0 0.25rem;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border: none;
+        border-radius: 0.5rem 0.5rem 0 0 !important;
+    }
+</style>
+{% endblock %}
