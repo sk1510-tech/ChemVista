@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+
+{% block title %}Chemical Calculator - ChemVista{% endblock %}
+
+{% block extra_css %}
+<style>
+    .calculator-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-radius: 0 0 30px 30px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .calculator-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .calculator-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .calculator-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .calculator-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .calc-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .formula-input {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: 15px;
+        padding: 1rem 1.5rem;
+        font-size: 1.2rem;
+        font-family: 'JetBrains Mono', monospace;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+    }
+    
+    .formula-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: white;
+    }
+    
+    .calc-button {
+        background: var(--gradient-1);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+    
+    .calc-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        filter: brightness(1.1);
+    }
+    
+    .calc-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .results-section {
+        margin-top: 2rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+    }
+    
+    .results-section.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .result-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--primary-color);
+    }
+    
+    .result-title {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .result-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .composition-table {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+    }
+    
+    .composition-table table {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .composition-table th {
+        background: var(--gradient-1);
+        color: white;
+        padding: 1rem;
+        font-weight: 600;
+        border: none;
+    }
+    
+    .composition-table td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .composition-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .composition-table tr:hover {
+        background: rgba(102, 126, 234, 0.05);
+    }
+    
+    .error-message {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+        border-left: 4px solid #ef4444;
+        border-radius: 10px;
+        padding: 1rem;
+        color: #dc2626;
+        margin-top: 1rem;
+    }
+    
+    .quick-examples {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+    
+    .example-formula {
+        background: rgba(102, 126, 234, 0.1);
+        color: var(--primary-color);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+    
+    .example-formula:hover {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+    
+    .loading {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top: 2px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    @media (max-width: 768px) {
+        .calculator-hero {
+            padding: 2rem 0;
+        }
+        
+        .calculator-card {
+            padding: 1.5rem;
+        }
+        
+        .formula-input {
+            font-size: 1rem;
+            padding: 0.875rem 1.25rem;
+        }
+        
+        .calc-button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .quick-examples {
+            justify-content: center;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .calculator-card {
+            padding: 1rem;
+        }
+        
+        .calc-title {
+            font-size: 1.3rem;
+        }
+        
+        .result-value {
+            font-size: 1.2rem;
+        }
+        
+        .composition-table th,
+        .composition-table td {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="calculator-hero">
+    <div class="container">
+        <div class="calculator-content text-center">
+            <h1 class="hero-title">Chemical Calculator</h1>
+            <p class="hero-subtitle">Calculate molecular weights, analyze formulas, and explore chemical properties</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Molecular Weight Calculator -->
+            <div class="calculator-card">
+                <h2 class="calc-title">
+                    <i class="fas fa-calculator"></i>
+                    Molecular Weight Calculator
+                </h2>
+                <p class="text-muted mb-3">Enter a chemical formula to calculate its molecular weight and composition</p>
+                
+                <div class="input-group">
+                    <input type="text" 
+                           id="formulaInput" 
+                           class="formula-input" 
+                           placeholder="Enter formula (e.g., H2O, C6H12O6, NaCl)" 
+                           value="{{ formula or '' }}">
+                    <button id="calculateBtn" class="calc-button">
+                        <span class="calc-text">Calculate</span>
+                        <span class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            Calculating...
+                        </span>
+                    </button>
+                </div>
+                
+                <div class="quick-examples">
+                    <span class="text-muted me-2">Quick examples:</span>
+                    <span class="example-formula" data-formula="H2O">H2O</span>
+                    <span class="example-formula" data-formula="CO2">CO2</span>
+                    <span class="example-formula" data-formula="NaCl">NaCl</span>
+                    <span class="example-formula" data-formula="C6H12O6">C6H12O6</span>
+                    <span class="example-formula" data-formula="CaCO3">CaCO3</span>
+                    <span class="example-formula" data-formula="H2SO4">H2SO4</span>
+                    <span class="example-formula" data-formula="NH3">NH3</span>
+                    <span class="example-formula" data-formula="CH4">CH4</span>
+                </div>
+                
+                <div id="resultsSection" class="results-section">
+                    <!-- Results will be inserted here -->
+                </div>
+            </div>
+            
+            <!-- Formula Analysis Tools -->
+            <div class="calculator-card">
+                <h2 class="calc-title">
+                    <i class="fas fa-atom"></i>
+                    Formula Analysis Tools
+                </h2>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <div class="result-title">Empirical Formula</div>
+                            <p class="text-muted small">Find the simplest ratio of elements</p>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showComingSoon('Empirical Formula Calculator')">
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="result-card">
+                            <div class="result-title">Equation Balancer</div>
+                            <p class="text-muted small">Balance chemical equations</p>
+                            <button class="btn btn-outline-primary btn-sm" onclick="showComingSoon('Chemical Equation Balancer')">
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formulaInput = document.getElementById('formulaInput');
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultsSection = document.getElementById('resultsSection');
+    const calcText = calculateBtn.querySelector('.calc-text');
+    const loadingSpinner = calculateBtn.querySelector('.loading');
+    
+    // Auto-calculate if formula is provided via URL
+    if (formulaInput.value.trim()) {
+        calculateMolecularWeight();
+    }
+    
+    // Example formula clicks
+    document.querySelectorAll('.example-formula').forEach(example => {
+        example.addEventListener('click', function() {
+            formulaInput.value = this.dataset.formula;
+            calculateMolecularWeight();
+        });
+    });
+    
+    // Calculate button click
+    calculateBtn.addEventListener('click', calculateMolecularWeight);
+    
+    // Enter key in input
+    formulaInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calculateMolecularWeight();
+        }
+    });
+    
+    // Real-time validation
+    formulaInput.addEventListener('input', function() {
+        const formula = this.value.trim();
+        if (formula.length > 0 && /^[A-Za-z0-9()]+$/.test(formula)) {
+            this.style.borderColor = 'rgba(102, 126, 234, 0.5)';
+        } else if (formula.length > 0) {
+            this.style.borderColor = 'rgba(239, 68, 68, 0.5)';
+        } else {
+            this.style.borderColor = 'rgba(102, 126, 234, 0.2)';
+        }
+    });
+    
+    async function calculateMolecularWeight() {
+        const formula = formulaInput.value.trim();
+        
+        if (!formula) {
+            showError('Please enter a chemical formula');
+            return;
+        }
+        
+        // Show loading state
+        calculateBtn.disabled = true;
+        calcText.style.display = 'none';
+        loadingSpinner.style.display = 'flex';
+        
+        try {
+            const response = await fetch(`/api/calculate_molecular_weight?formula=${encodeURIComponent(formula)}`);
+            const data = await response.json();
+            
+            if (data.error) {
+                showError(data.error);
+            } else {
+                showResults(data);
+            }
+        } catch (error) {
+            showError('Network error. Please try again.');
+            console.error('Calculation error:', error);
+        } finally {
+            // Hide loading state
+            calculateBtn.disabled = false;
+            calcText.style.display = 'inline';
+            loadingSpinner.style.display = 'none';
+        }
+    }
+    
+    function showResults(data) {
+        const html = `
+            <div class="result-card">
+                <div class="result-title">Molecular Weight</div>
+                <div class="result-value">${data.molecular_weight} g/mol</div>
+            </div>
+            
+            <div class="result-card">
+                <div class="result-title">Chemical Formula</div>
+                <div class="result-value">${data.formula}</div>
+            </div>
+            
+            ${data.element_breakdown && data.element_breakdown.length > 0 ? `
+            <div class="composition-table">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Symbol</th>
+                            <th>Count</th>
+                            <th>Mass (g/mol)</th>
+                            <th>% by Mass</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.element_breakdown.map(element => `
+                            <tr>
+                                <td><strong>${element.name}</strong></td>
+                                <td><code>${element.symbol}</code></td>
+                                <td>${element.count}</td>
+                                <td>${element.mass.toFixed(3)}</td>
+                                <td>${((element.mass / data.molecular_weight) * 100).toFixed(1)}%</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+            ` : ''}
+        `;
+        
+        resultsSection.innerHTML = html;
+        resultsSection.classList.add('show');
+        
+        // Animate table rows
+        setTimeout(() => {
+            document.querySelectorAll('.composition-table tbody tr').forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    row.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateX(0)';
+                }, index * 100);
+            });
+        }, 100);
+    }
+    
+    function showError(message) {
+        resultsSection.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Error:</strong> ${message}
+            </div>
+        `;
+        resultsSection.classList.add('show');
+    }
+    
+    // Coming soon modal
+    window.showComingSoon = function(feature) {
+        alert(`${feature} is coming soon! We're working on adding more advanced chemistry tools.`);
+    };
+});
+</script>
+{% endblock %}

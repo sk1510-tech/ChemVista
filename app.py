@@ -405,7 +405,8 @@ def resources():
 @app.route('/calculator')
 def calculator():
     """Chemistry calculator and tools"""
-    return render_template('calculator.html')
+    formula = request.args.get('formula', '')
+    return render_template('calculator.html', formula=formula)
 
 @app.route('/quiz')
 def quiz():
@@ -452,6 +453,71 @@ def api_elements():
 def api_compounds():
     """Get all compounds"""
     return jsonify(load_compounds())
+
+@app.route('/api/element/search')
+def api_element_search():
+    """Search elements API"""
+    query = request.args.get('q', '').strip()
+    limit = int(request.args.get('limit', 10))
+    
+    if not query:
+        return jsonify([])
+    
+    elements = load_elements()
+    results = []
+    
+    query_lower = query.lower()
+    for element in elements:
+        if (query_lower in element['symbol'].lower() or 
+            query_lower in element['name'].lower() or
+            str(element['number']) == query):
+            results.append({
+                'type': 'element',
+                'symbol': element['symbol'],
+                'name': element['name'],
+                'number': element['number'],
+                'atomic_mass': element['atomic_mass'],
+                'category': element['category'],
+                'period': element.get('period'),
+                'description': element.get('description', '')
+            })
+            if len(results) >= limit:
+                break
+    
+    return jsonify(results)
+
+@app.route('/api/compound/search')
+def api_compound_search():
+    """Search compounds API"""
+    query = request.args.get('q', '').strip()
+    limit = int(request.args.get('limit', 10))
+    
+    if not query:
+        return jsonify([])
+    
+    compounds = load_compounds()
+    results = []
+    
+    query_lower = query.lower()
+    for compound in compounds:
+        if (query_lower in compound['formula'].lower() or 
+            query_lower in compound['name'].lower() or
+            query_lower in compound.get('common_name', '').lower()):
+            results.append({
+                'type': 'compound',
+                'formula': compound['formula'],
+                'name': compound['name'],
+                'molecular_weight': compound.get('molecular_weight', 0),
+                'category': compound.get('category', ''),
+                'state': compound.get('state', ''),
+                'description': compound.get('description', ''),
+                'uses': compound.get('uses', []),
+                'common_name': compound.get('common_name', '')
+            })
+            if len(results) >= limit:
+                break
+    
+    return jsonify(results)
 
 # Helper functions for formula calculations
 def parse_formula(formula):
@@ -516,11 +582,14 @@ def formula_calculator():
     except Exception as e:
         return jsonify({'error': str(e), 'valid': False}), 400
 
-@app.route('/api/calculate_molecular_weight', methods=['POST'])
+@app.route('/api/calculate_molecular_weight', methods=['POST', 'GET'])
 def calculate_molecular_weight_api():
     """Calculate molecular weight from formula"""
-    data = request.get_json()
-    formula = data.get('formula', '').strip()
+    if request.method == 'POST':
+        data = request.get_json()
+        formula = data.get('formula', '').strip()
+    else:  # GET request
+        formula = request.args.get('formula', '').strip()
     
     if not formula:
         return jsonify({'error': 'No formula provided'}), 400
