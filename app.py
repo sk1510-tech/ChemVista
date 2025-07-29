@@ -301,6 +301,94 @@ def load_compounds():
         # Environmental compounds
         {"formula": "CFC-12", "name": "Dichlorodifluoromethane", "molecular_weight": 120.913, "category": "organic", "description": "Ozone-depleting refrigerant", "uses": ["Refrigerant (banned)"], "state": "gas", "common_name": "Freon-12", "hazards": ["Ozone depletion"]},
         {"formula": "CH2Cl2", "name": "Dichloromethane", "molecular_weight": 84.933, "category": "organic", "description": "Paint stripper and solvent", "uses": ["Paint stripper", "Solvent"], "state": "liquid", "common_name": "Methylene chloride", "hazards": ["Carcinogenic"]},
+        
+        # Additional Common Compounds
+        {"formula": "H2S", "name": "Hydrogen Sulfide", "molecular_weight": 34.082, "category": "molecular", "description": "Toxic gas with rotten egg smell", "uses": ["Chemical production"], "state": "gas", "common_name": "Hydrogen sulfide", "hazards": ["Highly toxic", "Flammable"]},
+        {"formula": "HF", "name": "Hydrogen Fluoride", "molecular_weight": 20.006, "category": "molecular", "description": "Extremely corrosive acid", "uses": ["Glass etching", "Chemical production"], "state": "gas", "common_name": "Hydrofluoric acid", "hazards": ["Extremely corrosive", "Toxic"]},
+        {"formula": "PH3", "name": "Phosphine", "molecular_weight": 33.998, "category": "molecular", "description": "Toxic gas", "uses": ["Fumigant", "Chemical production"], "state": "gas", "common_name": "Phosphine", "hazards": ["Highly toxic", "Flammable"]},
+        {"formula": "AsH3", "name": "Arsine", "molecular_weight": 77.946, "category": "molecular", "description": "Extremely toxic gas", "uses": ["Semiconductor production"], "state": "gas", "common_name": "Arsine", "hazards": ["Extremely toxic"]},
+        {"formula": "CO", "name": "Carbon Monoxide", "molecular_weight": 28.010, "category": "molecular", "description": "Odorless toxic gas", "uses": ["Industrial processes"], "state": "gas", "common_name": "Carbon monoxide", "hazards": ["Highly toxic", "Odorless"]},
+        
+        # More Organic Compounds
+        {"formula": "C6H14", "name": "Hexane", "molecular_weight": 86.178, "category": "organic", "description": "Solvent and gasoline component", "uses": ["Solvent", "Gasoline"], "state": "liquid", "common_name": "Hexane", "hazards": ["Flammable", "Neurotoxic"]},
+        {"formula": "C7H16", "name": "Heptane", "molecular_weight": 100.205, "category": "organic", "description": "Reference fuel for octane rating", "uses": ["Solvent", "Fuel"], "state": "liquid", "common_name": "Heptane", "hazards": ["Flammable"]},
+        {"formula": "C5H12", "name": "Pentane", "molecular_weight": 72.151, "category": "organic", "description": "Blowing agent for foam", "uses": ["Blowing agent", "Solvent"], "state": "liquid", "common_name": "Pentane", "hazards": ["Flammable"]},
+        {"formula": "C3H6", "name": "Propylene", "molecular_weight": 42.081, "category": "organic", "description": "Polymer precursor", "uses": ["Plastic production", "Chemical feedstock"], "state": "gas", "common_name": "Propylene", "hazards": ["Flammable"]},
+        {"formula": "C4H8", "name": "Butylene", "molecular_weight": 56.108, "category": "organic", "description": "Polymer precursor", "uses": ["Plastic production"], "state": "gas", "common_name": "Butylene", "hazards": ["Flammable"]},
+        
+        # Alcohols and Ethers
+        {"formula": "C3H8O", "name": "Isopropanol", "molecular_weight": 60.095, "category": "organic", "description": "Rubbing alcohol", "uses": ["Disinfectant", "Solvent", "Antiseptic"], "state": "liquid", "common_name": "Rubbing alcohol", "hazards": ["Flammable", "Toxic"]},
+        {"formula": "C4H10O", "name": "Butanol", "molecular_weight": 74.121, "category": "organic", "description": "Industrial alcohol", "uses": ["Solvent", "Chemical production"], "state": "liquid", "common_name": "Butanol", "hazards": ["Flammable"]},
+        {"formula": "C2H6O2", "name": "Ethylene Glycol", "molecular_weight": 62.068, "category": "organic", "description": "Antifreeze and coolant", "uses": ["Antifreeze", "Coolant", "Solvent"], "state": "liquid", "common_name": "Antifreeze", "hazards": ["Toxic"]},
+        {"formula": "C3H8O3", "name": "Glycerol", "molecular_weight": 92.094, "category": "organic", "description": "Humectant and sweetener", "uses": ["Cosmetics", "Food", "Pharmaceuticals"], "state": "liquid", "common_name": "Glycerine", "hazards": ["None"]},
+        {"formula": "C4H10O", "name": "Diethyl Ether", "molecular_weight": 74.121, "category": "organic", "description": "Anesthetic and solvent", "uses": ["Anesthetic", "Solvent"], "state": "liquid", "common_name": "Ether", "hazards": ["Flammable", "Forms peroxides"]},
+        
+        # Ketones and Aldehydes
+        {"formula": "C3H6O", "name": "Acetone", "molecular_weight": 58.080, "category": "organic", "description": "Common solvent", "uses": ["Nail polish remover", "Solvent", "Chemical production"], "state": "liquid", "common_name": "Acetone", "hazards": ["Flammable"]},
+        {"formula": "C2H4O", "name": "Acetaldehyde", "molecular_weight": 44.053, "category": "organic", "description": "Chemical intermediate", "uses": ["Chemical production"], "state": "gas", "common_name": "Acetaldehyde", "hazards": ["Carcinogenic", "Flammable"]},
+        {"formula": "C4H8O", "name": "Butanone", "molecular_weight": 72.107, "category": "organic", "description": "Industrial solvent", "uses": ["Solvent", "Chemical production"], "state": "liquid", "common_name": "MEK", "hazards": ["Flammable"]},
+        
+        # Esters
+        {"formula": "C4H8O2", "name": "Ethyl Acetate", "molecular_weight": 88.106, "category": "organic", "description": "Solvent with fruity odor", "uses": ["Solvent", "Nail polish remover"], "state": "liquid", "common_name": "Ethyl acetate", "hazards": ["Flammable"]},
+        {"formula": "C5H10O2", "name": "Methyl Butyrate", "molecular_weight": 102.132, "category": "organic", "description": "Fruity flavoring agent", "uses": ["Flavoring", "Fragrance"], "state": "liquid", "common_name": "Methyl butyrate", "hazards": ["Flammable"]},
+        
+        # Halogenated Compounds
+        {"formula": "CHCl3", "name": "Chloroform", "molecular_weight": 119.378, "category": "organic", "description": "Former anesthetic", "uses": ["Solvent", "Refrigerant"], "state": "liquid", "common_name": "Chloroform", "hazards": ["Carcinogenic", "Toxic"]},
+        {"formula": "CCl4", "name": "Carbon Tetrachloride", "molecular_weight": 153.823, "category": "organic", "description": "Former cleaning solvent", "uses": ["Fire extinguisher (banned)"], "state": "liquid", "common_name": "Carbon tetrachloride", "hazards": ["Carcinogenic", "Ozone depleting"]},
+        {"formula": "CF4", "name": "Carbon Tetrafluoride", "molecular_weight": 88.004, "category": "organic", "description": "Greenhouse gas", "uses": ["Electronics"], "state": "gas", "common_name": "Carbon tetrafluoride", "hazards": ["Greenhouse gas"]},
+        
+        # More Ionic Compounds
+        {"formula": "BaCl2", "name": "Barium Chloride", "molecular_weight": 208.233, "category": "ionic", "description": "Used in fireworks", "uses": ["Fireworks", "Rat poison"], "state": "solid", "common_name": "Barium chloride", "hazards": ["Toxic"]},
+        {"formula": "BaSO4", "name": "Barium Sulfate", "molecular_weight": 233.390, "category": "ionic", "description": "X-ray contrast agent", "uses": ["Medical imaging", "Paint"], "state": "solid", "common_name": "Barium sulfate", "hazards": ["None when pure"]},
+        {"formula": "CuSO4", "name": "Copper Sulfate", "molecular_weight": 159.609, "category": "ionic", "description": "Blue crystals, fungicide", "uses": ["Fungicide", "Algaecide"], "state": "solid", "common_name": "Blue vitriol", "hazards": ["Toxic to aquatic life"]},
+        {"formula": "FeSO4", "name": "Iron Sulfate", "molecular_weight": 151.908, "category": "ionic", "description": "Iron supplement", "uses": ["Iron supplement", "Lawn treatment"], "state": "solid", "common_name": "Iron sulfate", "hazards": ["None at normal doses"]},
+        {"formula": "ZnO", "name": "Zinc Oxide", "molecular_weight": 81.409, "category": "ionic", "description": "Sunscreen ingredient", "uses": ["Sunscreen", "Ointments", "Rubber"], "state": "solid", "common_name": "Zinc oxide", "hazards": ["None"]},
+        {"formula": "AgNO3", "name": "Silver Nitrate", "molecular_weight": 169.873, "category": "ionic", "description": "Antiseptic agent", "uses": ["Antiseptic", "Photography"], "state": "solid", "common_name": "Silver nitrate", "hazards": ["Corrosive", "Staining"]},
+        
+        # Complex Compounds
+        {"formula": "Ca3(PO4)2", "name": "Calcium Phosphate", "molecular_weight": 310.177, "category": "ionic", "description": "Bone and tooth mineral", "uses": ["Supplements", "Fertilizer"], "state": "solid", "common_name": "Calcium phosphate", "hazards": ["None"]},
+        {"formula": "Mg3(PO4)2", "name": "Magnesium Phosphate", "molecular_weight": 262.858, "category": "ionic", "description": "Fertilizer component", "uses": ["Fertilizer"], "state": "solid", "common_name": "Magnesium phosphate", "hazards": ["None"]},
+        {"formula": "Al(OH)3", "name": "Aluminum Hydroxide", "molecular_weight": 78.004, "category": "ionic", "description": "Antacid and flame retardant", "uses": ["Antacid", "Flame retardant"], "state": "solid", "common_name": "Aluminum hydroxide", "hazards": ["None"]},
+        
+        # Minerals
+        {"formula": "CaSO4", "name": "Calcium Sulfate", "molecular_weight": 136.141, "category": "ionic", "description": "Plaster of Paris", "uses": ["Construction", "Medical casts"], "state": "solid", "common_name": "Gypsum", "hazards": ["None"]},
+        {"formula": "MgSO4", "name": "Magnesium Sulfate", "molecular_weight": 120.368, "category": "ionic", "description": "Epsom salt", "uses": ["Bath salts", "Laxative", "Fertilizer"], "state": "solid", "common_name": "Epsom salt", "hazards": ["Laxative effect"]},
+        {"formula": "Na2SO4", "name": "Sodium Sulfate", "molecular_weight": 142.043, "category": "ionic", "description": "Glauber's salt", "uses": ["Detergent", "Glass"], "state": "solid", "common_name": "Glauber's salt", "hazards": ["None"]},
+        {"formula": "K2SO4", "name": "Potassium Sulfate", "molecular_weight": 174.260, "category": "ionic", "description": "Fertilizer", "uses": ["Fertilizer"], "state": "solid", "common_name": "Potassium sulfate", "hazards": ["None"]},
+        
+        # Food Additives
+        {"formula": "C6H7NaO6", "name": "Sodium Ascorbate", "molecular_weight": 198.106, "category": "organic", "description": "Vitamin C supplement", "uses": ["Food preservative", "Supplement"], "state": "solid", "common_name": "Vitamin C", "hazards": ["None"]},
+        {"formula": "C7H5NaO2", "name": "Sodium Benzoate", "molecular_weight": 144.103, "category": "organic", "description": "Food preservative", "uses": ["Food preservative"], "state": "solid", "common_name": "Sodium benzoate", "hazards": ["None at normal levels"]},
+        {"formula": "C4H5NaO4", "name": "Monosodium Glutamate", "molecular_weight": 169.111, "category": "organic", "description": "Flavor enhancer", "uses": ["Food flavoring"], "state": "solid", "common_name": "MSG", "hazards": ["None proven"]},
+        
+        # Explosives and Propellants
+        {"formula": "C3H5N3O9", "name": "Nitroglycerin", "molecular_weight": 227.087, "category": "organic", "description": "Explosive and heart medication", "uses": ["Explosives", "Heart medication"], "state": "liquid", "common_name": "Nitroglycerin", "hazards": ["Explosive", "Shock sensitive"]},
+        {"formula": "C7H5N3O6", "name": "TNT", "molecular_weight": 227.131, "category": "organic", "description": "Military explosive", "uses": ["Explosives"], "state": "solid", "common_name": "TNT", "hazards": ["Explosive"]},
+        {"formula": "KNO3", "name": "Potassium Nitrate", "molecular_weight": 101.103, "category": "ionic", "description": "Saltpeter, oxidizer", "uses": ["Fertilizer", "Fireworks", "Preservative"], "state": "solid", "common_name": "Saltpeter", "hazards": ["Oxidizer"]},
+        {"formula": "NaNO3", "name": "Sodium Nitrate", "molecular_weight": 84.995, "category": "ionic", "description": "Chile saltpeter", "uses": ["Fertilizer", "Food preservative"], "state": "solid", "common_name": "Chile saltpeter", "hazards": ["Oxidizer"]},
+        
+        # Dyes and Pigments
+        {"formula": "C16H10N2O2", "name": "Indigo", "molecular_weight": 262.262, "category": "organic", "description": "Blue dye", "uses": ["Textile dye"], "state": "solid", "common_name": "Indigo", "hazards": ["None"]},
+        {"formula": "C20H14O4", "name": "Alizarin", "molecular_weight": 318.323, "category": "organic", "description": "Red dye", "uses": ["Textile dye"], "state": "solid", "common_name": "Alizarin", "hazards": ["None"]},
+        
+        # Vitamins
+        {"formula": "C27H44O", "name": "Cholecalciferol", "molecular_weight": 384.648, "category": "organic", "description": "Vitamin D3", "uses": ["Supplement", "Food fortification"], "state": "solid", "common_name": "Vitamin D3", "hazards": ["Toxic in large doses"]},
+        {"formula": "C8H11NO2", "name": "Tyrosine", "molecular_weight": 181.191, "category": "organic", "description": "Amino acid", "uses": ["Supplement", "Research"], "state": "solid", "common_name": "Tyrosine", "hazards": ["None"]},
+        
+        # Cleaning Products
+        {"formula": "NaClO", "name": "Sodium Hypochlorite", "molecular_weight": 74.442, "category": "ionic", "description": "Bleach active ingredient", "uses": ["Bleach", "Disinfectant"], "state": "liquid", "common_name": "Bleach", "hazards": ["Corrosive", "Chlorine gas when mixed with acids"]},
+        {"formula": "H2O2", "name": "Hydrogen Peroxide", "molecular_weight": 34.015, "category": "molecular", "description": "Bleaching and disinfecting agent", "uses": ["Disinfectant", "Bleaching", "Wound care"], "state": "liquid", "common_name": "Hydrogen peroxide", "hazards": ["Oxidizer", "Skin irritant"]},
+        
+        # Industrial Gases
+        {"formula": "Ar", "name": "Argon", "molecular_weight": 39.948, "category": "noble gas", "description": "Inert gas for welding", "uses": ["Welding", "Light bulbs"], "state": "gas", "common_name": "Argon", "hazards": ["Asphyxiant"]},
+        {"formula": "He", "name": "Helium", "molecular_weight": 4.003, "category": "noble gas", "description": "Lifting gas for balloons", "uses": ["Balloons", "Breathing gas", "Cooling"], "state": "gas", "common_name": "Helium", "hazards": ["Asphyxiant"]},
+        {"formula": "Ne", "name": "Neon", "molecular_weight": 20.180, "category": "noble gas", "description": "Noble gas for signs", "uses": ["Neon signs", "Lasers"], "state": "gas", "common_name": "Neon", "hazards": ["Asphyxiant"]},
+        {"formula": "Kr", "name": "Krypton", "molecular_weight": 83.798, "category": "noble gas", "description": "Noble gas for lighting", "uses": ["High-intensity lamps"], "state": "gas", "common_name": "Krypton", "hazards": ["Asphyxiant"]},
+        {"formula": "Xe", "name": "Xenon", "molecular_weight": 131.293, "category": "noble gas", "description": "Noble gas for anesthesia", "uses": ["Anesthesia", "Ion drives"], "state": "gas", "common_name": "Xenon", "hazards": ["Asphyxiant"]},
+        
+        # Radioactive Compounds
+        {"formula": "UO2", "name": "Uranium Dioxide", "molecular_weight": 270.028, "category": "ionic", "description": "Nuclear fuel", "uses": ["Nuclear fuel"], "state": "solid", "common_name": "Uranium dioxide", "hazards": ["Radioactive", "Toxic"]},
+        {"formula": "ThO2", "name": "Thorium Dioxide", "molecular_weight": 264.037, "category": "ionic", "description": "Nuclear fuel precursor", "uses": ["Nuclear fuel"], "state": "solid", "common_name": "Thorium dioxide", "hazards": ["Radioactive"]},
     ]
 
 # Routes
